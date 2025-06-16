@@ -1,103 +1,92 @@
 <!DOCTYPE html>
-<html>
+<html lang="th">
 <head>
   <meta charset="UTF-8" />
-  <title>Win Delivery</title>
-  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Win Delivery 🍜</title>
   <style>
     body {
       font-family: sans-serif;
-      max-width: 400px;
-      margin: auto;
+      background-color: #f8f8f8;
       padding: 20px;
-      background: #f7f7f7;
+      max-width: 500px;
+      margin: auto;
     }
+
     h2 {
       text-align: center;
-      color: #2d8f57;
+      color: #e91e63;
     }
+
     input, textarea {
       width: 100%;
-      padding: 8px;
-      margin-bottom: 12px;
+      padding: 10px;
+      margin-bottom: 15px;
       border: 1px solid #ccc;
-      border-radius: 4px;
+      border-radius: 6px;
     }
+
     button {
-      background-color: #2d8f57;
-      color: white;
-      padding: 12px;
       width: 100%;
+      padding: 12px;
+      background-color: #e91e63;
+      color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 6px;
       font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #c2185b;
     }
   </style>
   <script>
-    async function main() {
-      try {
-        await liff.init({ liffId: "dummy-liff-id" }); // ใช้ liffId ปลอมเพื่อเปิดบนเว็บ
-        if (!liff.isLoggedIn()) liff.login();
-
-        const profile = await liff.getProfile();
-        document.getElementById("userId").value = profile.userId;
-        document.getElementById("displayName").value = profile.displayName;
-      } catch (e) {
-        // ใช้โหมดทดสอบถ้าไม่อยู่ใน LINE
-        document.getElementById("userId").value = "test-user";
-        document.getElementById("displayName").value = "Guest";
-      }
-    }
-
     function sendData() {
       const data = {
-        name: document.getElementById("displayName").value,
+        name: document.getElementById("name").value,
         phone: document.getElementById("phone").value,
         address: document.getElementById("address").value,
         order: document.getElementById("order").value,
-        note: document.getElementById("note").value,
-        userId: document.getElementById("userId").value
+        note: document.getElementById("note").value
       };
 
-      fetch("https://script.google.com/macros/s/AKfycbze5PP9rbboLCr0W-qNIA7x0hHcNlX1NgmATUslvRSM9CnHfXJpF7uyJady0sOc3Vuz/exec", {
-
-        method: 'POST',
-        body: JSON.stringify(data),
+      fetch("https://hook.eu2.make.com/5beh6y7q2zxf7uq0yjww3yuxz99gmut3", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
-        }
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
       })
-      .then(res => res.json())
-      .then(res => {
-        alert(res.message);
-        if (liff.isInClient()) liff.closeWindow();
+      .then(() => {
+        alert("✅ ส่งออเดอร์เรียบร้อยแล้ว!");
+        document.getElementById("form").reset();
       })
-      .catch(err => {
-        alert("เกิดข้อผิดพลาด: " + err);
+      .catch(error => {
+        alert("❌ เกิดข้อผิดพลาด: " + error.message);
       });
     }
-
-    window.onload = main;
   </script>
 </head>
 <body>
   <h2>Win Delivery 🍜</h2>
+  <form id="form" onsubmit="event.preventDefault(); sendData();">
+    <label>ชื่อผู้สั่ง:</label>
+    <input type="text" id="name" placeholder="ชื่อ-นามสกุล" required />
 
-  <input type="hidden" id="userId" />
-  <input type="hidden" id="displayName" />
+    <label>เบอร์โทร:</label>
+    <input type="tel" id="phone" placeholder="08xxxxxxxx" required />
 
-  <label>เบอร์โทร:</label>
-  <input id="phone" type="text" placeholder="กรอกเบอร์โทร">
+    <label>ที่อยู่:</label>
+    <textarea id="address" rows="3" placeholder="ที่อยู่สำหรับจัดส่ง" required></textarea>
 
-  <label>ที่อยู่:</label>
-  <textarea id="address" placeholder="กรอกที่อยู่สำหรับจัดส่ง"></textarea>
+    <label>รายการสั่งซื้อ:</label>
+    <textarea id="order" rows="3" placeholder="รายการอาหาร เช่น ส้มตำไทย 1 จาน" required></textarea>
 
-  <label>รายการสั่งซื้อ:</label>
-  <textarea id="order" placeholder="กรอกรายการอาหาร เช่น ส้มตำ 1 จาน"></textarea>
+    <label>หมายเหตุเพิ่มเติม:</label>
+    <textarea id="note" rows="2" placeholder="เช่น ไม่ใส่พริก หรืออื่นๆ"></textarea>
 
-  <label>หมายเหตุ:</label>
-  <textarea id="note" placeholder="ระบุเพิ่มเติม เช่น ไม่เผ็ด, ใส่ถุงแยก ฯลฯ"></textarea>
-
-  <button onclick="sendData()">✅ ส่งออเดอร์</button>
+    <button type="submit">ส่งออเดอร์</button>
+  </form>
 </body>
 </html>
