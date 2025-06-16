@@ -4,16 +4,49 @@
   <meta charset="UTF-8" />
   <title>Win Delivery</title>
   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 400px;
+      margin: auto;
+      padding: 20px;
+      background: #f7f7f7;
+    }
+    h2 {
+      text-align: center;
+      color: #2d8f57;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      background-color: #2d8f57;
+      color: white;
+      padding: 12px;
+      width: 100%;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+  </style>
   <script>
     async function main() {
-      await liff.init({ liffId: "dummy-liff-id" }); // ใช้ liffId ปลอมเพื่อให้เปิดเว็บได้
-      if (!liff.isLoggedIn()) {
-        liff.login();
-      }
+      try {
+        await liff.init({ liffId: "dummy-liff-id" }); // ใช้ liffId ปลอมเพื่อเปิดบนเว็บ
+        if (!liff.isLoggedIn()) liff.login();
 
-      const profile = await liff.getProfile();
-      document.getElementById("userId").value = profile.userId;
-      document.getElementById("displayName").value = profile.displayName;
+        const profile = await liff.getProfile();
+        document.getElementById("userId").value = profile.userId;
+        document.getElementById("displayName").value = profile.displayName;
+      } catch (e) {
+        // ใช้โหมดทดสอบถ้าไม่อยู่ใน LINE
+        document.getElementById("userId").value = "test-user";
+        document.getElementById("displayName").value = "Guest";
+      }
     }
 
     function sendData() {
@@ -36,9 +69,10 @@
       .then(res => res.json())
       .then(res => {
         alert(res.message);
-        if (liff.isInClient()) {
-          liff.closeWindow();
-        }
+        if (liff.isInClient()) liff.closeWindow();
+      })
+      .catch(err => {
+        alert("เกิดข้อผิดพลาด: " + err);
       });
     }
 
@@ -47,13 +81,22 @@
 </head>
 <body>
   <h2>Win Delivery 🍜</h2>
+
   <input type="hidden" id="userId" />
   <input type="hidden" id="displayName" />
 
-  <p>เบอร์โทร: <input id="phone" type="text"></p>
-  <p>ที่อยู่: <input id="address" type="text"></p>
-  <p>รายการสั่งซื้อ: <input id="order" type="text"></p>
-  <p>หมายเหตุ: <input id="note" type="text"></p>
-  <button onclick="sendData()">ส่งออเดอร์</button>
+  <label>เบอร์โทร:</label>
+  <input id="phone" type="text" placeholder="กรอกเบอร์โทร">
+
+  <label>ที่อยู่:</label>
+  <textarea id="address" placeholder="กรอกที่อยู่สำหรับจัดส่ง"></textarea>
+
+  <label>รายการสั่งซื้อ:</label>
+  <textarea id="order" placeholder="กรอกรายการอาหาร เช่น ส้มตำ 1 จาน"></textarea>
+
+  <label>หมายเหตุ:</label>
+  <textarea id="note" placeholder="ระบุเพิ่มเติม เช่น ไม่เผ็ด, ใส่ถุงแยก ฯลฯ"></textarea>
+
+  <button onclick="sendData()">✅ ส่งออเดอร์</button>
 </body>
 </html>
