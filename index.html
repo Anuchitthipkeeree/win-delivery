@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Win Delivery</title>
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+  <script>
+    async function main() {
+      await liff.init({ liffId: "dummy-liff-id" }); // ใช้ liffId ปลอมเพื่อให้เปิดเว็บได้
+      if (!liff.isLoggedIn()) {
+        liff.login();
+      }
+
+      const profile = await liff.getProfile();
+      document.getElementById("userId").value = profile.userId;
+      document.getElementById("displayName").value = profile.displayName;
+    }
+
+    function sendData() {
+      const data = {
+        name: document.getElementById("displayName").value,
+        phone: document.getElementById("phone").value,
+        address: document.getElementById("address").value,
+        order: document.getElementById("order").value,
+        note: document.getElementById("note").value,
+        userId: document.getElementById("userId").value
+      };
+
+      fetch("https://script.google.com/macros/s/AKfycbzA6rh0ytWuhUEvK31jTt0QnrmE09pbwoNyLktt13T9UnudNzj3YOhxLZaQ1E9HIRK7/exec", {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(res => res.json())
+      .then(res => {
+        alert(res.message);
+        if (liff.isInClient()) {
+          liff.closeWindow();
+        }
+      });
+    }
+
+    window.onload = main;
+  </script>
+</head>
+<body>
+  <h2>Win Delivery 🍜</h2>
+  <input type="hidden" id="userId" />
+  <input type="hidden" id="displayName" />
+
+  <p>เบอร์โทร: <input id="phone" type="text"></p>
+  <p>ที่อยู่: <input id="address" type="text"></p>
+  <p>รายการสั่งซื้อ: <input id="order" type="text"></p>
+  <p>หมายเหตุ: <input id="note" type="text"></p>
+  <button onclick="sendData()">ส่งออเดอร์</button>
+</body>
+</html>
