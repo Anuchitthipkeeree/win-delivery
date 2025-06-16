@@ -3,90 +3,68 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Win Delivery 🍜</title>
+  <title>Win Delivery</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    body {
-      font-family: sans-serif;
-      background-color: #f8f8f8;
-      padding: 20px;
-      max-width: 500px;
-      margin: auto;
-    }
-
-    h2 {
-      text-align: center;
-      color: #e91e63;
-    }
-
-    input, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-
-    button {
-      width: 100%;
-      padding: 12px;
-      background-color: #e91e63;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #c2185b;
-    }
+    body { background-color: #f9f9f9; }
+    .card:hover { transform: scale(1.02); transition: 0.3s; }
   </style>
-  <script>
-    function sendData() {
-      const data = {
-        name: document.getElementById("name").value,
-        phone: document.getElementById("phone").value,
-        address: document.getElementById("address").value,
-        order: document.getElementById("order").value,
-        note: document.getElementById("note").value
-      };
-
-      fetch("https://hook.eu2.make.com/5beh6y7q2zxf7uq0yjww3yuxz99gmut3", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-      })
-      .then(() => {
-        alert("✅ ส่งออเดอร์เรียบร้อยแล้ว!");
-        document.getElementById("form").reset();
-      })
-      .catch(error => {
-        alert("❌ เกิดข้อผิดพลาด: " + error.message);
-      });
-    }
-  </script>
 </head>
 <body>
-  <h2>Win Delivery 🍜</h2>
-  <form id="form" onsubmit="event.preventDefault(); sendData();">
-    <label>ชื่อผู้สั่ง:</label>
-    <input type="text" id="name" placeholder="ชื่อ-นามสกุล" required />
+  <div class="container py-4">
+    <h1 class="text-center mb-4">🛵 Win Delivery</h1>
+    <div id="shop-list" class="row"></div>
+    <hr>
+    <div id="menu-section" class="mt-4"></div>
+  </div>
 
-    <label>เบอร์โทร:</label>
-    <input type="tel" id="phone" placeholder="08xxxxxxxx" required />
+  <script>
+    const apiURL = "https://script.google.com/macros/s/AKfycbxI8O4rurUwOzmXJGV4mHFKO498VdVIM29QjwzZxZbBhGGk8X3zz6mdmxMgyUy-bRv5/exec";
 
-    <label>ที่อยู่:</label>
-    <textarea id="address" rows="3" placeholder="ที่อยู่สำหรับจัดส่ง" required></textarea>
+    async function loadShops() {
+      const res = await fetch(apiURL);
+      const data = await res.json();
+      const shopList = document.getElementById("shop-list");
 
-    <label>รายการสั่งซื้อ:</label>
-    <textarea id="order" rows="3" placeholder="รายการอาหาร เช่น ส้มตำไทย 1 จาน" required></textarea>
+      data.shops.forEach(shop => {
+        const col = document.createElement("div");
+        col.className = "col-md-4 mb-3";
+        col.innerHTML = `
+          <div class="card h-100" onclick="loadMenu('${shop['ร้านID']}', '${shop['ชื่อร้าน']}')">
+            <img src="${shop['ลิงก์โลโก้']}" class="card-img-top" style="height:200px; object-fit:cover;">
+            <div class="card-body">
+              <h5 class="card-title">${shop['ชื่อร้าน']}</h5>
+              <p class="card-text">🕙 ${shop['เวลาทำการ']} | 🚚 ค่าส่ง ${shop['ค่าส่งพื้นฐาน']} บาท</p>
+            </div>
+          </div>`;
+        shopList.appendChild(col);
+      });
+    }
 
-    <label>หมายเหตุเพิ่มเติม:</label>
-    <textarea id="note" rows="2" placeholder="เช่น ไม่ใส่พริก หรืออื่นๆ"></textarea>
+    async function loadMenu(restaurantId, shopName) {
+      const res = await fetch(`${apiURL}?restaurantId=${restaurantId}`);
+      const data = await res.json();
+      const menuSection = document.getElementById("menu-section");
+      menuSection.innerHTML = `<h3>📋 เมนูจากร้าน ${shopName}</h3><div class="row">`;
 
-    <button type="submit">ส่งออเดอร์</button>
-  </form>
+      data.menu.forEach(item => {
+        menuSection.innerHTML += `
+          <div class="col-md-4 mb-3">
+            <div class="card h-100">
+              <img src="${item['รูปภาพเมนู']}" class="card-img-top" style="height:200px; object-fit:cover;">
+              <div class="card-body">
+                <h5 class="card-title">${item['ชื่อเมนู']}</h5>
+                <p class="card-text">💰 ${item['ราคา']} บาท</p>
+                <button class="btn btn-success w-100">เพิ่มลงตะกร้า</button>
+              </div>
+            </div>
+          </div>`;
+      });
+
+      menuSection.innerHTML += "</div>";
+    }
+
+    loadShops();
+  </script>
 </body>
 </html>
