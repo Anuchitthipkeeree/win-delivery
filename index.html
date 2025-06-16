@@ -1,145 +1,99 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Win Delivery - Food Delivery</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <title>Win Delivery - เมนูอาหาร</title>
+  <style>
+    body {
+      font-family: 'Prompt', sans-serif;
+      padding: 20px;
+      background-color: #f6f6f6;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    .menu-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .menu-item {
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 15px;
+      width: 250px;
+      text-align: center;
+    }
+    .menu-item img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    .menu-item button {
+      background-color: #27ae60;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .menu-item button:hover {
+      background-color: #219150;
+    }
+  </style>
 </head>
 <body>
-  <div class="container mt-4">
-    <h1 class="mb-4">Win Delivery - เมนูอาหาร</h1>
-    <div id="menu-section">
-      <p>กำลังโหลดเมนู...</p>
-    </div>
-    <button class="btn btn-warning mt-3" onclick="showCart()">ดูตะกร้า 🛒</button>
+  <h1>🍽️ Win Delivery - เมนูอาหาร</h1>
+  <div id="menu-section" class="menu-container">
+    <p>กำลังโหลดเมนู...</p>
   </div>
 
-<script>
-const MENU_SHEET_ID = '1HCxb0FBBbeHfaa8Dg3OnQZ4xqEEqEu1Rx2g_6kraJBA';  // แก้เป็น Google Sheets เมนูของคุณ
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzkAatyOegEpL2vvVdTuDBZf1scnIjhmaleZ2EJFy6wGf57sRr6SlAble4O1d9ruLIVmA/exec';  // Web App URL ที่ Deploy แล้ว
+  <script>
+    let menuData = [];
 
-let menuData = [];
-let cart = [];
-
-async function loadMenu() {
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${MENU_SHEET_ID}/values/Menu?key=YOUR_GOOGLE_API_KEY`; 
-  // **หมายเหตุ**: คุณต้องสร้าง Google API Key และใส่ที่ YOUR_GOOGLE_API_KEY
-  
-  try {
-    const res = await fetch(url);
-    const data = await res.json();
-    if (!data.values) {
-      document.getElementById('menu-section').innerHTML = '<p>ไม่พบข้อมูลเมนู</p>';
-      return;
+    async function loadMenu() {
+      const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRofi5K4AA-BOa8_g45wbryLbUqV6JTDrNQ1iN5GeChwK5950HPbXl205PdC41sbwJVdFSDPyEPlI4o/pub?gid=1385616180&single=true&output=csv';
+      try {
+        const res = await fetch(csvUrl);
+        const csvText = await res.text();
+        parseCSVAndRenderMenu(csvText);
+      } catch (error) {
+        document.getElementById('menu-section').innerHTML = `<p>เกิดข้อผิดพลาด: ${error.message}</p>`;
+      }
     }
 
-    // data.values[0] = header row
-    menuData = data.values.slice(1); // ตัดหัวตารางออก
-    renderMenu();
-
-  } catch (error) {
-    document.getElementById('menu-section').innerHTML = `<p>เกิดข้อผิดพลาด: ${error.message}</p>`;
-  }
-}
-
-function renderMenu() {
-  const section = document.getElementById("menu-section");
-  section.innerHTML = '';
-  if(menuData.length === 0){
-    section.innerHTML = '<p>ไม่มีเมนูอาหาร</p>';
-    return;
-  }
-  menuData.forEach(row => {
-    const [shop, menuName, price] = row;
-    const card = document.createElement('div');
-    card.className = "card mb-3";
-    card.innerHTML = `
-      <div class="card-body">
-        <h5 class="card-title">${menuName}</h5>
-        <p class="card-text">ร้าน: ${shop}</p>
-        <p class="card-text">ราคา: ${price} บาท</p>
-        <button class="btn btn-success" onclick="addToCart('${menuName}', ${price}, '${shop}')">เพิ่มลงตะกร้า</button>
-      </div>
-    `;
-    section.appendChild(card);
-  });
-}
-
-function addToCart(menuItem, price, shop) {
-  const found = cart.find(item => item.menu === menuItem && item.shop === shop);
-  if (found) {
-    found.qty += 1;
-  } else {
-    cart.push({ shop, menu: menuItem, price: parseFloat(price), qty: 1 });
-  }
-  alert("✅ เพิ่มลงตะกร้าแล้ว");
-}
-
-function showCart() {
-  const section = document.getElementById("menu-section");
-  section.innerHTML = "<h3>🛒 ตะกร้าของคุณ</h3>";
-  if (cart.length === 0) {
-    section.innerHTML += "<p>ยังไม่มีสินค้าในตะกร้า</p>";
-    return;
-  }
-
-  let total = 0;
-  section.innerHTML += `<table class="table"><thead><tr>
-      <th>ร้าน</th><th>เมนู</th><th>จำนวน</th><th>รวม</th></tr></thead><tbody>`;
-
-  cart.forEach(item => {
-    const sum = item.qty * item.price;
-    total += sum;
-    section.innerHTML += `<tr><td>${item.shop}</td><td>${item.menu}</td><td>${item.qty}</td><td>${sum}฿</td></tr>`;
-  });
-
-  section.innerHTML += `</tbody></table>
-    <p><strong>รวมทั้งหมด: ${total} บาท</strong></p>
-    <p>📞 เบอร์โทรลูกค้า: <input id="customerPhone" class="form-control mb-2" placeholder="กรอกเบอร์โทร"></p>
-    <p>📍 พิกัด (หรือที่อยู่): <input id="customerLocation" class="form-control mb-2" placeholder="กรอกที่อยู่หรือพิกัด"></p>
-    <button class="btn btn-primary" onclick="submitOrder()">ยืนยันสั่งซื้อ</button>
-    <button class="btn btn-secondary mt-2" onclick="renderMenu()">กลับไปเลือกเมนู</button>`;
-}
-
-async function submitOrder() {
-  const phone = document.getElementById("customerPhone").value.trim();
-  const location = document.getElementById("customerLocation").value.trim();
-  if (!phone || !location) {
-    alert("กรุณากรอกเบอร์โทรและที่อยู่ก่อนสั่งซื้อ");
-    return;
-  }
-  if(cart.length === 0){
-    alert("ตะกร้าว่าง ไม่มีเมนูให้สั่ง");
-    return;
-  }
-
-  const payload = {
-    phone,
-    location,
-    orders: cart
-  };
-
-  try {
-    const response = await fetch(GOOGLE_SCRIPT_URL, {
-      method: "POST",
-      body: JSON.stringify(payload),
-      headers: { "Content-Type": "application/json" }
-    });
-    if (response.ok) {
-      alert("✅ สั่งซื้อเรียบร้อยแล้ว!");
-      cart = [];
+    function parseCSVAndRenderMenu(csvText) {
+      const lines = csvText.trim().split('\n');
+      const data = lines.map(line => line.split(','));
+      menuData = data.slice(1); // ข้ามหัวตาราง
       renderMenu();
-    } else {
-      alert("❌ เกิดข้อผิดพลาดในการส่งออเดอร์");
     }
-  } catch (error) {
-    alert("❌ เกิดข้อผิดพลาด: " + error.message);
-  }
-}
 
-// เรียกโหลดเมนูตอนหน้าเว็บโหลดเสร็จ
-window.onload = loadMenu;
-</script>
+    function renderMenu() {
+      const container = document.getElementById('menu-section');
+      container.innerHTML = '';
+      menuData.forEach(([name, price, image]) => {
+        const item = document.createElement('div');
+        item.className = 'menu-item';
+        item.innerHTML = `
+          <img src="${image}" alt="${name}">
+          <h3>${name}</h3>
+          <p>ราคา: ${price} บาท</p>
+          <button onclick="addToCart('${name}', ${price})">สั่งซื้อ</button>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function addToCart(name, price) {
+      alert(`คุณเลือกเมนู: ${name} (${price} บาท)\n\n(ระบบสั่งซื้อกำลังพัฒนา)`);
+    }
+
+    window.onload = loadMenu;
+  </script>
 </body>
 </html>
