@@ -2,69 +2,144 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Win Delivery</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body { background-color: #f9f9f9; }
-    .card:hover { transform: scale(1.02); transition: 0.3s; }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Win Delivery - Food Delivery</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
-  <div class="container py-4">
-    <h1 class="text-center mb-4">🛵 Win Delivery</h1>
-    <div id="shop-list" class="row"></div>
-    <hr>
-    <div id="menu-section" class="mt-4"></div>
+  <div class="container mt-4">
+    <h1 class="mb-4">Win Delivery - เมนูอาหาร</h1>
+    <div id="menu-section">
+      <p>กำลังโหลดเมนู...</p>
+    </div>
+    <button class="btn btn-warning mt-3" onclick="showCart()">ดูตะกร้า 🛒</button>
   </div>
 
-  <script>
-    const apiURL = "https://script.google.com/macros/s/AKfycbxI8O4rurUwOzmXJGV4mHFKO498VdVIM29QjwzZxZbBhGGk8X3zz6mdmxMgyUy-bRv5/exec";
+<script>
+const MENU_SHEET_ID = '1HCxb0FBBbeHfaa8Dg3OnQZ4xqEEqEu1Rx2g_6kraJBA';  // แก้เป็น Google Sheets เมนูของคุณ
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzkAatyOegEpL2vvVdTuDBZf1scnIjhmaleZ2EJFy6wGf57sRr6SlAble4O1d9ruLIVmA/exec';  // Web App URL ที่ Deploy แล้ว
 
-    async function loadShops() {
-      const res = await fetch(apiURL);
-      const data = await res.json();
-      const shopList = document.getElementById("shop-list");
+let menuData = [];
+let cart = [];
 
-      data.shops.forEach(shop => {
-        const col = document.createElement("div");
-        col.className = "col-md-4 mb-3";
-        col.innerHTML = `
-          <div class="card h-100" onclick="loadMenu('${shop['ร้านID']}', '${shop['ชื่อร้าน']}')">
-            <img src="${shop['ลิงก์โลโก้']}" class="card-img-top" style="height:200px; object-fit:cover;">
-            <div class="card-body">
-              <h5 class="card-title">${shop['ชื่อร้าน']}</h5>
-              <p class="card-text">🕙 ${shop['เวลาทำการ']} | 🚚 ค่าส่ง ${shop['ค่าส่งพื้นฐาน']} บาท</p>
-            </div>
-          </div>`;
-        shopList.appendChild(col);
-      });
+async function loadMenu() {
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${MENU_SHEET_ID}/values/Menu?key=YOUR_GOOGLE_API_KEY`; 
+  // **หมายเหตุ**: คุณต้องสร้าง Google API Key และใส่ที่ YOUR_GOOGLE_API_KEY
+  
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    if (!data.values) {
+      document.getElementById('menu-section').innerHTML = '<p>ไม่พบข้อมูลเมนู</p>';
+      return;
     }
 
-    async function loadMenu(restaurantId, shopName) {
-      const res = await fetch(`${apiURL}?restaurantId=${restaurantId}`);
-      const data = await res.json();
-      const menuSection = document.getElementById("menu-section");
-      menuSection.innerHTML = `<h3>📋 เมนูจากร้าน ${shopName}</h3><div class="row">`;
+    // data.values[0] = header row
+    menuData = data.values.slice(1); // ตัดหัวตารางออก
+    renderMenu();
 
-      data.menu.forEach(item => {
-        menuSection.innerHTML += `
-          <div class="col-md-4 mb-3">
-            <div class="card h-100">
-              <img src="${item['รูปภาพเมนู']}" class="card-img-top" style="height:200px; object-fit:cover;">
-              <div class="card-body">
-                <h5 class="card-title">${item['ชื่อเมนู']}</h5>
-                <p class="card-text">💰 ${item['ราคา']} บาท</p>
-                <button class="btn btn-success w-100">เพิ่มลงตะกร้า</button>
-              </div>
-            </div>
-          </div>`;
-      });
+  } catch (error) {
+    document.getElementById('menu-section').innerHTML = `<p>เกิดข้อผิดพลาด: ${error.message}</p>`;
+  }
+}
 
-      menuSection.innerHTML += "</div>";
+function renderMenu() {
+  const section = document.getElementById("menu-section");
+  section.innerHTML = '';
+  if(menuData.length === 0){
+    section.innerHTML = '<p>ไม่มีเมนูอาหาร</p>';
+    return;
+  }
+  menuData.forEach(row => {
+    const [shop, menuName, price] = row;
+    const card = document.createElement('div');
+    card.className = "card mb-3";
+    card.innerHTML = `
+      <div class="card-body">
+        <h5 class="card-title">${menuName}</h5>
+        <p class="card-text">ร้าน: ${shop}</p>
+        <p class="card-text">ราคา: ${price} บาท</p>
+        <button class="btn btn-success" onclick="addToCart('${menuName}', ${price}, '${shop}')">เพิ่มลงตะกร้า</button>
+      </div>
+    `;
+    section.appendChild(card);
+  });
+}
+
+function addToCart(menuItem, price, shop) {
+  const found = cart.find(item => item.menu === menuItem && item.shop === shop);
+  if (found) {
+    found.qty += 1;
+  } else {
+    cart.push({ shop, menu: menuItem, price: parseFloat(price), qty: 1 });
+  }
+  alert("✅ เพิ่มลงตะกร้าแล้ว");
+}
+
+function showCart() {
+  const section = document.getElementById("menu-section");
+  section.innerHTML = "<h3>🛒 ตะกร้าของคุณ</h3>";
+  if (cart.length === 0) {
+    section.innerHTML += "<p>ยังไม่มีสินค้าในตะกร้า</p>";
+    return;
+  }
+
+  let total = 0;
+  section.innerHTML += `<table class="table"><thead><tr>
+      <th>ร้าน</th><th>เมนู</th><th>จำนวน</th><th>รวม</th></tr></thead><tbody>`;
+
+  cart.forEach(item => {
+    const sum = item.qty * item.price;
+    total += sum;
+    section.innerHTML += `<tr><td>${item.shop}</td><td>${item.menu}</td><td>${item.qty}</td><td>${sum}฿</td></tr>`;
+  });
+
+  section.innerHTML += `</tbody></table>
+    <p><strong>รวมทั้งหมด: ${total} บาท</strong></p>
+    <p>📞 เบอร์โทรลูกค้า: <input id="customerPhone" class="form-control mb-2" placeholder="กรอกเบอร์โทร"></p>
+    <p>📍 พิกัด (หรือที่อยู่): <input id="customerLocation" class="form-control mb-2" placeholder="กรอกที่อยู่หรือพิกัด"></p>
+    <button class="btn btn-primary" onclick="submitOrder()">ยืนยันสั่งซื้อ</button>
+    <button class="btn btn-secondary mt-2" onclick="renderMenu()">กลับไปเลือกเมนู</button>`;
+}
+
+async function submitOrder() {
+  const phone = document.getElementById("customerPhone").value.trim();
+  const location = document.getElementById("customerLocation").value.trim();
+  if (!phone || !location) {
+    alert("กรุณากรอกเบอร์โทรและที่อยู่ก่อนสั่งซื้อ");
+    return;
+  }
+  if(cart.length === 0){
+    alert("ตะกร้าว่าง ไม่มีเมนูให้สั่ง");
+    return;
+  }
+
+  const payload = {
+    phone,
+    location,
+    orders: cart
+  };
+
+  try {
+    const response = await fetch(GOOGLE_SCRIPT_URL, {
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: { "Content-Type": "application/json" }
+    });
+    if (response.ok) {
+      alert("✅ สั่งซื้อเรียบร้อยแล้ว!");
+      cart = [];
+      renderMenu();
+    } else {
+      alert("❌ เกิดข้อผิดพลาดในการส่งออเดอร์");
     }
+  } catch (error) {
+    alert("❌ เกิดข้อผิดพลาด: " + error.message);
+  }
+}
 
-    loadShops();
-  </script>
+// เรียกโหลดเมนูตอนหน้าเว็บโหลดเสร็จ
+window.onload = loadMenu;
+</script>
 </body>
 </html>
