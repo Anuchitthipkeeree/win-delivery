@@ -1,164 +1,153 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <title>ไรเดอร์ - Dashboard</title>
-  <link
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-    rel="stylesheet"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rider Dashboard - Win Delivery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --primary: #007bff;
-      --primary-dark: #004085;
+      --primary: #1877f2;
+      --primary-dark: #145dbf;
+      --background: #f0f2f5;
+      --card: #fff;
+      --text: #050505;
+      --muted: #65676b;
+      --accent: #ff3b30;
       --success: #28a745;
-      --warning: #ffc107;
-      --danger: #dc3545;
-      --info: #17a2b8;
-      --bg-light: #f8f9fa;
-      --text-dark: #212529;
-      --shadow: rgba(0, 0, 0, 0.15);
-      --border-radius: 10px;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      --shadow: rgba(0, 0, 0, 0.1);
     }
 
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+      font-family: 'Prompt', sans-serif;
     }
 
     body {
-      background: var(--bg-light);
-      color: var(--text-dark);
-      font-size: 16px;
-      line-height: 1.4;
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.5;
       min-height: 100vh;
-      padding-bottom: 90px; /* เผื่อปุ่มลอย */
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
+      padding-bottom: 120px; /* พื้นที่ให้ footer และ fab ไม่บังเนื้อหา */
     }
 
     header {
-      background: var(--primary);
-      color: white;
-      padding: 16px 20px;
-      font-size: 1.25rem;
-      font-weight: 700;
+      background-color: var(--primary);
+      color: #fff;
+      padding: 1rem;
       text-align: center;
-      box-shadow: 0 4px 8px var(--shadow);
-      user-select: none;
+      font-weight: 600;
+      font-size: 1.3rem;
+      box-shadow: 0 2px 5px var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
     main {
-      flex: 1;
-      padding: 20px;
+      max-width: 600px;
+      margin: 1rem auto 0 auto;
+      padding: 0 1rem;
     }
 
-    /* รายการงานไรเดอร์ */
-    .task-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .task-item {
-      background: white;
-      border-radius: var(--border-radius);
-      box-shadow: 0 2px 6px var(--shadow);
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      user-select: none;
-    }
-
-    .task-header {
+    .status-card {
+      background: var(--card);
+      box-shadow: 0 3px 8px var(--shadow);
+      border-radius: 1rem;
+      padding: 1rem 1.5rem;
+      margin-bottom: 1rem;
       display: flex;
       justify-content: space-between;
-      font-weight: 700;
-      font-size: 1rem;
+      align-items: center;
+      font-weight: 600;
+      font-size: 1.1rem;
       color: var(--primary-dark);
     }
 
-    .task-details {
-      font-size: 0.9rem;
-      color: #555;
+    .order-list {
+      max-width: 600px;
+      margin: 0 auto 80px auto;
+      padding: 0 1rem;
     }
 
-    .status {
-      padding: 6px 14px;
-      border-radius: 20px;
+    .order-item {
+      background: var(--card);
+      border-radius: 1rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      padding: 1rem;
+      margin-bottom: 1rem;
+      transition: box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .order-item:hover {
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .order-header {
       font-weight: 700;
-      font-size: 0.85rem;
-      color: white;
-      width: fit-content;
-      text-align: center;
-      user-select: none;
+      font-size: 1.1rem;
+      margin-bottom: 0.25rem;
+      color: var(--primary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    .status.pending {
-      background-color: var(--warning);
+    .order-details {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-top: 0.5rem;
     }
 
-    .status.picked-up {
-      background-color: var(--info);
-    }
-
-    .status.delivering {
-      background-color: #6f42c1; /* สีม่วงเข้ม */
-    }
-
-    .status.completed {
-      background-color: var(--success);
-    }
-
-    .status.cancelled {
-      background-color: var(--danger);
-    }
-
-    /* ปุ่มลอยด้านล่างแบบจัดสมมาตร มีปุ่มกลางใหญ่ */
+    /* แถบปุ่มลอย (FAB) */
     .fab-container {
       position: fixed;
       bottom: 16px;
       left: 50%;
       transform: translateX(-50%);
       background: rgba(255 255 255 / 0.98);
-      padding: 10px 24px;
+      padding: 10px 12px;
       border-radius: 40px;
       box-shadow: 0 8px 20px var(--shadow);
       display: flex;
-      gap: 36px;
+      gap: 12px;
       z-index: 1000;
-      max-width: 600px;
+      max-width: 480px;
       width: 100%;
       justify-content: center;
       user-select: none;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      flex-wrap: nowrap;
     }
 
     .fab-item {
       display: flex;
       flex-direction: column;
       align-items: center;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       color: var(--primary-dark);
       cursor: pointer;
-      width: 56px;
+      width: 44px;
       transition: transform 0.3s ease;
       user-select: none;
+      flex-shrink: 0;
     }
 
     .fab-btn {
       background-color: var(--primary);
       border: none;
       color: white;
-      width: 48px;
-      height: 48px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
-      font-size: 1.4rem;
+      font-size: 1.2rem;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -168,213 +157,151 @@
       user-select: none;
     }
 
-    /* ปุ่มรีเฟรชเด่น ใหญ่กว่า อยู่กลาง */
     .fab-item.refresh {
-      width: 72px;
-      margin: 0 12px;
-      color: white;
+      width: 56px;
+      margin: 0 8px;
       font-weight: 700;
+      font-size: 0.75rem;
+      color: var(--success);
     }
 
     .fab-btn.refresh-btn {
-      width: 64px;
-      height: 64px;
-      font-size: 1.8rem;
+      width: 56px;
+      height: 56px;
+      font-size: 1.5rem;
       background-color: var(--success);
       box-shadow: 0 0 15px var(--success);
       animation: pulse-glow 2.5s infinite;
     }
 
-    .fab-btn.refresh-btn:hover,
-    .fab-btn.refresh-btn:focus-visible {
-      background-color: #218838;
-      box-shadow: 0 0 25px #218838;
-      outline: none;
+    .fab-item:hover .fab-btn {
+      background-color: var(--primary-dark);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
+    /* กำหนดแอนิเมชันเรืองแสง */
     @keyframes pulse-glow {
-      0%,
-      100% {
-        box-shadow: 0 0 10px var(--success);
+      0% {
+        box-shadow: 0 0 8px var(--success);
       }
       50% {
-        box-shadow: 0 0 25px var(--success);
+        box-shadow: 0 0 18px var(--success);
+      }
+      100% {
+        box-shadow: 0 0 8px var(--success);
       }
     }
 
-    .fab-item span {
-      user-select: none;
-      white-space: nowrap;
-    }
-
-    /* Responsive */
-    @media (max-width: 400px) {
-      body {
-        font-size: 14px;
+    @media (max-width: 480px) {
+      .fab-container {
+        padding: 8px 8px;
+        gap: 8px;
       }
+
       .fab-item {
-        width: 44px;
-        font-size: 0.7rem;
+        width: 40px;
+        font-size: 0.65rem;
       }
+
       .fab-btn {
-        width: 42px;
-        height: 42px;
-        font-size: 1.2rem;
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
         margin-bottom: 2px;
       }
+
       .fab-item.refresh {
-        width: 56px;
+        width: 48px;
+        font-size: 0.7rem;
       }
+
       .fab-btn.refresh-btn {
-        width: 56px;
-        height: 56px;
-        font-size: 1.5rem;
+        width: 48px;
+        height: 48px;
+        font-size: 1.3rem;
       }
     }
   </style>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
-  <header>ไรเดอร์ - Dashboard</header>
+  <header>แดชบอร์ดไรเดอร์</header>
+
   <main>
-    <ul class="task-list" aria-label="รายการงานส่งของ">
-      <li class="task-item" tabindex="0" aria-label="งานส่งคำสั่งซื้อ #1001 สถานะ รอรับของ">
-        <div class="task-header">
-          <span>คำสั่งซื้อ #1001</span>
-          <span class="status pending" aria-live="polite">รอรับของ</span>
+    <section class="status-card" aria-label="สถานะไรเดอร์">
+      สถานะ: <span id="riderStatus">ออนไลน์</span>
+    </section>
+
+    <section class="order-list" aria-label="รายการออร์เดอร์ที่ได้รับ">
+      <article class="order-item" tabindex="0" aria-label="ออร์เดอร์หมายเลข 12345 สั่งโดยคุณสมชาย">
+        <div class="order-header">
+          <span>ออร์เดอร์ #12345</span>
+          <span>กำลังรอรับอาหาร</span>
         </div>
-        <div class="task-details">
-          ร้านค้า: ส้มตำป้าเล็ก<br />
-          ที่อยู่จัดส่ง: ซอยสุขุมวิท 101<br />
-          รายการ: ส้มตำไทย, ไก่ย่าง<br />
-          เวลาออเดอร์: 11:15 น.
+        <div class="order-details">
+          <p>ลูกค้า: คุณสมชาย</p>
+          <p>ที่อยู่: 123/45 ซ.สุขุมวิท 101</p>
+          <p>โทร: 081-234-5678</p>
+          <p>รายการ: ส้มตำปูปลาร้า, ไก่ทอด</p>
         </div>
-      </li>
-      <li class="task-item" tabindex="0" aria-label="งานส่งคำสั่งซื้อ #1002 สถานะ กำลังส่ง">
-        <div class="task-header">
-          <span>คำสั่งซื้อ #1002</span>
-          <span class="status delivering" aria-live="polite">กำลังส่ง</span>
+      </article>
+
+      <article class="order-item" tabindex="0" aria-label="ออร์เดอร์หมายเลข 12346 สั่งโดยคุณสายฝน">
+        <div class="order-header">
+          <span>ออร์เดอร์ #12346</span>
+          <span>กำลังจัดส่ง</span>
         </div>
-        <div class="task-details">
-          ร้านค้า: MK สาขาเซ็นทรัล<br />
-          ที่อยู่จัดส่ง: ถนนสุขุมวิท 55<br />
-          รายการ: ข้าวหน้าเป็ด<br />
-          เวลาออเดอร์: 11:30 น.
+        <div class="order-details">
+          <p>ลูกค้า: คุณสายฝน</p>
+          <p>ที่อยู่: 456/78 ถ.ลาดพร้าว</p>
+          <p>โทร: 089-876-5432</p>
+          <p>รายการ: ข้าวมันไก่, น้ำสมุนไพร</p>
         </div>
-      </li>
-      <li class="task-item" tabindex="0" aria-label="งานส่งคำสั่งซื้อ #1003 สถานะ ส่งสำเร็จ">
-        <div class="task-header">
-          <span>คำสั่งซื้อ #1003</span>
-          <span class="status completed" aria-live="polite">ส่งสำเร็จ</span>
-        </div>
-        <div class="task-details">
-          ร้านค้า: ร้านยำแซ่บ<br />
-          ที่อยู่จัดส่ง: ถนนพระราม 3<br />
-          รายการ: ยำรวมมิตร<br />
-          เวลาออเดอร์: 11:45 น.
-        </div>
-      </li>
-    </ul>
+      </article>
+    </section>
   </main>
 
-  <!-- Floating Action Buttons -->
-  <nav
-    class="fab-container"
-    aria-label="เมนูลัดไรเดอร์"
-    role="navigation"
-  >
-    <div
-      class="fab-item"
-      role="button"
-      tabindex="0"
-      aria-label="หน้าหลัก"
-      title="หน้าหลัก"
-      onclick="goHome()"
-      onkeypress="if(event.key==='Enter') goHome()"
-    >
-      <button class="fab-btn" aria-hidden="true"><i class="fas fa-home"></i></button>
-      <span>หน้าหลัก</span>
+  <!-- แถบปุ่มลอย (FAB) -->
+  <nav class="fab-container" aria-label="เมนูการใช้งานด่วน">
+    <div class="fab-item" role="button" tabindex="0" aria-label="ดูประวัติการส่ง">
+      <button class="fab-btn"><i class="fas fa-history"></i></button>
+      ประวัติ
     </div>
-
-    <div
-      class="fab-item"
-      role="button"
-      tabindex="0"
-      aria-label="อัปเดตสถานะงาน"
-      title="อัปเดตสถานะงาน"
-      onclick="updateStatus()"
-      onkeypress="if(event.key==='Enter') updateStatus()"
-    >
-      <button class="fab-btn" aria-hidden="true"><i class="fas fa-check-circle"></i></button>
-      <span>อัปเดต</span>
+    <div class="fab-item" role="button" tabindex="0" aria-label="เปิดแชตกับร้านค้า">
+      <button class="fab-btn"><i class="fas fa-comment-alt"></i></button>
+      แชต
     </div>
-
-    <div
-      class="fab-item refresh"
-      role="button"
-      tabindex="0"
-      aria-label="รีเฟรชงาน"
-      title="รีเฟรชงาน"
-      onclick="refreshTasks()"
-      onkeypress="if(event.key==='Enter') refreshTasks()"
-    >
-      <button class="fab-btn refresh-btn" aria-hidden="true"><i class="fas fa-sync-alt"></i></button>
-      <span>รีเฟรช</span>
+    <div class="fab-item refresh" role="button" tabindex="0" aria-label="รีเฟรชรายการออร์เดอร์" onclick="refreshOrders()">
+      <button class="fab-btn refresh-btn"><i class="fas fa-sync-alt"></i></button>
+      รีเฟรช
     </div>
-
-    <div
-      class="fab-item"
-      role="button"
-      tabindex="0"
-      aria-label="ติดต่อร้านค้า"
-      title="ติดต่อร้านค้า"
-      onclick="contactShop()"
-      onkeypress="if(event.key==='Enter') contactShop()"
-    >
-      <button class="fab-btn" aria-hidden="true"><i class="fas fa-phone"></i></button>
-      <span>โทรร้าน</span>
+    <div class="fab-item" role="button" tabindex="0" aria-label="ตั้งค่าสถานะไรเดอร์">
+      <button class="fab-btn"><i class="fas fa-cog"></i></button>
+      ตั้งค่า
     </div>
-
-    <div
-      class="fab-item"
-      role="button"
-      tabindex="0"
-      aria-label="แผนที่เส้นทาง"
-      title="แผนที่เส้นทาง"
-      onclick="openMap()"
-      onkeypress="if(event.key==='Enter') openMap()"
-    >
-      <button class="fab-btn" aria-hidden="true"><i class="fas fa-map-marked-alt"></i></button>
-      <span>แผนที่</span>
+    <div class="fab-item" role="button" tabindex="0" aria-label="ออกจากระบบ">
+      <button class="fab-btn"><i class="fas fa-sign-out-alt"></i></button>
+      ออกจากระบบ
     </div>
   </nav>
 
   <script>
-    function goHome() {
-      alert("กลับหน้าหลัก");
-      // ตัวอย่าง: window.location.href = "/rider-home.html";
+    function refreshOrders() {
+      alert('รีเฟรชรายการออร์เดอร์แล้ว (ทดสอบฟังก์ชัน)');
+      // TODO: เรียก API ดึงรายการออร์เดอร์ใหม่ และรีเฟรชหน้า
     }
 
-    function updateStatus() {
-      alert("อัปเดตสถานะงานล่าสุด");
-      // ฟังก์ชันส่งข้อมูลอัปเดตสถานะไป backend หรือ API
-    }
-
-    function contactShop() {
-      alert("โทรติดต่อร้านค้า");
-      // ฟังก์ชันโทรออกผ่านมือถือ (หรือเปิดแอปโทรศัพท์)
-      // ตัวอย่าง: window.location.href = "tel:+66612345678";
-    }
-
-    function openMap() {
-      alert("เปิดแผนที่เส้นทาง");
-      // ฟังก์ชันเปิด Google Maps หรือแผนที่ในแอป
-      // ตัวอย่าง: window.open('https://maps.google.com/?q=13.7563,100.5018', '_blank');
-    }
-
-    function refreshTasks() {
-      alert("รีเฟรชรายการงาน");
-      // ฟังก์ชันโหลดข้อมูลงานใหม่จาก API
-    }
+    // เพิ่ม event keypress เพื่อให้กด Enter หรือ Space บนปุ่มลอยได้
+    document.querySelectorAll('.fab-item').forEach(item => {
+      item.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          item.click();
+        }
+      });
+    });
   </script>
 </body>
+
 </html>
