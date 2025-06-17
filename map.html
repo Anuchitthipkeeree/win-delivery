@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>แผนที่ - Win Delivery</title>
+  <title>แผนที่การจัดส่ง - Win Delivery</title>
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
   <style>
@@ -47,19 +47,18 @@
       z-index: 100;
     }
 
-    .map-container {
-      margin: 1rem auto;
+    main {
       max-width: 600px;
-      height: 500px;
-      border-radius: 1rem;
-      overflow: hidden;
-      box-shadow: 0 4px 15px var(--shadow);
+      margin: 1rem auto 0 auto;
+      padding: 0 1rem;
     }
 
     iframe {
       width: 100%;
-      height: 100%;
+      height: 400px;
       border: none;
+      border-radius: 1rem;
+      box-shadow: 0 3px 8px var(--shadow);
     }
 
     /* ปุ่มลอยด้านล่าง */
@@ -78,7 +77,6 @@
       max-width: 600px;
       width: 100%;
       justify-content: center;
-      user-select: none;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
     }
@@ -89,9 +87,10 @@
       align-items: center;
       font-size: 0.7rem;
       color: var(--primary-dark);
-      cursor: pointer;
       width: 44px;
       flex-shrink: 0;
+      text-align: center;
+      text-decoration: none;
     }
 
     .fab-btn {
@@ -107,7 +106,6 @@
       justify-content: center;
       margin-bottom: 6px;
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-      transition: background-color 0.3s ease;
     }
 
     .fab-item:hover .fab-btn {
@@ -132,14 +130,20 @@
     }
 
     @keyframes pulse-glow {
-      0% { box-shadow: 0 0 8px var(--success); }
-      50% { box-shadow: 0 0 18px var(--success); }
-      100% { box-shadow: 0 0 8px var(--success); }
+      0% {
+        box-shadow: 0 0 8px var(--success);
+      }
+      50% {
+        box-shadow: 0 0 18px var(--success);
+      }
+      100% {
+        box-shadow: 0 0 8px var(--success);
+      }
     }
 
     @media (max-width: 480px) {
       .fab-container {
-        padding: 8px 8px;
+        padding: 8px;
         gap: 12px;
       }
 
@@ -152,7 +156,6 @@
         width: 36px;
         height: 36px;
         font-size: 1rem;
-        margin-bottom: 4px;
       }
 
       .fab-item.refresh {
@@ -173,62 +176,41 @@
 <body>
   <header>แผนที่การจัดส่ง</header>
 
-  <section class="map-container" aria-label="ตำแหน่งจาก Google Maps">
-    <iframe 
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.539228579023!2d100.5293632153491!3d13.745016990350777!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29ec980bf6cf9%3A0x96d238aefec53a0!2sVictory%20Monument!5e0!3m2!1sth!2sth!4v1686900000000!5m2!1sth!2sth" 
-      allowfullscreen 
+  <main>
+    <p style="margin-bottom: 10px;">ตำแหน่งปัจจุบัน (แสดงตัวอย่าง Google Maps):</p>
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.6982471034753!2d100.52318661510974!3d13.736717801116998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e2997f3f3b98d5%3A0x52b2aa5dc1726d04!2sBangkok!5e0!3m2!1sen!2sth!4v1615376578561!5m2!1sen!2sth"
+      allowfullscreen=""
       loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade"
     ></iframe>
-  </section>
+  </main>
 
-  <nav class="fab-container" aria-label="เมนูด่วน">
-    <div class="fab-item" onclick="goHome()">
-      <button class="fab-btn"><i class="fas fa-home"></i></button>
+  <!-- ปุ่มลอยลิงก์ -->
+  <nav class="fab-container">
+    <a href="index.html" class="fab-item" aria-label="หน้าหลัก">
+      <div class="fab-btn"><i class="fas fa-home"></i></div>
       หน้าหลัก
-    </div>
+    </a>
 
-    <div class="fab-item" onclick="updateStatus()">
-      <button class="fab-btn"><i class="fas fa-user-check"></i></button>
+    <a href="update.html" class="fab-item" aria-label="อัปเดต">
+      <div class="fab-btn"><i class="fas fa-user-check"></i></div>
       อัปเดต
-    </div>
+    </a>
 
-    <div class="fab-item refresh" onclick="refreshOrders()">
-      <button class="fab-btn refresh-btn"><i class="fas fa-sync-alt"></i></button>
+    <a href="map.html" class="fab-item refresh" aria-label="รีเฟรช">
+      <div class="fab-btn refresh-btn"><i class="fas fa-sync-alt"></i></div>
       รีเฟรช
-    </div>
+    </a>
 
-    <div class="fab-item" onclick="openChat()">
-      <button class="fab-btn"><i class="fas fa-comment-alt"></i></button>
+    <a href="chat.html" class="fab-item" aria-label="แชต">
+      <div class="fab-btn"><i class="fas fa-comment-alt"></i></div>
       แชต
-    </div>
+    </a>
 
-    <div class="fab-item" onclick="openMap()">
-      <button class="fab-btn"><i class="fas fa-map-marker-alt"></i></button>
+    <a href="map.html" class="fab-item" aria-label="แผนที่">
+      <div class="fab-btn"><i class="fas fa-map-marker-alt"></i></div>
       แผนที่
-    </div>
+    </a>
   </nav>
-
-  <script>
-    function goHome() {
-      alert("กลับหน้าหลัก (ทดสอบ)");
-    }
-
-    function updateStatus() {
-      alert("อัปเดตสถานะไรเดอร์ (ทดสอบ)");
-    }
-
-    function refreshOrders() {
-      alert("รีเฟรชรายการ (ทดสอบ)");
-    }
-
-    function openChat() {
-      alert("เปิดแชต (ทดสอบ)");
-    }
-
-    function openMap() {
-      alert("อยู่หน้าแผนที่แล้ว");
-    }
-  </script>
 </body>
 </html>
