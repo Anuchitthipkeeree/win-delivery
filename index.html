@@ -59,20 +59,6 @@
       border-radius: 50%;
     }
 
-    .nav-icons {
-      display: flex;
-      gap: 1rem;
-      width: 100%;
-      justify-content: space-around;
-      padding-top: 0.5rem;
-    }
-
-    .nav-icons i {
-      font-size: 1.3rem;
-      cursor: pointer;
-      color: #fff;
-    }
-
     .cart {
       position: relative;
       cursor: pointer;
@@ -146,7 +132,7 @@
     footer a {
       text-decoration: none;
       color: var(--muted);
-      font-size: 0.9rem;
+      font-size: 0.75rem;
       text-align: center;
       display: flex;
       flex-direction: column;
@@ -155,6 +141,9 @@
     }
 
     footer a i {
+      background-color: #f2f2f2;
+      border-radius: 50%;
+      padding: 0.6rem;
       font-size: 1.2rem;
       margin-bottom: 0.25rem;
     }
@@ -163,29 +152,70 @@
       color: var(--primary);
       font-weight: 600;
     }
+
+    .chat-popup {
+      display: none;
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background: #fff;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      max-height: 400px;
+      overflow: hidden;
+      z-index: 20;
+    }
+
+    .chat-popup header {
+      background-color: var(--primary);
+      color: #fff;
+      padding: 0.5rem;
+      font-weight: bold;
+    }
+
+    .chat-popup .messages {
+      padding: 0.5rem;
+      height: 300px;
+      overflow-y: auto;
+    }
+
+    .chat-popup .input-area {
+      display: flex;
+      border-top: 1px solid #ccc;
+    }
+
+    .chat-popup input {
+      flex: 1;
+      border: none;
+      padding: 0.5rem;
+    }
+
+    .chat-popup button {
+      border: none;
+      background: var(--primary);
+      color: #fff;
+      padding: 0 1rem;
+    }
   </style>
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <script>
+    function toggleChat() {
+      const popup = document.getElementById('chatPopup');
+      popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
+    }
+  </script>
 </head>
 
 <body>
   <header>
     <div class="logo">Win Delivery</div>
     <div class="user-profile">
-      <img src="https://via.placeholder.com/36x36?text=U" alt="User">
-      <span>ชื่อผู้ใช้</span>
+      <img src="https://via.placeholder.com/40" alt="User">
     </div>
     <div class="cart">
       <i class="fas fa-shopping-cart"></i>
       <span class="cart-count">2</span>
-    </div>
-    <div class="nav-icons">
-      <i class="fas fa-home" title="หน้าหลัก"></i>
-      <i class="fas fa-store" title="ร้านค้า"></i>
-      <i class="fas fa-ticket-alt" title="คูปอง"></i>
-      <i class="fas fa-bullhorn" title="ข่าวสาร"></i>
-      <i class="fas fa-user" title="บัญชีผู้ใช้"></i>
-      <i class="fas fa-comments" title="แชตร้านค้า"></i>
-      <i class="fas fa-star" title="ร้านโปรด"></i>
     </div>
   </header>
 
@@ -202,14 +232,24 @@
     </div>
   </main>
 
+  <div id="chatPopup" class="chat-popup">
+    <header>แชตร้านค้า</header>
+    <div class="messages">
+      <p>👩‍🍳 สวัสดีค่ะ สอบถามเมนูได้นะคะ</p>
+    </div>
+    <div class="input-area">
+      <input type="text" placeholder="พิมพ์ข้อความ...">
+      <button>ส่ง</button>
+    </div>
+  </div>
+
   <footer>
     <a href="#" class="active"><i class="fas fa-home"></i>หน้าหลัก</a>
     <a href="#"><i class="fas fa-store"></i>ร้านค้า</a>
     <a href="#"><i class="fas fa-ticket-alt"></i>คูปอง</a>
-    <a href="#"><i class="fas fa-bullhorn"></i>ข่าวสาร</a>
-    <a href="#"><i class="fas fa-user"></i>บัญชี</a>
-    <a href="#"><i class="fas fa-comments"></i>แชตร้านค้า</a>
-    <a href="#"><i class="fas fa-star"></i>ร้านโปรด</a>
+    <a href="#"><i class="fas fa-bell"></i>แจ้งเตือน</a>
+    <a href="#"><i class="fas fa-user-circle"></i>บัญชี</a>
+    <a href="#" onclick="toggleChat()"><i class="fas fa-comment-dots"></i>แชต</a>
   </footer>
 </body>
 
