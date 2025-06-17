@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <title>ร้านค้า - Dashboard</title>
+  <title>ไรเดอร์ - Dashboard</title>
   <link
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
     rel="stylesheet"
@@ -12,6 +12,10 @@
     :root {
       --primary: #007bff;
       --primary-dark: #004085;
+      --success: #28a745;
+      --warning: #ffc107;
+      --danger: #dc3545;
+      --info: #17a2b8;
       --bg-light: #f8f9fa;
       --text-dark: #212529;
       --shadow: rgba(0, 0, 0, 0.15);
@@ -19,7 +23,6 @@
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    /* Reset */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -32,7 +35,7 @@
       font-size: 16px;
       line-height: 1.4;
       min-height: 100vh;
-      padding-bottom: 80px; /* เผื่อปุ่มลอย */
+      padding-bottom: 90px; /* เผื่อปุ่มลอย */
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
@@ -46,6 +49,7 @@
       font-weight: 700;
       text-align: center;
       box-shadow: 0 4px 8px var(--shadow);
+      user-select: none;
     }
 
     main {
@@ -53,25 +57,26 @@
       padding: 20px;
     }
 
-    /* รายการออเดอร์ */
-    .order-list {
+    /* รายการงานไรเดอร์ */
+    .task-list {
       list-style: none;
       display: flex;
       flex-direction: column;
       gap: 16px;
     }
 
-    .order-item {
+    .task-item {
       background: white;
       border-radius: var(--border-radius);
       box-shadow: 0 2px 6px var(--shadow);
       padding: 16px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
+      user-select: none;
     }
 
-    .order-header {
+    .task-header {
       display: flex;
       justify-content: space-between;
       font-weight: 700;
@@ -79,50 +84,54 @@
       color: var(--primary-dark);
     }
 
-    .order-details {
+    .task-details {
       font-size: 0.9rem;
       color: #555;
     }
 
-    /* ปุ่มสถานะ */
     .status {
-      padding: 6px 12px;
+      padding: 6px 14px;
       border-radius: 20px;
       font-weight: 700;
       font-size: 0.85rem;
       color: white;
       width: fit-content;
       text-align: center;
+      user-select: none;
     }
 
     .status.pending {
-      background-color: #ffc107; /* เหลือง */
+      background-color: var(--warning);
     }
 
-    .status.in-progress {
-      background-color: #17a2b8; /* น้ำเงินอมฟ้า */
+    .status.picked-up {
+      background-color: var(--info);
+    }
+
+    .status.delivering {
+      background-color: #6f42c1; /* สีม่วงเข้ม */
     }
 
     .status.completed {
-      background-color: #28a745; /* เขียว */
+      background-color: var(--success);
     }
 
     .status.cancelled {
-      background-color: #dc3545; /* แดง */
+      background-color: var(--danger);
     }
 
-    /* Floating Action Buttons Container */
+    /* ปุ่มลอยด้านล่าง */
     .fab-container {
       position: fixed;
       bottom: 16px;
       left: 50%;
       transform: translateX(-50%);
       background: rgba(255 255 255 / 0.98);
-      padding: 8px 20px;
+      padding: 10px 24px;
       border-radius: 40px;
       box-shadow: 0 8px 20px var(--shadow);
       display: flex;
-      gap: 18px;
+      gap: 24px;
       z-index: 1000;
       max-width: 600px;
       width: 100%;
@@ -142,14 +151,6 @@
       user-select: none;
     }
 
-    /* ปุ่มอัปเดตสถานะเด่นกว่า */
-    .fab-item.update-status {
-      width: 72px;
-      margin: 0 12px;
-      color: white;
-      font-weight: 700;
-    }
-
     .fab-btn {
       background-color: var(--primary);
       border: none;
@@ -167,13 +168,20 @@
       user-select: none;
     }
 
-    /* ปุ่มอัปเดตสถานะสีเขียวสด ใหญ่กว่า */
+    /* ปุ่มอัปเดตสถานะเด่น */
+    .fab-item.update-status {
+      width: 72px;
+      margin: 0 12px;
+      color: white;
+      font-weight: 700;
+    }
+
     .fab-btn.update-status-btn {
       width: 64px;
       height: 64px;
       font-size: 1.8rem;
-      background-color: #28a745;
-      box-shadow: 0 0 15px #28a745;
+      background-color: var(--success);
+      box-shadow: 0 0 15px var(--success);
       animation: pulse-glow 2.5s infinite;
     }
 
@@ -184,14 +192,13 @@
       outline: none;
     }
 
-    /* พัลส์แอนิเมชัน */
     @keyframes pulse-glow {
       0%,
       100% {
-        box-shadow: 0 0 10px #28a745;
+        box-shadow: 0 0 10px var(--success);
       }
       50% {
-        box-shadow: 0 0 25px #28a745;
+        box-shadow: 0 0 25px var(--success);
       }
     }
 
@@ -227,40 +234,43 @@
   </style>
 </head>
 <body>
-  <header>ร้านค้า - Dashboard</header>
+  <header>ไรเดอร์ - Dashboard</header>
   <main>
-    <ul class="order-list" aria-label="รายการออเดอร์ล่าสุด">
-      <li class="order-item" tabindex="0" aria-label="คำสั่งซื้อ #1001 สถานะ รอดำเนินการ">
-        <div class="order-header">
+    <ul class="task-list" aria-label="รายการงานส่งของ">
+      <li class="task-item" tabindex="0" aria-label="งานส่งคำสั่งซื้อ #1001 สถานะ รอรับของ">
+        <div class="task-header">
           <span>คำสั่งซื้อ #1001</span>
-          <span class="status pending" aria-live="polite">รอดำเนินการ</span>
+          <span class="status pending" aria-live="polite">รอรับของ</span>
         </div>
-        <div class="order-details">
-          ลูกค้า: สมชาย<br />
-          รายการ: ส้มตำ, ไก่ย่าง<br />
-          รวม: 120 บาท
+        <div class="task-details">
+          ร้านค้า: ส้มตำป้าเล็ก<br />
+          ที่อยู่จัดส่ง: ซอยสุขุมวิท 101<br />
+          รายการ: ส้มตำไทย, ไก่ย่าง<br />
+          เวลาออเดอร์: 11:15 น.
         </div>
       </li>
-      <li class="order-item" tabindex="0" aria-label="คำสั่งซื้อ #1002 สถานะ กำลังจัดส่ง">
-        <div class="order-header">
+      <li class="task-item" tabindex="0" aria-label="งานส่งคำสั่งซื้อ #1002 สถานะ กำลังส่ง">
+        <div class="task-header">
           <span>คำสั่งซื้อ #1002</span>
-          <span class="status in-progress" aria-live="polite">กำลังจัดส่ง</span>
+          <span class="status delivering" aria-live="polite">กำลังส่ง</span>
         </div>
-        <div class="order-details">
-          ลูกค้า: สมหญิง<br />
-          รายการ: ต้มแซ่บ, ข้าวเหนียว<br />
-          รวม: 150 บาท
+        <div class="task-details">
+          ร้านค้า: MK สาขาเซ็นทรัล<br />
+          ที่อยู่จัดส่ง: ถนนสุขุมวิท 55<br />
+          รายการ: ข้าวหน้าเป็ด<br />
+          เวลาออเดอร์: 11:30 น.
         </div>
       </li>
-      <li class="order-item" tabindex="0" aria-label="คำสั่งซื้อ #1003 สถานะ เสร็จสิ้น">
-        <div class="order-header">
+      <li class="task-item" tabindex="0" aria-label="งานส่งคำสั่งซื้อ #1003 สถานะ ส่งสำเร็จ">
+        <div class="task-header">
           <span>คำสั่งซื้อ #1003</span>
-          <span class="status completed" aria-live="polite">เสร็จสิ้น</span>
+          <span class="status completed" aria-live="polite">ส่งสำเร็จ</span>
         </div>
-        <div class="order-details">
-          ลูกค้า: จารุวรรณ<br />
-          รายการ: ขนมจีนน้ำยา<br />
-          รวม: 80 บาท
+        <div class="task-details">
+          ร้านค้า: ร้านยำแซ่บ<br />
+          ที่อยู่จัดส่ง: ถนนพระราม 3<br />
+          รายการ: ยำรวมมิตร<br />
+          เวลาออเดอร์: 11:45 น.
         </div>
       </li>
     </ul>
@@ -289,23 +299,10 @@
       class="fab-item"
       role="button"
       tabindex="0"
-      aria-label="รีเฟรชข้อมูล"
-      title="รีเฟรชข้อมูล"
-      onclick="refreshOrders()"
-      onkeypress="if(event.key==='Enter') refreshOrders()"
-    >
-      <button class="fab-btn" aria-hidden="true"><i class="fas fa-sync-alt"></i></button>
-      <span>รีเฟรช</span>
-    </div>
-
-    <div
-      class="fab-item update-status"
-      role="button"
-      tabindex="0"
-      aria-label="อัปเดตสถานะเร็ว"
-      title="อัปเดตสถานะเร็ว"
-      onclick="quickStatusUpdate()"
-      onkeypress="if(event.key==='Enter') quickStatusUpdate()"
+      aria-label="อัปเดตสถานะงาน"
+      title="อัปเดตสถานะงาน"
+      onclick="updateStatus()"
+      onkeypress="if(event.key==='Enter') updateStatus()"
     >
       <button class="fab-btn update-status-btn" aria-hidden="true"><i class="fas fa-check-circle"></i></button>
       <span>อัปเดต</span>
@@ -315,54 +312,68 @@
       class="fab-item"
       role="button"
       tabindex="0"
-      aria-label="แจ้งเตือน"
-      title="แจ้งเตือน"
-      onclick="openNotifications()"
-      onkeypress="if(event.key==='Enter') openNotifications()"
+      aria-label="ติดต่อร้านค้า"
+      title="ติดต่อร้านค้า"
+      onclick="contactShop()"
+      onkeypress="if(event.key==='Enter') contactShop()"
     >
-      <button class="fab-btn" aria-hidden="true"><i class="fas fa-bell"></i></button>
-      <span>แจ้งเตือน</span>
+      <button class="fab-btn" aria-hidden="true"><i class="fas fa-phone"></i></button>
+      <span>โทรร้าน</span>
     </div>
 
     <div
       class="fab-item"
       role="button"
       tabindex="0"
-      aria-label="แผนที่"
-      title="แผนที่"
+      aria-label="แผนที่เส้นทาง"
+      title="แผนที่เส้นทาง"
       onclick="openMap()"
       onkeypress="if(event.key==='Enter') openMap()"
     >
-      <button class="fab-btn" aria-hidden="true"><i class="fas fa-map-marker-alt"></i></button>
+      <button class="fab-btn" aria-hidden="true"><i class="fas fa-map-marked-alt"></i></button>
       <span>แผนที่</span>
+    </div>
+
+    <div
+      class="fab-item"
+      role="button"
+      tabindex="0"
+      aria-label="รีเฟรชงาน"
+      title="รีเฟรชงาน"
+      onclick="refreshTasks()"
+      onkeypress="if(event.key==='Enter') refreshTasks()"
+    >
+      <button class="fab-btn" aria-hidden="true"><i class="fas fa-sync-alt"></i></button>
+      <span>รีเฟรช</span>
     </div>
   </nav>
 
   <script>
-    // ตัวอย่างฟังก์ชันเรียกใช้งานปุ่ม
     function goHome() {
-      alert("ไปหน้าหลัก");
-      // window.location.href = "/home.html";
+      alert("กลับหน้าหลัก");
+      // ตัวอย่าง: window.location.href = "/rider-home.html";
     }
 
-    function refreshOrders() {
-      alert("รีเฟรชข้อมูลคำสั่งซื้อ");
-      // โค้ดรีเฟรชข้อมูลจาก API หรือ database
+    function updateStatus() {
+      alert("อัปเดตสถานะงานล่าสุด");
+      // ฟังก์ชันส่งข้อมูลอัปเดตสถานะไป backend หรือ API
     }
 
-    function quickStatusUpdate() {
-      alert("อัปเดตสถานะคำสั่งซื้อเร็ว");
-      // โค้ดอัปเดตสถานะ เช่น ส่ง API
-    }
-
-    function openNotifications() {
-      alert("เปิดแจ้งเตือน");
-      // โค้ดเปิดหน้าจอแจ้งเตือน
+    function contactShop() {
+      alert("โทรติดต่อร้านค้า");
+      // ฟังก์ชันโทรออกผ่านมือถือ (หรือเปิดแอปโทรศัพท์)
+      // ตัวอย่าง: window.location.href = "tel:+66612345678";
     }
 
     function openMap() {
-      alert("เปิดแผนที่");
-      // โค้ดเปิดแผนที่แสดงตำแหน่งร้าน/ไรเดอร์
+      alert("เปิดแผนที่เส้นทาง");
+      // ฟังก์ชันเปิด Google Maps หรือแผนที่ในแอป
+      // ตัวอย่าง: window.open('https://maps.google.com/?q=13.7563,100.5018', '_blank');
+    }
+
+    function refreshTasks() {
+      alert("รีเฟรชรายการงาน");
+      // ฟังก์ชันโหลดข้อมูลงานใหม่จาก API
     }
   </script>
 </body>
