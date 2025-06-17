@@ -1,190 +1,57 @@
 <!DOCTYPE html>
-<html lang="th">
-
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Win Delivery</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Prompt&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary: #1877f2;
-      --background: #f0f2f5;
-      --card: #fff;
-      --text: #050505;
-      --muted: #65676b;
-      --accent: #ff3b30;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Prompt', sans-serif;
-    }
-
-    body {
-      background: var(--background);
-      color: var(--text);
-    }
-
-    header {
-      background-color: var(--primary);
-      color: #fff;
-      padding: 0.5rem 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-    }
-
-    .logo {
-      font-size: 1.5rem;
-      font-weight: bold;
-    }
-
-    .user-profile {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .user-profile img {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-    }
-
-    .nav-icons {
-      display: flex;
-      gap: 1rem;
-      margin-top: 0.5rem;
-      width: 100%;
-      justify-content: center;
-    }
-
-    .nav-icons i {
-      font-size: 1.2rem;
-      cursor: pointer;
-    }
-
-    .cart {
-      position: relative;
-      cursor: pointer;
-    }
-
-    .cart-count {
-      position: absolute;
-      top: -6px;
-      right: -8px;
-      background: var(--accent);
-      color: #fff;
-      border-radius: 50%;
-      padding: 2px 6px;
-      font-size: 0.7rem;
-    }
-
-    main {
-      max-width: 600px;
-      margin: 1rem auto;
-      padding: 0 1rem;
-    }
-
-    .feed-post {
-      background: var(--card);
-      border-radius: 1rem;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      padding: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .feed-post img {
-      width: 100%;
-      border-radius: 0.75rem;
-    }
-
-    .feed-title {
-      font-size: 1.2rem;
-      margin-top: 0.5rem;
-      font-weight: bold;
-    }
-
-    .feed-description {
-      color: var(--muted);
-    }
-
-    footer {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      background: #fff;
-      border-top: 1px solid #ddd;
-      display: flex;
-      justify-content: space-around;
-      padding: 0.5rem 0;
-    }
-
-    footer a {
-      text-decoration: none;
-      color: var(--muted);
-      font-size: 0.9rem;
-      text-align: center;
-    }
-
-    footer a.active {
-      color: var(--primary);
-      font-weight: bold;
-    }
-  </style>
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <title>Fast Delivery</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
   <header>
-    <div class="logo">Win Delivery</div>
-    <div class="user-profile">
-      <img src="https://via.placeholder.com/36x36?text=U" alt="User">
-      <span>ชื่อผู้ใช้</span>
-    </div>
-    <div class="cart">
-      <i class="fas fa-shopping-cart"></i>
-      <span class="cart-count">2</span>
-    </div>
-    <div class="nav-icons">
-      <i class="fas fa-home" title="หน้าหลัก"></i>
-      <i class="fas fa-store" title="ร้านค้า"></i>
-      <i class="fas fa-ticket-alt" title="คูปอง"></i>
-      <i class="fas fa-bullhorn" title="ข่าวสาร"></i>
-      <i class="fas fa-user" title="บัญชีผู้ใช้"></i>
-      <i class="fas fa-comments" title="แชตร้านค้า"></i>
-      <i class="fas fa-star" title="ร้านโปรด"></i>
-    </div>
+    <div class="logo">Fast Delivery</div>
+    <nav>
+      <ul>
+        <li><a href="#menu">เมนูอาหาร</a></li>
+        <li><a href="#order">เช็คออเดอร์</a></li>
+        <li><a href="#contact">ติดต่อเรา</a></li>
+        <li><a href="#promo">โปรโมชั่น</a></li>
+      </ul>
+    </nav>
   </header>
 
-  <main>
-    <div class="feed-post">
-      <img src="https://via.placeholder.com/500x300?text=โพสต์อาหารจากร้านค้า" alt="อาหาร">
-      <div class="feed-title">ร้านส้มตำปูปลาร้า</div>
-      <div class="feed-description">วันนี้มีเมนูใหม่ ส้มตำผลไม้รวม แซ่บนัวสุดๆ</div>
+  <section id="menu">
+    <h2>เมนูอาหาร</h2>
+    <div class="menu-item">
+      <img src="menu1.jpg" alt="ยำลูกชิ้นรวม">
+      <div class="menu-details">
+        <h3>ยำลูกชิ้นรวม 5 อย่าง</h3>
+        <p>50 บาท</p>
+        <button class="order-btn">สั่งเลย</button>
+      </div>
     </div>
-    <div class="feed-post">
-      <img src="https://via.placeholder.com/500x300?text=ไก่ทอด+ข้าวเหนียว" alt="ข้าวเหนียวไก่ทอด">
-      <div class="feed-title">ร้านไก่ทอดหาดใหญ่</div>
-      <div class="feed-description">โปรโมชั่นวันนี้! ซื้อครบ 100 บาท รับฟรีน้ำสมุนไพร</div>
-    </div>
-  </main>
+    <!-- Repeat for more menu items -->
+  </section>
+
+  <section id="order">
+    <h2>เช็คออเดอร์</h2>
+    <p>สถานะ: กำลังเตรียมอาหาร</p>
+    <button class="track-btn">ติดตามไรเดอร์</button>
+  </section>
+
+  <section id="contact">
+    <h2>ติดต่อเรา</h2>
+    <p>โทร: 098-4498519</p>
+    <button class="contact-btn">ติดต่อผ่าน LINE</button>
+  </section>
+
+  <section id="promo">
+    <h2>โปรโมชั่น</h2>
+    <p>ลด 10% สำหรับการสั่งครั้งแรก!</p>
+    <button class="promo-btn">รับโปรโมชั่น</button>
+  </section>
 
   <footer>
-    <a href="#" class="active">หน้าหลัก</a>
-    <a href="#">ร้านค้า</a>
-    <a href="#">คูปอง</a>
-    <a href="#">ข่าวสาร</a>
-    <a href="#">บัญชี</a>
-    <a href="#">แชตร้านค้า</a>
-    <a href="#">ร้านโปรด</a>
+    <p>&copy; 2023 Fast Delivery. All Rights Reserved.</p>
   </footer>
 </body>
-
 </html>
