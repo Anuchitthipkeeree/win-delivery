@@ -4,14 +4,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Rider Dashboard - Win Delivery</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <title>แดชบอร์ดไรเดอร์ - Win Delivery</title>
   <link
     href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap"
     rel="stylesheet"
   />
-  <!-- ใช้ Font Awesome CDN ล่าสุด -->
   <link
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     rel="stylesheet"
@@ -39,9 +36,9 @@
     body {
       background: var(--background);
       color: var(--text);
-      line-height: 1.5;
       min-height: 100vh;
-      padding-bottom: 120px; /* พื้นที่ให้ footer และ fab ไม่บังเนื้อหา */
+      padding-bottom: 120px; /* พื้นที่ปุ่มลอย */
+      line-height: 1.5;
     }
 
     header {
@@ -69,12 +66,12 @@
       border-radius: 1rem;
       padding: 1rem 1.5rem;
       margin-bottom: 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       font-weight: 600;
       font-size: 1.1rem;
       color: var(--primary-dark);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .order-list {
@@ -89,12 +86,14 @@
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
       padding: 1rem;
       margin-bottom: 1rem;
-      transition: box-shadow 0.3s ease;
       cursor: pointer;
+      transition: box-shadow 0.3s ease;
     }
 
-    .order-item:hover {
+    .order-item:hover,
+    .order-item:focus {
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      outline: none;
     }
 
     .order-header {
@@ -113,26 +112,25 @@
       margin-top: 0.5rem;
     }
 
-    /* แถบปุ่มลอย (FAB) */
+    /* ปุ่มลอยด้านล่าง */
     .fab-container {
       position: fixed;
       bottom: 16px;
       left: 50%;
       transform: translateX(-50%);
       background: rgba(255 255 255 / 0.98);
-      padding: 10px 12px;
+      padding: 10px 16px;
       border-radius: 40px;
       box-shadow: 0 8px 20px var(--shadow);
       display: flex;
-      gap: 12px;
+      gap: 20px;
       z-index: 1000;
-      max-width: 480px;
+      max-width: 600px;
       width: 100%;
       justify-content: center;
       user-select: none;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
-      flex-wrap: nowrap;
     }
 
     .fab-item {
@@ -143,7 +141,6 @@
       color: var(--primary-dark);
       cursor: pointer;
       width: 44px;
-      transition: transform 0.3s ease;
       user-select: none;
       flex-shrink: 0;
     }
@@ -159,42 +156,46 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-      transition: background-color 0.3s ease, box-shadow 0.5s ease;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
       user-select: none;
     }
 
+    .fab-item:hover .fab-btn,
+    .fab-item:focus .fab-btn {
+      background-color: var(--primary-dark);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      outline: none;
+    }
+
+    /* ปุ่มรีเฟรชเด่นตรงกลาง */
     .fab-item.refresh {
-      width: 56px;
-      margin: 0 8px;
+      width: 68px;
       font-weight: 700;
       font-size: 0.75rem;
       color: var(--success);
+      margin: 0 16px;
     }
 
     .fab-btn.refresh-btn {
-      width: 56px;
-      height: 56px;
-      font-size: 1.5rem;
+      width: 68px;
+      height: 68px;
+      font-size: 1.7rem;
       background-color: var(--success);
       box-shadow: 0 0 15px var(--success);
       animation: pulse-glow 2.5s infinite;
     }
 
-    .fab-item:hover .fab-btn {
-      background-color: var(--primary-dark);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    }
-
-    /* กำหนดแอนิเมชันเรืองแสง */
     @keyframes pulse-glow {
       0% {
         box-shadow: 0 0 8px var(--success);
       }
+
       50% {
         box-shadow: 0 0 18px var(--success);
       }
+
       100% {
         box-shadow: 0 0 8px var(--success);
       }
@@ -203,30 +204,31 @@
     @media (max-width: 480px) {
       .fab-container {
         padding: 8px 8px;
-        gap: 8px;
+        gap: 12px;
       }
 
       .fab-item {
-        width: 40px;
-        font-size: 0.65rem;
+        width: 36px;
+        font-size: 0.6rem;
       }
 
       .fab-btn {
         width: 36px;
         height: 36px;
         font-size: 1rem;
-        margin-bottom: 2px;
+        margin-bottom: 4px;
       }
 
       .fab-item.refresh {
-        width: 48px;
+        width: 56px;
         font-size: 0.7rem;
+        margin: 0 12px;
       }
 
       .fab-btn.refresh-btn {
-        width: 48px;
-        height: 48px;
-        font-size: 1.3rem;
+        width: 56px;
+        height: 56px;
+        font-size: 1.5rem;
       }
     }
   </style>
@@ -238,6 +240,25 @@
   <main>
     <section class="status-card" aria-label="สถานะไรเดอร์">
       สถานะ: <span id="riderStatus">ออนไลน์</span>
+      <button
+        style="
+          margin-left: 12px;
+          background-color: var(--primary);
+          color: white;
+          border: none;
+          padding: 6px 12px;
+          border-radius: 6px;
+          cursor: pointer;
+          font-weight: 600;
+          font-size: 0.9rem;
+          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+          transition: background-color 0.3s ease;
+        "
+        id="btnUpdateStatus"
+        aria-label="อัปเดตสถานะไรเดอร์"
+      >
+        อัปเดตสถานะ
+      </button>
     </section>
 
     <section class="order-list" aria-label="รายการออร์เดอร์ที่ได้รับ">
@@ -283,22 +304,24 @@
       class="fab-item"
       role="button"
       tabindex="0"
-      aria-label="ดูประวัติการส่ง"
-      onclick="alert('กดดูประวัติการส่ง (ทดสอบ)')"
+      aria-label="ไปหน้าหลัก"
+      onclick="goHome()"
     >
-      <button class="fab-btn"><i class="fas fa-history"></i></button>
-      ประวัติ
+      <button class="fab-btn"><i class="fas fa-home"></i></button>
+      หน้าหลัก
     </div>
+
     <div
       class="fab-item"
       role="button"
       tabindex="0"
-      aria-label="เปิดแชตกับร้านค้า"
-      onclick="alert('กดแชตกับร้านค้า (ทดสอบ)')"
+      aria-label="อัปเดตสถานะไรเดอร์"
+      onclick="updateStatus()"
     >
-      <button class="fab-btn"><i class="fas fa-comment-alt"></i></button>
-      แชต
+      <button class="fab-btn"><i class="fas fa-user-check"></i></button>
+      อัปเดต
     </div>
+
     <div
       class="fab-item refresh"
       role="button"
@@ -309,35 +332,58 @@
       <button class="fab-btn refresh-btn"><i class="fas fa-sync-alt"></i></button>
       รีเฟรช
     </div>
+
     <div
       class="fab-item"
       role="button"
       tabindex="0"
-      aria-label="ตั้งค่าสถานะไรเดอร์"
-      onclick="alert('กดตั้งค่าสถานะ (ทดสอบ)')"
+      aria-label="เปิดแชตกับร้านค้า"
+      onclick="openChat()"
     >
-      <button class="fab-btn"><i class="fas fa-cog"></i></button>
-      ตั้งค่า
+      <button class="fab-btn"><i class="fas fa-comment-alt"></i></button>
+      แชต
     </div>
+
     <div
       class="fab-item"
       role="button"
       tabindex="0"
-      aria-label="ออกจากระบบ"
-      onclick="alert('กดออกจากระบบ (ทดสอบ)')"
+      aria-label="ดูแผนที่การจัดส่ง"
+      onclick="openMap()"
     >
-      <button class="fab-btn"><i class="fas fa-sign-out-alt"></i></button>
-      ออกจากระบบ
+      <button class="fab-btn"><i class="fas fa-map-marker-alt"></i></button>
+      แผนที่
     </div>
   </nav>
 
   <script>
-    function refreshOrders() {
-      alert('รีเฟรชรายการออร์เดอร์แล้ว (ทดสอบฟังก์ชัน)');
-      // TODO: เรียก API ดึงรายการออร์เดอร์ใหม่ และรีเฟรชหน้า
+    // ตัวอย่างฟังก์ชันทดสอบ กดปุ่มต่างๆ
+    function goHome() {
+      alert('กลับสู่หน้าหลัก (ทดสอบ)');
+      // TODO: เปลี่ยนหน้าเป็นหน้าหลัก หรือโหลดข้อมูลใหม่
     }
 
-    // เพิ่ม event keypress เพื่อให้กด Enter หรือ Space บนปุ่มลอยได้
+    function updateStatus() {
+      alert('อัปเดตสถานะไรเดอร์ (ทดสอบ)');
+      // TODO: โค้ดอัปเดตสถานะจริง
+    }
+
+    function refreshOrders() {
+      alert('รีเฟรชรายการออร์เดอร์แล้ว (ทดสอบ)');
+      // TODO: โหลดข้อมูลออร์เดอร์ใหม่จาก API
+    }
+
+    function openChat() {
+      alert('เปิดแชตกับร้านค้า (ทดสอบ)');
+      // TODO: เปิดหน้าต่างแชต
+    }
+
+    function openMap() {
+      alert('เปิดแผนที่การจัดส่ง (ทดสอบ)');
+      // TODO: เปิดแผนที่ที่ตำแหน่งออร์เดอร์ หรือ Google Maps
+    }
+
+    // รองรับกดคีย์ Enter หรือ Space บนปุ่มลอย
     document.querySelectorAll('.fab-item').forEach((item) => {
       item.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -346,6 +392,9 @@
         }
       });
     });
+
+    // ปุ่มอัปเดตสถานะที่บนหน้าจอ
+    document.getElementById('btnUpdateStatus').addEventListener('click', updateStatus);
   </script>
 </body>
 
