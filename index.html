@@ -8,7 +8,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Prompt&display=swap" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <style>
     :root {
       --primary: #1877f2;
@@ -16,6 +15,7 @@
       --card: #fff;
       --text: #050505;
       --muted: #65676b;
+      --accent: #ff3b30;
     }
 
     * {
@@ -33,28 +33,57 @@
     header {
       background-color: var(--primary);
       color: #fff;
-      padding: 1rem;
+      padding: 0.5rem 1rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+      flex-wrap: wrap;
     }
 
-    header .logo {
+    .logo {
       font-size: 1.5rem;
       font-weight: bold;
     }
 
-    header .nav-icons {
+    .user-profile {
       display: flex;
-      gap: 1rem;
+      align-items: center;
+      gap: 0.5rem;
     }
 
-    header .nav-icons i {
+    .user-profile img {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+    }
+
+    .nav-icons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 0.5rem;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .nav-icons i {
       font-size: 1.2rem;
       cursor: pointer;
+    }
+
+    .cart {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -6px;
+      right: -8px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 50%;
+      padding: 2px 6px;
+      font-size: 0.7rem;
     }
 
     main {
@@ -95,7 +124,6 @@
       display: flex;
       justify-content: space-around;
       padding: 0.5rem 0;
-      z-index: 999;
     }
 
     footer a {
@@ -109,24 +137,29 @@
       color: var(--primary);
       font-weight: bold;
     }
-
-    @media screen and (min-width: 768px) {
-      main {
-        max-width: 720px;
-      }
-    }
   </style>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
   <header>
     <div class="logo">Win Delivery</div>
+    <div class="user-profile">
+      <img src="https://via.placeholder.com/36x36?text=U" alt="User">
+      <span>ชื่อผู้ใช้</span>
+    </div>
+    <div class="cart">
+      <i class="fas fa-shopping-cart"></i>
+      <span class="cart-count">2</span>
+    </div>
     <div class="nav-icons">
       <i class="fas fa-home" title="หน้าหลัก"></i>
       <i class="fas fa-store" title="ร้านค้า"></i>
       <i class="fas fa-ticket-alt" title="คูปอง"></i>
       <i class="fas fa-bullhorn" title="ข่าวสาร"></i>
       <i class="fas fa-user" title="บัญชีผู้ใช้"></i>
+      <i class="fas fa-comments" title="แชตร้านค้า"></i>
+      <i class="fas fa-star" title="ร้านโปรด"></i>
     </div>
   </header>
 
@@ -149,6 +182,8 @@
     <a href="#">คูปอง</a>
     <a href="#">ข่าวสาร</a>
     <a href="#">บัญชี</a>
+    <a href="#">แชตร้านค้า</a>
+    <a href="#">ร้านโปรด</a>
   </footer>
 </body>
 
