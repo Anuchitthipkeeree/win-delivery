@@ -3,14 +3,13 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>แดชบอร์ดไรเดอร์ - Win Delivery</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap" rel="stylesheet" />
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <style>
-    /* Root Colors */
     :root {
       --primary: #1e88e5;
       --primary-dark: #1565c0;
@@ -23,6 +22,7 @@
       --text-muted: #616161;
       --border-radius: 12px;
       --shadow: rgba(0, 0, 0, 0.1);
+      --font-family: 'Prompt', sans-serif;
     }
 
     /* Reset and font */
@@ -30,14 +30,15 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Prompt', sans-serif;
+      font-family: var(--font-family);
     }
 
     body {
       background-color: var(--background);
       color: var(--text-primary);
       min-height: 100vh;
-      padding-bottom: 80px; /* space for footer */
+      padding-bottom: 80px;
+      line-height: 1.4;
     }
 
     header {
@@ -45,24 +46,25 @@
       color: #fff;
       padding: 1.2rem 1rem;
       font-weight: 600;
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       text-align: center;
       box-shadow: 0 3px 6px var(--shadow);
       position: sticky;
       top: 0;
       z-index: 10;
+      user-select: none;
     }
 
     main {
-      max-width: 600px;
+      max-width: 720px;
       margin: 1rem auto;
       padding: 0 1rem;
     }
 
-    /* Summary Cards Container */
+    /* Summary Cards */
     .summary-cards {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 1rem;
       margin-bottom: 1.5rem;
     }
@@ -71,7 +73,7 @@
       background: var(--card-bg);
       border-radius: var(--border-radius);
       box-shadow: 0 4px 10px var(--shadow);
-      padding: 1rem 1.2rem;
+      padding: 1.2rem 1.5rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -87,20 +89,21 @@
     }
 
     .card .icon {
-      font-size: 2.2rem;
+      font-size: 2.5rem;
       margin-bottom: 0.5rem;
       color: var(--primary);
     }
 
     .card .number {
-      font-size: 1.8rem;
+      font-size: 2rem;
       font-weight: 700;
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.3rem;
       color: var(--text-primary);
+      white-space: nowrap;
     }
 
     .card .label {
-      font-size: 0.95rem;
+      font-size: 1rem;
       color: var(--text-muted);
       font-weight: 600;
     }
@@ -112,49 +115,81 @@
       border-spacing: 0 12px;
     }
 
+    /* Table Head */
     .orders-table thead tr {
       text-align: left;
       color: var(--text-muted);
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: 1rem;
     }
 
+    .orders-table thead th {
+      padding: 0.75rem 1rem;
+    }
+
+    /* Table Body Rows */
     .orders-table tbody tr {
       background: var(--card-bg);
       box-shadow: 0 4px 10px var(--shadow);
       border-radius: var(--border-radius);
       cursor: pointer;
       transition: background-color 0.2s ease;
-      display: grid;
-      grid-template-columns: 1fr 3fr 3fr 2fr 1fr;
-      align-items: center;
-      padding: 1rem 1rem;
-      margin-bottom: 12px;
     }
 
-    .orders-table tbody tr:hover {
+    .orders-table tbody tr:hover,
+    .orders-table tbody tr:focus-visible {
       background-color: #e3f2fd;
+      outline: none;
     }
 
     .orders-table tbody td {
-      padding: 0 0.5rem;
-      font-size: 0.95rem;
+      padding: 1rem;
+      font-size: 1rem;
+      vertical-align: middle;
+      max-width: 1px;
+      white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      white-space: nowrap;
+    }
+
+    /* Set specific width for columns */
+    .orders-table tbody td:nth-child(1) {
+      width: 12%;
+      font-weight: 600;
+      color: var(--primary-dark);
+    }
+
+    .orders-table tbody td:nth-child(2) {
+      width: 25%;
+    }
+
+    .orders-table tbody td:nth-child(3) {
+      width: 35%;
+      white-space: normal; /* Allow wrapping for address */
+      max-width: none;
+      word-break: break-word;
+    }
+
+    .orders-table tbody td:nth-child(4) {
+      width: 15%;
+    }
+
+    .orders-table tbody td:nth-child(5) {
+      width: 13%;
+      text-align: center;
     }
 
     /* Status badges */
     .status {
       font-weight: 700;
-      padding: 0.25rem 0.75rem;
+      padding: 0.3rem 0.9rem;
       border-radius: 20px;
       color: white;
       display: inline-block;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       user-select: none;
+      min-width: 85px;
       text-align: center;
-      min-width: 80px;
     }
 
     .status.pending {
@@ -183,38 +218,74 @@
       background-color: var(--primary);
       color: #fff;
       border: none;
-      border-radius: 6px;
-      padding: 0.4rem 0.8rem;
-      font-size: 0.85rem;
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
       cursor: pointer;
       transition: background-color 0.2s ease;
+      user-select: none;
     }
 
-    .btn-update:hover {
+    .btn-update:hover,
+    .btn-update:focus-visible {
       background-color: var(--primary-dark);
+      outline: none;
     }
 
     /* Responsive */
-    @media (max-width: 520px) {
+    @media (max-width: 620px) {
+      main {
+        padding: 0 0.8rem;
+      }
+
+      .card .number {
+        font-size: 1.6rem;
+      }
+
+      .card .label {
+        font-size: 0.9rem;
+      }
+
+      /* Table adjustments for small screen */
+      .orders-table thead {
+        display: none; /* hide headers */
+      }
+
       .orders-table tbody tr {
-        grid-template-columns: 1fr 2fr 1fr;
-        grid-template-rows: auto auto;
-        row-gap: 6px;
-        padding: 0.75rem 1rem;
+        display: block;
+        margin-bottom: 1rem;
+        box-shadow: 0 4px 10px var(--shadow);
+        border-radius: var(--border-radius);
+        padding: 1rem;
       }
 
-      .orders-table tbody td:nth-child(3),
-      .orders-table thead th:nth-child(3),
-      .orders-table tbody td:nth-child(4),
-      .orders-table thead th:nth-child(4),
-      .orders-table tbody td:nth-child(5),
-      .orders-table thead th:nth-child(5) {
-        display: none;
+      .orders-table tbody td {
+        display: flex;
+        padding: 0.4rem 0.6rem;
+        font-size: 0.95rem;
+        white-space: normal;
+        max-width: 100%;
+        overflow: visible;
+        text-overflow: clip;
+        align-items: center;
       }
 
-      .orders-table tbody td:nth-child(2) {
-        font-weight: 600;
-        font-size: 1rem;
+      .orders-table tbody td::before {
+        content: attr(data-label);
+        flex: 0 0 110px;
+        font-weight: 700;
+        color: var(--text-muted);
+        padding-right: 0.5rem;
+      }
+
+      .orders-table tbody td:nth-child(5) {
+        justify-content: flex-start;
+        padding-top: 0.8rem;
+      }
+
+      .btn-update {
+        padding: 0.4rem 0.9rem;
+        font-size: 0.85rem;
       }
     }
   </style>
@@ -223,29 +294,31 @@
 <body>
   <header>แดชบอร์ดไรเดอร์ - Win Delivery</header>
   <main>
+    <!-- Summary Cards -->
     <section class="summary-cards" aria-label="ข้อมูลสรุปออเดอร์และรายได้">
       <article class="card" tabindex="0" role="region" aria-labelledby="pendingOrdersLabel">
-        <div class="icon"><i class="fas fa-box"></i></div>
+        <div class="icon" aria-hidden="true"><i class="fas fa-box"></i></div>
         <div id="pendingOrdersNumber" class="number">5</div>
         <div id="pendingOrdersLabel" class="label">ออเดอร์รอจัดส่ง</div>
       </article>
       <article class="card" tabindex="0" role="region" aria-labelledby="deliveredOrdersLabel">
-        <div class="icon"><i class="fas fa-check-circle"></i></div>
+        <div class="icon" aria-hidden="true"><i class="fas fa-check-circle"></i></div>
         <div id="deliveredOrdersNumber" class="number">12</div>
         <div id="deliveredOrdersLabel" class="label">ส่งแล้ววันนี้</div>
       </article>
       <article class="card" tabindex="0" role="region" aria-labelledby="inProgressOrdersLabel">
-        <div class="icon"><i class="fas fa-truck-loading"></i></div>
+        <div class="icon" aria-hidden="true"><i class="fas fa-truck-loading"></i></div>
         <div id="inProgressOrdersNumber" class="number">3</div>
         <div id="inProgressOrdersLabel" class="label">กำลังจัดส่ง</div>
       </article>
       <article class="card" tabindex="0" role="region" aria-labelledby="incomeTodayLabel">
-        <div class="icon"><i class="fas fa-coins"></i></div>
+        <div class="icon" aria-hidden="true"><i class="fas fa-coins"></i></div>
         <div id="incomeTodayNumber" class="number">฿1,850</div>
         <div id="incomeTodayLabel" class="label">รายได้วันนี้</div>
       </article>
     </section>
 
+    <!-- Orders Table -->
     <section aria-label="รายการออเดอร์สำหรับไรเดอร์">
       <table class="orders-table" role="table" aria-describedby="ordersDesc">
         <thead>
@@ -259,25 +332,25 @@
         </thead>
         <tbody id="ordersBody">
           <tr tabindex="0">
-            <td>OD1234</td>
-            <td>ร้านส้มตำปูปลาร้า</td>
-            <td>ถนนสุขสวัสดิ์ 76</td>
-            <td><span class="status pending">รอรับอาหาร</span></td>
-            <td><button class="btn-update" aria-label="อัพเดตสถานะ ออเดอร์ OD1234">อัพเดต</button></td>
+            <td data-label="รหัส">OD1234</td>
+            <td data-label="ร้านค้า">ร้านส้มตำปูปลาร้า</td>
+            <td data-label="ที่อยู่จัดส่ง">ถนนสุขสวัสดิ์ 76 แขวงบางปะกอก เขตราษฎร์บูรณะ กรุงเทพมหานคร 10140</td>
+            <td data-label="สถานะ"><span class="status pending" aria-label="สถานะ รอรับอาหาร">รอรับอาหาร</span></td>
+            <td data-label="จัดการ"><button class="btn-update" aria-label="อัพเดตสถานะ ออเดอร์ OD1234">อัพเดต</button></td>
           </tr>
           <tr tabindex="0">
-            <td>OD1235</td>
-            <td>ร้านไก่ทอดหาดใหญ่</td>
-            <td>ซอยสุขุมวิท 42</td>
-            <td><span class="status delivering">กำลังส่ง</span></td>
-            <td><button class="btn-update" aria-label="อัพเดตสถานะ ออเดอร์ OD1235">อัพเดต</button></td>
+            <td data-label="รหัส">OD1235</td>
+            <td data-label="ร้านค้า">ร้านไก่ทอดหาดใหญ่</td>
+            <td data-label="ที่อยู่จัดส่ง">ซอยสุขุมวิท 42</td>
+            <td data-label="สถานะ"><span class="status delivering" aria-label="สถานะ กำลังส่ง">กำลังส่ง</span></td>
+            <td data-label="จัดการ"><button class="btn-update" aria-label="อัพเดตสถานะ ออเดอร์ OD1235">อัพเดต</button></td>
           </tr>
           <tr tabindex="0">
-            <td>OD1236</td>
-            <td>ร้านบะหมี่หมูแดง</td>
-            <td>ซอยลาดพร้าว 101</td>
-            <td><span class="status delivered">ส่งสำเร็จ</span></td>
-            <td><button class="btn-update" aria-label="อัพเดตสถานะ ออเดอร์ OD1236">อัพเดต</button></td>
+            <td data-label="รหัส">OD1236</td>
+            <td data-label="ร้านค้า">ร้านบะหมี่หมูแดง</td>
+            <td data-label="ที่อยู่จัดส่ง">ซอยลาดพร้าว 101</td>
+            <td data-label="สถานะ"><span class="status delivered" aria-label="สถานะ ส่งสำเร็จ">ส่งสำเร็จ</span></td>
+            <td data-label="จัดการ"><button class="btn-update" aria-label="อัพเดตสถานะ ออเดอร์ OD1236">อัพเดต</button></td>
           </tr>
         </tbody>
       </table>
