@@ -120,7 +120,7 @@
       background-color: var(--danger);
     }
 
-    /* ปุ่มลอยด้านล่าง */
+    /* ปุ่มลอยด้านล่างแบบจัดสมมาตร มีปุ่มกลางใหญ่ */
     .fab-container {
       position: fixed;
       bottom: 16px;
@@ -131,7 +131,7 @@
       border-radius: 40px;
       box-shadow: 0 8px 20px var(--shadow);
       display: flex;
-      gap: 24px;
+      gap: 36px;
       z-index: 1000;
       max-width: 600px;
       width: 100%;
@@ -168,7 +168,7 @@
       user-select: none;
     }
 
-    /* ปุ่มอัปเดตสถานะเด่น */
+    /* ปุ่มอัปเดตสถานะเด่น ใหญ่กว่า อยู่กลาง */
     .fab-item.update-status {
       width: 72px;
       margin: 0 12px;
@@ -296,7 +296,7 @@
     </div>
 
     <div
-      class="fab-item"
+      class="fab-item update-status"
       role="button"
       tabindex="0"
       aria-label="อัปเดตสถานะงาน"
