@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>แดชบอร์ดไรเดอร์ - Win Delivery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    body {
+      font-family: 'Prompt', sans-serif;
+      margin: 0;
+      background: #f4f6f9;
+      color: #333;
+    }
+
+    header {
+      background: #1877f2;
+      color: #fff;
+      padding: 1rem 1.5rem;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .card i {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      color: #1877f2;
+    }
+
+    .card-title {
+      font-weight: 600;
+      margin-top: 0.5rem;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 2rem;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 0.75rem;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 0.75rem;
+      text-align: center;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background: #f0f2f5;
+      font-weight: 600;
+    }
+
+    .status-pending { color: #ff9800; }
+    .status-delivered { color: #4caf50; }
+    .status-cancelled { color: #f44336; }
+
+    @media (max-width: 600px) {
+      .card-title { font-size: 0.95rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    แดชบอร์ดไรเดอร์ - Win Delivery
+  </header>
+
+  <div class="container">
+    <div class="cards">
+      <div class="card">
+        <i class="fas fa-motorcycle"></i>
+        <div class="card-title">ออเดอร์ที่ต้องจัดส่ง: 5</div>
+      </div>
+      <div class="card">
+        <i class="fas fa-check-circle"></i>
+        <div class="card-title">ส่งแล้ววันนี้: 12</div>
+      </div>
+      <div class="card">
+        <i class="fas fa-clock"></i>
+        <div class="card-title">รอการจัดส่ง: 3</div>
+      </div>
+      <div class="card">
+        <i class="fas fa-wallet"></i>
+        <div class="card-title">รายได้วันนี้: 450 บาท</div>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>เลขที่ออเดอร์</th>
+          <th>ร้านค้า</th>
+          <th>ที่อยู่จัดส่ง</th>
+          <th>สถานะ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>#D1001</td>
+          <td>ส้มตำแซ่บนัว</td>
+          <td>ตลาดเทศบาล 3</td>
+          <td class="status-pending">รอรับอาหาร</td>
+        </tr>
+        <tr>
+          <td>#D1002</td>
+          <td>ข้าวมันไก่เจ๊แดง</td>
+          <td>ม.บ้านสวน</td>
+          <td class="status-delivered">จัดส่งแล้ว</td>
+        </tr>
+        <tr>
+          <td>#D1003</td>
+          <td>ไก่ทอดหาดใหญ่</td>
+          <td>บิ๊กซี ชุมพร</td>
+          <td class="status-pending">รอรับอาหาร</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+
+</html>
