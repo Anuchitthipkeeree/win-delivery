@@ -1,99 +1,155 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
   <meta charset="UTF-8">
-  <title>Win Delivery - เมนูอาหาร</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Win Delivery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <style>
-    body {
+    :root {
+      --primary: #1877f2;
+      --background: #f0f2f5;
+      --card: #fff;
+      --text: #050505;
+      --muted: #65676b;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
       font-family: 'Prompt', sans-serif;
-      padding: 20px;
-      background-color: #f6f6f6;
     }
-    h1 {
-      text-align: center;
-      color: #2c3e50;
+
+    body {
+      background: var(--background);
+      color: var(--text);
     }
-    .menu-container {
+
+    header {
+      background-color: var(--primary);
+      color: #fff;
+      padding: 1rem;
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 20px;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
-    .menu-item {
-      background-color: white;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      padding: 15px;
-      width: 250px;
-      text-align: center;
+
+    header .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
     }
-    .menu-item img {
-      max-width: 100%;
-      border-radius: 8px;
-      margin-bottom: 10px;
+
+    header .nav-icons {
+      display: flex;
+      gap: 1rem;
     }
-    .menu-item button {
-      background-color: #27ae60;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
+
+    header .nav-icons i {
+      font-size: 1.2rem;
       cursor: pointer;
     }
-    .menu-item button:hover {
-      background-color: #219150;
+
+    main {
+      max-width: 600px;
+      margin: 1rem auto;
+      padding: 0 1rem;
+    }
+
+    .feed-post {
+      background: var(--card);
+      border-radius: 1rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .feed-post img {
+      width: 100%;
+      border-radius: 0.75rem;
+    }
+
+    .feed-title {
+      font-size: 1.2rem;
+      margin-top: 0.5rem;
+      font-weight: bold;
+    }
+
+    .feed-description {
+      color: var(--muted);
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #fff;
+      border-top: 1px solid #ddd;
+      display: flex;
+      justify-content: space-around;
+      padding: 0.5rem 0;
+      z-index: 999;
+    }
+
+    footer a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    footer a.active {
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    @media screen and (min-width: 768px) {
+      main {
+        max-width: 720px;
+      }
     }
   </style>
 </head>
+
 <body>
-  <h1>🍽️ Win Delivery - เมนูอาหาร</h1>
-  <div id="menu-section" class="menu-container">
-    <p>กำลังโหลดเมนู...</p>
-  </div>
+  <header>
+    <div class="logo">Win Delivery</div>
+    <div class="nav-icons">
+      <i class="fas fa-home" title="หน้าหลัก"></i>
+      <i class="fas fa-store" title="ร้านค้า"></i>
+      <i class="fas fa-ticket-alt" title="คูปอง"></i>
+      <i class="fas fa-bullhorn" title="ข่าวสาร"></i>
+      <i class="fas fa-user" title="บัญชีผู้ใช้"></i>
+    </div>
+  </header>
 
-  <script>
-    let menuData = [];
+  <main>
+    <div class="feed-post">
+      <img src="https://via.placeholder.com/500x300?text=โพสต์อาหารจากร้านค้า" alt="อาหาร">
+      <div class="feed-title">ร้านส้มตำปูปลาร้า</div>
+      <div class="feed-description">วันนี้มีเมนูใหม่ ส้มตำผลไม้รวม แซ่บนัวสุดๆ</div>
+    </div>
+    <div class="feed-post">
+      <img src="https://via.placeholder.com/500x300?text=ไก่ทอด+ข้าวเหนียว" alt="ข้าวเหนียวไก่ทอด">
+      <div class="feed-title">ร้านไก่ทอดหาดใหญ่</div>
+      <div class="feed-description">โปรโมชั่นวันนี้! ซื้อครบ 100 บาท รับฟรีน้ำสมุนไพร</div>
+    </div>
+  </main>
 
-    async function loadMenu() {
-      const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRofi5K4AA-BOa8_g45wbryLbUqV6JTDrNQ1iN5GeChwK5950HPbXl205PdC41sbwJVdFSDPyEPlI4o/pub?gid=1385616180&single=true&output=csv';
-      try {
-        const res = await fetch(csvUrl);
-        const csvText = await res.text();
-        parseCSVAndRenderMenu(csvText);
-      } catch (error) {
-        document.getElementById('menu-section').innerHTML = `<p>เกิดข้อผิดพลาด: ${error.message}</p>`;
-      }
-    }
-
-    function parseCSVAndRenderMenu(csvText) {
-      const lines = csvText.trim().split('\n');
-      const data = lines.map(line => line.split(','));
-      menuData = data.slice(1); // ข้ามหัวตาราง
-      renderMenu();
-    }
-
-    function renderMenu() {
-      const container = document.getElementById('menu-section');
-      container.innerHTML = '';
-      menuData.forEach(([name, price, image]) => {
-        const item = document.createElement('div');
-        item.className = 'menu-item';
-        item.innerHTML = `
-          <img src="${image}" alt="${name}">
-          <h3>${name}</h3>
-          <p>ราคา: ${price} บาท</p>
-          <button onclick="addToCart('${name}', ${price})">สั่งซื้อ</button>
-        `;
-        container.appendChild(item);
-      });
-    }
-
-    function addToCart(name, price) {
-      alert(`คุณเลือกเมนู: ${name} (${price} บาท)\n\n(ระบบสั่งซื้อกำลังพัฒนา)`);
-    }
-
-    window.onload = loadMenu;
-  </script>
+  <footer>
+    <a href="#" class="active">หน้าหลัก</a>
+    <a href="#">ร้านค้า</a>
+    <a href="#">คูปอง</a>
+    <a href="#">ข่าวสาร</a>
+    <a href="#">บัญชี</a>
+  </footer>
 </body>
+
 </html>
