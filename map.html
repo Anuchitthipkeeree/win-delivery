@@ -46,7 +46,6 @@
       position: relative;
     }
 
-    /* ปุ่มกลับ */
     .back-button {
       position: absolute;
       left: 1rem;
@@ -99,6 +98,16 @@
       color: var(--primary);
       font-weight: 600;
     }
+
+    /* ข้อความแจ้งเมื่อหา GPS ไม่ได้ */
+    #locationError {
+      padding: 1rem;
+      text-align: center;
+      color: var(--accent);
+      font-weight: 600;
+      background: #ffe6e6;
+      display: none;
+    }
   </style>
 
   <!-- ใช้ Font Awesome สำหรับไอคอน -->
@@ -121,6 +130,7 @@
     แผนที่จัดส่ง
   </header>
 
+  <div id="locationError" role="alert"></div>
   <div id="map" role="region" aria-label="แผนที่แสดงตำแหน่งไรเดอร์และจุดจัดส่ง"></div>
 
   <footer>
@@ -151,49 +161,103 @@
       window.history.back();
     }
 
-    // ฟังก์ชันเริ่มต้น Google Map
-    function initMap() {
-      // ตำแหน่งเริ่มต้น (ตัวอย่าง: กรุงเทพฯ)
-      const initialPosition = { lat: 13.7563, lng: 100.5018 };
+    let map, riderMarker, customerMarker, routePath;
 
-      // สร้างแผนที่
-      const map = new google.maps.Map(document.getElementById('map'), {
-        center: initialPosition,
+    function initMap() {
+      // สร้างแผนที่ที่ศูนย์กลางไว้ก่อน (กรุงเทพ)
+      const defaultPosition = { lat: 13.7563, lng: 100.5018 };
+
+      map = new google.maps.Map(document.getElementById("map"), {
+        center: defaultPosition,
         zoom: 12,
       });
 
-      // เพิ่ม Marker ตำแหน่งไรเดอร์ (ตัวอย่าง)
-      const riderMarker = new google.maps.Marker({
-        position: initialPosition,
+      // ไอคอน Rider
+      const riderIcon = {
+        url: "https://cdn-icons-png.flaticon.com/512/1946/1946429.png",
+        scaledSize: new google.maps.Size(40, 40),
+      };
+
+      // ไอคอน บ้านลูกค้า
+      const customerIcon = {
+        url: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
+        scaledSize: new google.maps.Size(40, 40),
+      };
+
+      // Marker ลูกค้า ตำแหน่งตัวอย่าง
+      const customerPosition = { lat: 13.7463, lng: 100.5318 };
+      customerMarker = new google.maps.Marker({
+        position: customerPosition,
         map: map,
-        title: 'ตำแหน่งไรเดอร์ของคุณ',
-        icon: {
-          url: 'https://cdn-icons-png.flaticon.com/512/1946/1946429.png', // ไอคอน Rider
-          scaledSize: new google.maps.Size(40, 40),
-        },
+        title: "จุดส่งลูกค้า",
+        icon: customerIcon,
       });
 
-      // ตัวอย่าง Marker จุดส่งของลูกค้า
-      const customerMarker = new google.maps.Marker({
-        position: { lat: 13.7463, lng: 100.5318 },
-        map: map,
-        title: 'จุดส่งลูกค้า',
-        icon: {
-          url: 'https://cdn-icons-png.flaticon.com/512/684/684908.png', // ไอคอนบ้าน
-          scaledSize: new google.maps.Size(40, 40),
-        },
-      });
+      // ขอสิทธิ์ดึงตำแหน่ง GPS ของไรเดอร์
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const riderPos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            };
 
-      // วาดเส้นทาง (Polyline) ระหว่างไรเดอร์กับลูกค้า
-      const routePath = new google.maps.Polyline({
-        path: [initialPosition, customerMarker.position],
-        geodesic: true,
-        strokeColor: '#1877f2',
-        strokeOpacity: 0.8,
-        strokeWeight: 4,
-      });
+            // วาง marker ไรเดอร์ตำแหน่งจริง
+            if (!riderMarker) {
+              riderMarker = new google.maps.Marker({
+                position: riderPos,
+                map: map,
+                title: "ตำแหน่งไรเดอร์ของคุณ",
+                icon: riderIcon,
+              });
+            } else {
+              riderMarker.setPosition(riderPos);
+            }
 
-      routePath.setMap(map);
+            // วาดเส้นทางจากไรเดอร์ไปยังลูกค้า
+            if (routePath) {
+              routePath.setMap(null); // เคลียร์เส้นเดิมก่อน
+            }
+
+            routePath = new google.maps.Polyline({
+              path: [riderPos, customerPosition],
+              geodesic: true,
+              strokeColor: "#1877f2",
+              strokeOpacity: 0.8,
+              strokeWeight: 4,
+            });
+            routePath.setMap(map);
+
+            // ซูมและจัดตำแหน่งกลางเพื่อให้เห็นทั้ง 2 จุด
+            const bounds = new google.maps.LatLngBounds();
+            bounds.extend(riderPos);
+            bounds.extend(customerPosition);
+            map.fitBounds(bounds);
+
+            // ซ่อนข้อความ error
+            document.getElementById("locationError").style.display = "none";
+          },
+          (error) => {
+            // กรณีไม่อนุญาตหรือเกิดข้อผิดพลาด
+            const errorDiv = document.getElementById("locationError");
+            errorDiv.textContent =
+              "ไม่สามารถระบุตำแหน่งปัจจุบันของคุณได้ กรุณาเปิด GPS และอนุญาตเบราว์เซอร์";
+            errorDiv.style.display = "block";
+
+            // แสดงตำแหน่ง default และ customer
+            map.setCenter(defaultPosition);
+            map.setZoom(12);
+          }
+        );
+      } else {
+        // เบราว์เซอร์ไม่รองรับ GPS
+        const errorDiv = document.getElementById("locationError");
+        errorDiv.textContent = "เบราว์เซอร์ของคุณไม่รองรับการระบุตำแหน่ง";
+        errorDiv.style.display = "block";
+
+        map.setCenter(defaultPosition);
+        map.setZoom(12);
+      }
     }
   </script>
 </body>
