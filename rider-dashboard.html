@@ -1,151 +1,114 @@
 <!DOCTYPE html>
 <html lang="th">
-
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Rider Dashboard - Win Delivery</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>ร้านค้า - Dashboard</title>
   <link
-    href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
     rel="stylesheet"
   />
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <style>
     :root {
-      --primary: #1877f2;
-      --primary-dark: #125fc1;
-      --background: #f9fafb;
-      --card-bg: #fff;
-      --text-primary: #222;
-      --text-muted: #666;
-      --accent: #ff3b30;
-      --shadow: rgba(0, 0, 0, 0.12);
+      --primary: #007bff;
+      --primary-dark: #004085;
+      --bg-light: #f8f9fa;
+      --text-dark: #212529;
+      --shadow: rgba(0, 0, 0, 0.15);
+      --border-radius: 10px;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     }
 
+    /* Reset */
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-      font-family: 'Prompt', sans-serif;
     }
 
     body {
-      background-color: var(--background);
-      color: var(--text-primary);
+      background: var(--bg-light);
+      color: var(--text-dark);
+      font-size: 16px;
+      line-height: 1.4;
       min-height: 100vh;
+      padding-bottom: 80px; /* เผื่อปุ่มลอย */
       display: flex;
       flex-direction: column;
+      justify-content: flex-start;
     }
 
     header {
-      background-color: var(--primary);
+      background: var(--primary);
       color: white;
-      padding: 1rem 1.5rem;
-      font-weight: 600;
-      font-size: 1.5rem;
-      box-shadow: 0 3px 6px var(--shadow);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    header .logo {
+      padding: 16px 20px;
+      font-size: 1.25rem;
       font-weight: 700;
-    }
-
-    header .profile {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-    }
-
-    header .profile img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid white;
+      text-align: center;
+      box-shadow: 0 4px 8px var(--shadow);
     }
 
     main {
-      flex-grow: 1;
-      padding: 1rem 1.5rem 6rem; /* เพิ่มพื้นที่ล่างให้พอสำหรับปุ่มลอย */
-      max-width: 600px;
-      margin: 0 auto;
-      width: 100%;
+      flex: 1;
+      padding: 20px;
     }
 
-    /* Card style */
-    .order-card {
-      background-color: var(--card-bg);
-      border-radius: 12px;
-      padding: 1rem 1.2rem;
-      box-shadow: 0 2px 10px var(--shadow);
-      margin-bottom: 1rem;
-      transition: box-shadow 0.3s ease;
+    /* รายการออเดอร์ */
+    .order-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
 
-    .order-card:hover {
-      box-shadow: 0 4px 20px var(--shadow);
+    .order-item {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: 0 2px 6px var(--shadow);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
 
     .order-header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.6rem;
-    }
-
-    .order-id {
       font-weight: 700;
-      font-size: 1.1rem;
-      color: var(--primary);
-    }
-
-    .order-status {
-      padding: 0.25rem 0.75rem;
-      border-radius: 20px;
-      font-weight: 600;
-      font-size: 0.85rem;
-      color: white;
-      white-space: nowrap;
-    }
-
-    .status-pending {
-      background-color: #ff9800;
-    }
-
-    .status-inprogress {
-      background-color: #2196f3;
-    }
-
-    .status-completed {
-      background-color: #4caf50;
+      font-size: 1rem;
+      color: var(--primary-dark);
     }
 
     .order-details {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      line-height: 1.3;
-      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      color: #555;
     }
 
-    .btn-update-status {
-      background-color: var(--primary);
+    /* ปุ่มสถานะ */
+    .status {
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.85rem;
       color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 25px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      font-size: 0.95rem;
+      width: fit-content;
+      text-align: center;
     }
 
-    .btn-update-status:hover {
-      background-color: var(--primary-dark);
+    .status.pending {
+      background-color: #ffc107; /* เหลือง */
+    }
+
+    .status.in-progress {
+      background-color: #17a2b8; /* น้ำเงินอมฟ้า */
+    }
+
+    .status.completed {
+      background-color: #28a745; /* เขียว */
+    }
+
+    .status.cancelled {
+      background-color: #dc3545; /* แดง */
     }
 
     /* Floating Action Buttons Container */
@@ -167,7 +130,6 @@
       user-select: none;
     }
 
-    /* แต่ละปุ่มและ label */
     .fab-item {
       display: flex;
       flex-direction: column;
@@ -176,6 +138,16 @@
       color: var(--primary-dark);
       cursor: pointer;
       width: 56px;
+      transition: transform 0.3s ease;
+      user-select: none;
+    }
+
+    /* ปุ่มอัปเดตสถานะเด่นกว่า */
+    .fab-item.update-status {
+      width: 72px;
+      margin: 0 12px;
+      color: white;
+      font-weight: 700;
     }
 
     .fab-btn {
@@ -191,21 +163,47 @@
       justify-content: center;
       margin-bottom: 4px;
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s ease, box-shadow 0.5s ease;
       user-select: none;
     }
 
-    .fab-btn:hover,
-    .fab-btn:focus-visible {
-      background-color: var(--primary-dark);
+    /* ปุ่มอัปเดตสถานะสีเขียวสด ใหญ่กว่า */
+    .fab-btn.update-status-btn {
+      width: 64px;
+      height: 64px;
+      font-size: 1.8rem;
+      background-color: #28a745;
+      box-shadow: 0 0 15px #28a745;
+      animation: pulse-glow 2.5s infinite;
+    }
+
+    .fab-btn.update-status-btn:hover,
+    .fab-btn.update-status-btn:focus-visible {
+      background-color: #218838;
+      box-shadow: 0 0 25px #218838;
       outline: none;
+    }
+
+    /* พัลส์แอนิเมชัน */
+    @keyframes pulse-glow {
+      0%,
+      100% {
+        box-shadow: 0 0 10px #28a745;
+      }
+      50% {
+        box-shadow: 0 0 25px #28a745;
+      }
+    }
+
+    .fab-item span {
+      user-select: none;
+      white-space: nowrap;
     }
 
     /* Responsive */
     @media (max-width: 400px) {
-      .fab-container {
-        gap: 12px;
-        padding: 6px 12px;
+      body {
+        font-size: 14px;
       }
       .fab-item {
         width: 44px;
@@ -217,167 +215,155 @@
         font-size: 1.2rem;
         margin-bottom: 2px;
       }
+      .fab-item.update-status {
+        width: 56px;
+      }
+      .fab-btn.update-status-btn {
+        width: 56px;
+        height: 56px;
+        font-size: 1.5rem;
+      }
     }
   </style>
 </head>
-
 <body>
-  <header>
-    <div class="logo">Win Delivery - Rider</div>
-    <div class="profile" aria-label="โปรไฟล์ผู้ขับ">
-      <img src="https://via.placeholder.com/80x80?text=R" alt="รูปไรเดอร์" />
-      <div>
-        <div style="font-weight:600;">สมชาย ขับดี</div>
-        <div style="font-size:0.85rem; color: var(--text-muted);">ไรเดอร์ประจำ</div>
-      </div>
-    </div>
-  </header>
-
-  <main aria-live="polite" aria-atomic="true" aria-relevant="additions">
-    <section aria-label="รายการออเดอร์ที่รับผิดชอบ">
-      <h2 style="margin-bottom: 1rem; font-weight: 700; color: var(--primary); font-size: 1.3rem;">
-        ออเดอร์ของคุณ
-      </h2>
-
-      <!-- ตัวอย่างการ์ดออเดอร์ 1 -->
-      <article class="order-card" tabindex="0" aria-describedby="order1-desc">
+  <header>ร้านค้า - Dashboard</header>
+  <main>
+    <ul class="order-list" aria-label="รายการออเดอร์ล่าสุด">
+      <li class="order-item" tabindex="0" aria-label="คำสั่งซื้อ #1001 สถานะ รอดำเนินการ">
         <div class="order-header">
-          <span class="order-id">Order #00123</span>
-          <span class="order-status status-pending">รอรับออเดอร์</span>
+          <span>คำสั่งซื้อ #1001</span>
+          <span class="status pending" aria-live="polite">รอดำเนินการ</span>
         </div>
-        <div id="order1-desc" class="order-details">
-          ร้าน: ร้านส้มตำปูปลาร้า<br />
-          สถานที่ส่ง: ซอยสุขุมวิท 71<br />
-          เวลาออเดอร์: 12:30 น.
+        <div class="order-details">
+          ลูกค้า: สมชาย<br />
+          รายการ: ส้มตำ, ไก่ย่าง<br />
+          รวม: 120 บาท
         </div>
-        <button
-          class="btn-update-status"
-          onclick="updateStatus(this, 'inprogress')"
-          aria-label="เปลี่ยนสถานะออเดอร์ 00123 เป็น กำลังส่ง"
-        >
-          รับออเดอร์แล้ว
-        </button>
-      </article>
-
-      <!-- ตัวอย่างการ์ดออเดอร์ 2 -->
-      <article class="order-card" tabindex="0" aria-describedby="order2-desc">
+      </li>
+      <li class="order-item" tabindex="0" aria-label="คำสั่งซื้อ #1002 สถานะ กำลังจัดส่ง">
         <div class="order-header">
-          <span class="order-id">Order #00122</span>
-          <span class="order-status status-inprogress">กำลังส่ง</span>
+          <span>คำสั่งซื้อ #1002</span>
+          <span class="status in-progress" aria-live="polite">กำลังจัดส่ง</span>
         </div>
-        <div id="order2-desc" class="order-details">
-          ร้าน: ร้านไก่ทอดหาดใหญ่<br />
-          สถานที่ส่ง: ถนนพระราม 4<br />
-          เวลาออเดอร์: 11:45 น.
+        <div class="order-details">
+          ลูกค้า: สมหญิง<br />
+          รายการ: ต้มแซ่บ, ข้าวเหนียว<br />
+          รวม: 150 บาท
         </div>
-        <button
-          class="btn-update-status"
-          onclick="updateStatus(this, 'completed')"
-          aria-label="เปลี่ยนสถานะออเดอร์ 00122 เป็น ส่งสำเร็จ"
-        >
-          ส่งออเดอร์แล้ว
-        </button>
-      </article>
-    </section>
+      </li>
+      <li class="order-item" tabindex="0" aria-label="คำสั่งซื้อ #1003 สถานะ เสร็จสิ้น">
+        <div class="order-header">
+          <span>คำสั่งซื้อ #1003</span>
+          <span class="status completed" aria-live="polite">เสร็จสิ้น</span>
+        </div>
+        <div class="order-details">
+          ลูกค้า: จารุวรรณ<br />
+          รายการ: ขนมจีนน้ำยา<br />
+          รวม: 80 บาท
+        </div>
+      </li>
+    </ul>
   </main>
 
-  <!-- Floating Action Buttons พร้อม Label -->
-  <nav class="fab-container" aria-label="เมนูลัดไรเดอร์">
-    <div class="fab-item" role="button" tabindex="0" aria-label="หน้าหลัก" title="หน้าหลัก" onclick="goHome()" onkeypress="if(event.key==='Enter') goHome()">
-      <button class="fab-btn" aria-hidden="true">
-        <i class="fas fa-home"></i>
-      </button>
+  <!-- Floating Action Buttons -->
+  <nav
+    class="fab-container"
+    aria-label="เมนูลัดไรเดอร์"
+    role="navigation"
+  >
+    <div
+      class="fab-item"
+      role="button"
+      tabindex="0"
+      aria-label="หน้าหลัก"
+      title="หน้าหลัก"
+      onclick="goHome()"
+      onkeypress="if(event.key==='Enter') goHome()"
+    >
+      <button class="fab-btn" aria-hidden="true"><i class="fas fa-home"></i></button>
       <span>หน้าหลัก</span>
     </div>
 
-    <div class="fab-item" role="button" tabindex="0" aria-label="รีเฟรชข้อมูล" title="รีเฟรชข้อมูล" onclick="refreshOrders()" onkeypress="if(event.key==='Enter') refreshOrders()">
-      <button class="fab-btn" aria-hidden="true">
-        <i class="fas fa-sync-alt"></i>
-      </button>
+    <div
+      class="fab-item"
+      role="button"
+      tabindex="0"
+      aria-label="รีเฟรชข้อมูล"
+      title="รีเฟรชข้อมูล"
+      onclick="refreshOrders()"
+      onkeypress="if(event.key==='Enter') refreshOrders()"
+    >
+      <button class="fab-btn" aria-hidden="true"><i class="fas fa-sync-alt"></i></button>
       <span>รีเฟรช</span>
     </div>
 
-    <div class="fab-item" role="button" tabindex="0" aria-label="แจ้งเตือน" title="แจ้งเตือน" onclick="openNotifications()" onkeypress="if(event.key==='Enter') openNotifications()">
-      <button class="fab-btn" aria-hidden="true">
-        <i class="fas fa-bell"></i>
-      </button>
+    <div
+      class="fab-item update-status"
+      role="button"
+      tabindex="0"
+      aria-label="อัปเดตสถานะเร็ว"
+      title="อัปเดตสถานะเร็ว"
+      onclick="quickStatusUpdate()"
+      onkeypress="if(event.key==='Enter') quickStatusUpdate()"
+    >
+      <button class="fab-btn update-status-btn" aria-hidden="true"><i class="fas fa-check-circle"></i></button>
+      <span>อัปเดต</span>
+    </div>
+
+    <div
+      class="fab-item"
+      role="button"
+      tabindex="0"
+      aria-label="แจ้งเตือน"
+      title="แจ้งเตือน"
+      onclick="openNotifications()"
+      onkeypress="if(event.key==='Enter') openNotifications()"
+    >
+      <button class="fab-btn" aria-hidden="true"><i class="fas fa-bell"></i></button>
       <span>แจ้งเตือน</span>
     </div>
 
-    <div class="fab-item" role="button" tabindex="0" aria-label="แผนที่" title="แผนที่" onclick="openMap()" onkeypress="if(event.key==='Enter') openMap()">
-      <button class="fab-btn" aria-hidden="true">
-        <i class="fas fa-map-marker-alt"></i>
-      </button>
+    <div
+      class="fab-item"
+      role="button"
+      tabindex="0"
+      aria-label="แผนที่"
+      title="แผนที่"
+      onclick="openMap()"
+      onkeypress="if(event.key==='Enter') openMap()"
+    >
+      <button class="fab-btn" aria-hidden="true"><i class="fas fa-map-marker-alt"></i></button>
       <span>แผนที่</span>
-    </div>
-
-    <div class="fab-item" role="button" tabindex="0" aria-label="อัพเดตสถานะเร็ว" title="อัพเดตสถานะเร็ว" onclick="quickStatusUpdate()" onkeypress="if(event.key==='Enter') quickStatusUpdate()">
-      <button class="fab-btn" aria-hidden="true">
-        <i class="fas fa-check-circle"></i>
-      </button>
-      <span>อัพเดต</span>
     </div>
   </nav>
 
   <script>
-    // ฟังก์ชันอัพเดตสถานะออเดอร์
-    function updateStatus(button, newStatus) {
-      const orderCard = button.closest('.order-card');
-      const statusLabel = orderCard.querySelector('.order-status');
-
-      // อัพเดตข้อความสถานะและคลาสสี
-      statusLabel.textContent =
-        newStatus === 'pending'
-          ? 'รอรับออเดอร์'
-          : newStatus === 'inprogress'
-          ? 'กำลังส่ง'
-          : 'ส่งสำเร็จ';
-
-      statusLabel.className = 'order-status ' + (newStatus === 'pending'
-        ? 'status-pending'
-        : newStatus === 'inprogress'
-        ? 'status-inprogress'
-        : 'status-completed');
-
-      // เปลี่ยนปุ่มข้อความและสถานะ
-      if (newStatus === 'inprogress') {
-        button.textContent = 'ส่งออเดอร์แล้ว';
-        button.setAttribute('aria-label', 'เปลี่ยนสถานะเป็น ส่งสำเร็จ');
-        button.setAttribute('onclick', "updateStatus(this, 'completed')");
-      } else if (newStatus === 'completed') {
-        button.disabled = true;
-        button.textContent = 'ส่งเรียบร้อยแล้ว';
-        button.style.backgroundColor = '#4caf50';
-        button.style.cursor = 'default';
-      }
-    }
-
-    // ฟังก์ชันเมนูลอย
+    // ตัวอย่างฟังก์ชันเรียกใช้งานปุ่ม
     function goHome() {
-      alert('กลับไปหน้าหลัก');
-      // window.location.href = 'rider-dashboard.html'; // หรือ URL หน้าแรกจริง ๆ
+      alert("ไปหน้าหลัก");
+      // window.location.href = "/home.html";
     }
 
     function refreshOrders() {
-      alert('รีเฟรชข้อมูลออเดอร์ใหม่');
-      // โหลดข้อมูลออเดอร์จาก API หรือ database
-    }
-
-    function openNotifications() {
-      alert('เปิดแจ้งเตือน');
-      // เปิดหน้าจอแจ้งเตือน หรือแสดงข้อความ
-    }
-
-    function openMap() {
-      alert('เปิดแผนที่นำทาง');
-      // เปิดแผนที่ เช่น Google Maps พร้อมพิกัดออเดอร์
+      alert("รีเฟรชข้อมูลคำสั่งซื้อ");
+      // โค้ดรีเฟรชข้อมูลจาก API หรือ database
     }
 
     function quickStatusUpdate() {
-      alert('เปิดฟังก์ชันอัพเดตสถานะรวดเร็ว');
-      // แสดงเมนูเลือกสถานะออเดอร์อย่างรวดเร็ว
+      alert("อัปเดตสถานะคำสั่งซื้อเร็ว");
+      // โค้ดอัปเดตสถานะ เช่น ส่ง API
+    }
+
+    function openNotifications() {
+      alert("เปิดแจ้งเตือน");
+      // โค้ดเปิดหน้าจอแจ้งเตือน
+    }
+
+    function openMap() {
+      alert("เปิดแผนที่");
+      // โค้ดเปิดแผนที่แสดงตำแหน่งร้าน/ไรเดอร์
     }
   </script>
 </body>
-
 </html>
