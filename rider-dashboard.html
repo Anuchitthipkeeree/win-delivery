@@ -168,15 +168,15 @@
       user-select: none;
     }
 
-    /* ปุ่มอัปเดตสถานะเด่น ใหญ่กว่า อยู่กลาง */
-    .fab-item.update-status {
+    /* ปุ่มรีเฟรชเด่น ใหญ่กว่า อยู่กลาง */
+    .fab-item.refresh {
       width: 72px;
       margin: 0 12px;
       color: white;
       font-weight: 700;
     }
 
-    .fab-btn.update-status-btn {
+    .fab-btn.refresh-btn {
       width: 64px;
       height: 64px;
       font-size: 1.8rem;
@@ -185,8 +185,8 @@
       animation: pulse-glow 2.5s infinite;
     }
 
-    .fab-btn.update-status-btn:hover,
-    .fab-btn.update-status-btn:focus-visible {
+    .fab-btn.refresh-btn:hover,
+    .fab-btn.refresh-btn:focus-visible {
       background-color: #218838;
       box-shadow: 0 0 25px #218838;
       outline: none;
@@ -222,10 +222,10 @@
         font-size: 1.2rem;
         margin-bottom: 2px;
       }
-      .fab-item.update-status {
+      .fab-item.refresh {
         width: 56px;
       }
-      .fab-btn.update-status-btn {
+      .fab-btn.refresh-btn {
         width: 56px;
         height: 56px;
         font-size: 1.5rem;
@@ -296,7 +296,7 @@
     </div>
 
     <div
-      class="fab-item update-status"
+      class="fab-item"
       role="button"
       tabindex="0"
       aria-label="อัปเดตสถานะงาน"
@@ -304,8 +304,21 @@
       onclick="updateStatus()"
       onkeypress="if(event.key==='Enter') updateStatus()"
     >
-      <button class="fab-btn update-status-btn" aria-hidden="true"><i class="fas fa-check-circle"></i></button>
+      <button class="fab-btn" aria-hidden="true"><i class="fas fa-check-circle"></i></button>
       <span>อัปเดต</span>
+    </div>
+
+    <div
+      class="fab-item refresh"
+      role="button"
+      tabindex="0"
+      aria-label="รีเฟรชงาน"
+      title="รีเฟรชงาน"
+      onclick="refreshTasks()"
+      onkeypress="if(event.key==='Enter') refreshTasks()"
+    >
+      <button class="fab-btn refresh-btn" aria-hidden="true"><i class="fas fa-sync-alt"></i></button>
+      <span>รีเฟรช</span>
     </div>
 
     <div
@@ -332,19 +345,6 @@
     >
       <button class="fab-btn" aria-hidden="true"><i class="fas fa-map-marked-alt"></i></button>
       <span>แผนที่</span>
-    </div>
-
-    <div
-      class="fab-item"
-      role="button"
-      tabindex="0"
-      aria-label="รีเฟรชงาน"
-      title="รีเฟรชงาน"
-      onclick="refreshTasks()"
-      onkeypress="if(event.key==='Enter') refreshTasks()"
-    >
-      <button class="fab-btn" aria-hidden="true"><i class="fas fa-sync-alt"></i></button>
-      <span>รีเฟรช</span>
     </div>
   </nav>
 
