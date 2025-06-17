@@ -1,182 +1,167 @@
 <!DOCTYPE html>
 <html lang="th">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>แดชบอร์ดร้านค้า | Win Delivery</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap" rel="stylesheet" />
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <style>
-    body {
-      font-family: 'Prompt', sans-serif;
+    :root {
+      --primary: #1877f2;
+      --background: #f0f2f5;
+      --card: #fff;
+      --text: #050505;
+      --muted: #65676b;
+      --accent: #ff3b30;
+    }
+
+    * {
       margin: 0;
-      background: #f5f6f8;
-      color: #333;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Prompt', sans-serif;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.6;
     }
 
     header {
-      background-color: #1877f2;
-      color: white;
+      background-color: var(--primary);
+      color: #fff;
       padding: 1rem;
-      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    }
+
+    .logo {
       font-size: 1.5rem;
       font-weight: 600;
     }
 
-    .container {
-      padding: 1rem;
-      max-width: 800px;
-      margin: 0 auto;
+    .user-profile img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
     }
 
-    .card {
-      background: #fff;
+    main {
+      max-width: 600px;
+      margin: 2rem auto 5rem;
+      padding: 0 1rem;
+    }
+
+    .dashboard-card {
+      background: var(--card);
       border-radius: 1rem;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-      padding: 1rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      padding: 1.2rem;
       margin-bottom: 1.5rem;
-    }
-
-    .card h2 {
-      margin-bottom: 0.5rem;
-    }
-
-    .stats {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    .stat-item {
-      flex: 1 1 45%;
-      background: #e9f1ff;
-      padding: 1rem;
-      border-radius: 0.75rem;
-      text-align: center;
-    }
-
-    .stat-item h3 {
-      font-size: 1.2rem;
-      margin: 0.5rem 0;
-    }
-
-    button {
-      background-color: #1877f2;
-      color: white;
-      border: none;
-      padding: 0.75rem 1.5rem;
-      border-radius: 0.5rem;
-      font-size: 1rem;
+      transition: transform 0.2s ease;
       cursor: pointer;
-      margin-top: 1rem;
     }
 
-    button:hover {
-      background-color: #0e5fd1;
+    .dashboard-card:hover {
+      transform: translateY(-4px);
     }
 
-    .orders-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1rem;
+    .card-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
     }
 
-    .orders-table th,
-    .orders-table td {
-      border: 1px solid #ccc;
-      padding: 0.75rem;
-      text-align: left;
-    }
-
-    .orders-table th {
-      background: #f0f2f5;
+    .card-description {
+      color: var(--muted);
+      font-size: 0.95rem;
     }
 
     footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #fff;
+      border-top: 1px solid #ddd;
+      display: flex;
+      justify-content: space-around;
+      padding: 0.75rem 0;
+      box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
+      z-index: 10;
+    }
+
+    footer a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.75rem;
       text-align: center;
-      padding: 1rem;
-      font-size: 0.85rem;
-      color: #999;
-      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: color 0.3s;
+    }
+
+    footer a i {
+      background-color: #f2f2f2;
+      border-radius: 50%;
+      padding: 0.6rem;
+      font-size: 1.2rem;
+      margin-bottom: 0.25rem;
+    }
+
+    footer a.active {
+      color: var(--primary);
+      font-weight: 600;
     }
   </style>
 </head>
 
 <body>
+
   <header>
-    แดชบอร์ดร้านค้า - Win Delivery
+    <div class="logo">แดชบอร์ดร้านค้า</div>
+    <div class="user-profile">
+      <img src="https://via.placeholder.com/40" alt="User" />
+    </div>
   </header>
 
-  <div class="container">
-    <div class="card">
-      <h2>สรุปข้อมูลร้านวันนี้</h2>
-      <div class="stats">
-        <div class="stat-item">
-          <i class="fas fa-utensils"></i>
-          <h3>20</h3>
-          <p>เมนูทั้งหมด</p>
-        </div>
-        <div class="stat-item">
-          <i class="fas fa-shopping-bag"></i>
-          <h3>35</h3>
-          <p>คำสั่งซื้อวันนี้</p>
-        </div>
-        <div class="stat-item">
-          <i class="fas fa-users"></i>
-          <h3>120</h3>
-          <p>ผู้ติดตามร้าน</p>
-        </div>
-        <div class="stat-item">
-          <i class="fas fa-coins"></i>
-          <h3>4,250฿</h3>
-          <p>รายได้วันนี้</p>
-        </div>
-      </div>
-      <button onclick="alert('ไปที่จัดการเมนู')">จัดการเมนูอาหาร</button>
+  <main>
+    <div class="dashboard-card" onclick="location.href='sales-summary.html'">
+      <div class="card-title">ยอดขายวันนี้</div>
+      <div class="card-description">฿1,250 จาก 12 คำสั่งซื้อ</div>
     </div>
 
-    <div class="card">
-      <h2>คำสั่งซื้อล่าสุด</h2>
-      <table class="orders-table">
-        <thead>
-          <tr>
-            <th>หมายเลขออเดอร์</th>
-            <th>ลูกค้า</th>
-            <th>ยอดรวม</th>
-            <th>สถานะ</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>#ORD123</td>
-            <td>สมชาย</td>
-            <td>150฿</td>
-            <td>กำลังจัดส่ง</td>
-          </tr>
-          <tr>
-            <td>#ORD122</td>
-            <td>จินตนา</td>
-            <td>80฿</td>
-            <td>สำเร็จ</td>
-          </tr>
-          <tr>
-            <td>#ORD121</td>
-            <td>วีระ</td>
-            <td>200฿</td>
-            <td>รอดำเนินการ</td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="dashboard-card" onclick="location.href='menu-manager.html'">
+      <div class="card-title">จัดการเมนู</div>
+      <div class="card-description">เพิ่ม/ลบ/แก้ไขเมนูอาหาร</div>
     </div>
-  </div>
+
+    <div class="dashboard-card" onclick="location.href='orders.html'">
+      <div class="card-title">คำสั่งซื้อ</div>
+      <div class="card-description">ตรวจสอบรายการสั่งซื้อและอัปเดตสถานะ</div>
+    </div>
+
+    <div class="dashboard-card" onclick="location.href='promotion.html'">
+      <div class="card-title">จัดการโปรโมชัน</div>
+      <div class="card-description">เพิ่มส่วนลดหรือโปรโมชันพิเศษ</div>
+    </div>
+
+    <div class="dashboard-card" onclick="location.href='shop-settings.html'">
+      <div class="card-title">ตั้งค่าร้านค้า</div>
+      <div class="card-description">แก้ไขโปรไฟล์, เวลาทำการ, การจัดส่ง</div>
+    </div>
+  </main>
 
   <footer>
-    &copy; 2025 Win Delivery. พัฒนาโดยทีมของคุณ
+    <a href="index.html"><i class="fas fa-home"></i><span>หน้าหลัก</span></a>
+    <a href="shop.html"><i class="fas fa-store"></i><span>ร้านค้า</span></a>
+    <a href="shop-dashboard.html" class="active"><i class="fas fa-tools"></i><span>แดชบอร์ด</span></a>
+    <a href="accounts.html"><i class="fas fa-user-circle"></i><span>บัญชี</span></a>
   </footer>
-</body>
 
+</body>
 </html>
