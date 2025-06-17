@@ -3,11 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ติดตามไรเดอร์ | Win Delivery</title>
+  <title>Win Delivery</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap" rel="stylesheet" />
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <style>
     :root {
       --primary: #1877f2;
@@ -28,76 +27,112 @@
     body {
       background: var(--background);
       color: var(--text);
+      line-height: 1.6;
     }
 
     header {
       background-color: var(--primary);
       color: #fff;
       padding: 1rem;
-      font-size: 1.5rem;
-      font-weight: 600;
-      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .user-profile img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    .cart {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .cart i {
+      font-size: 1.4rem;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -6px;
+      right: -8px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 50%;
+      padding: 2px 6px;
+      font-size: 0.7rem;
+    }
+
+    /* แบนเนอร์โปรโมชัน */
+    .promo-banner {
+      max-width: 600px;
+      margin: 1rem auto;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .promo-banner img {
+      width: 100%;
+      display: block;
+    }
+
+    .promo-banner:hover {
+      transform: scale(1.05);
     }
 
     main {
       max-width: 600px;
-      margin: 1rem auto 5rem;
-      padding: 1rem;
+      margin: 1.5rem auto 5rem;
+      padding: 0 1rem;
     }
 
-    .rider-card {
+    .feed-post {
       background: var(--card);
       border-radius: 1rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
       padding: 1rem;
-      margin-bottom: 1rem;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      transition: transform 0.2s ease;
     }
 
-    .rider-info {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
+    .feed-post:hover {
+      transform: translateY(-4px);
     }
 
-    .rider-info img {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
+    .feed-post img {
+      width: 100%;
+      border-radius: 0.75rem;
       object-fit: cover;
     }
 
-    .rider-details {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .rider-name {
+    .feed-title {
+      font-size: 1.3rem;
+      margin-top: 0.75rem;
       font-weight: 600;
-      font-size: 1.1rem;
     }
 
-    .rider-status {
-      font-size: 0.9rem;
+    .feed-description {
       color: var(--muted);
-    }
-
-    .follow-btn {
-      background-color: var(--primary);
-      color: #fff;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 1.5rem;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background-color 0.3s;
-    }
-
-    .follow-btn:hover {
-      background-color: #0e5edb;
+      font-size: 0.95rem;
+      margin-top: 0.25rem;
     }
 
     footer {
@@ -136,7 +171,82 @@
       color: var(--primary);
       font-weight: 600;
     }
+
+    /* ปุ่มแชตลอย */
+    .chat-toggle-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: var(--primary);
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* หน้าต่างแชต */
+    .chat-popup {
+      display: none;
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background: #fff;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 320px;
+      max-height: 400px;
+      overflow: hidden;
+      z-index: 25;
+      flex-direction: column;
+    }
+
+    .chat-popup header {
+      background-color: var(--primary);
+      color: #fff;
+      padding: 0.5rem 1rem;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chat-popup .messages {
+      padding: 0.5rem 1rem;
+      height: 300px;
+      overflow-y: auto;
+      flex-grow: 1;
+    }
+
+    .chat-popup .input-area {
+      display: flex;
+      border-top: 1px solid #ccc;
+      padding: 0.5rem 1rem;
+    }
+
+    .chat-popup input {
+      flex: 1;
+      border: none;
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .chat-popup button {
+      border: none;
+      background: var(--primary);
+      color: #fff;
+      padding: 0 1rem;
+      cursor: pointer;
+    }
   </style>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
