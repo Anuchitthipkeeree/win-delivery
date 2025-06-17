@@ -3,359 +3,343 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <title>แดชบอร์ดไรเดอร์ - Win Delivery</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rider Dashboard - Win Delivery</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <style>
     :root {
-      --primary: #1e88e5;
-      --primary-dark: #1565c0;
-      --success: #43a047;
-      --warning: #fbc02d;
-      --danger: #e53935;
-      --background: #f4f6f8;
-      --card-bg: #ffffff;
-      --text-primary: #212121;
-      --text-muted: #616161;
-      --border-radius: 12px;
-      --shadow: rgba(0, 0, 0, 0.1);
-      --font-family: 'Prompt', sans-serif;
+      --primary: #1877f2;
+      --primary-dark: #125fc1;
+      --background: #f9fafb;
+      --card-bg: #fff;
+      --text-primary: #222;
+      --text-muted: #666;
+      --accent: #ff3b30;
+      --shadow: rgba(0, 0, 0, 0.12);
     }
 
-    /* Reset and font */
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: var(--font-family);
+      box-sizing: border-box;
+      font-family: 'Prompt', sans-serif;
     }
 
     body {
       background-color: var(--background);
       color: var(--text-primary);
       min-height: 100vh;
-      padding-bottom: 80px;
-      line-height: 1.4;
+      display: flex;
+      flex-direction: column;
     }
 
     header {
       background-color: var(--primary);
-      color: #fff;
-      padding: 1.2rem 1rem;
+      color: white;
+      padding: 1rem 1.5rem;
       font-weight: 600;
       font-size: 1.5rem;
-      text-align: center;
       box-shadow: 0 3px 6px var(--shadow);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    header .logo {
+      font-weight: 700;
+    }
+
+    header .profile {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    header .profile img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid white;
     }
 
     main {
-      max-width: 720px;
-      margin: 1rem auto;
-      padding: 0 1rem;
+      flex-grow: 1;
+      padding: 1rem 1.5rem 5rem;
+      max-width: 600px;
+      margin: 0 auto;
+      width: 100%;
     }
 
-    /* Summary Cards */
-    .summary-cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 1rem;
-      margin-bottom: 1.5rem;
+    /* Card style */
+    .order-card {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      box-shadow: 0 2px 10px var(--shadow);
+      margin-bottom: 1rem;
+      transition: box-shadow 0.3s ease;
     }
 
-    .card {
-      background: var(--card-bg);
-      border-radius: var(--border-radius);
-      box-shadow: 0 4px 10px var(--shadow);
-      padding: 1.2rem 1.5rem;
+    .order-card:hover {
+      box-shadow: 0 4px 20px var(--shadow);
+    }
+
+    .order-header {
       display: flex;
-      flex-direction: column;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
-      text-align: center;
-      transition: transform 0.2s ease;
-      cursor: default;
+      margin-bottom: 0.6rem;
     }
 
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 20px var(--shadow);
-    }
-
-    .card .icon {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
+    .order-id {
+      font-weight: 700;
+      font-size: 1.1rem;
       color: var(--primary);
     }
 
-    .card .number {
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 0.3rem;
-      color: var(--text-primary);
-      white-space: nowrap;
-    }
-
-    .card .label {
-      font-size: 1rem;
-      color: var(--text-muted);
-      font-weight: 600;
-    }
-
-    /* Orders Table */
-    .orders-table {
-      width: 100%;
-      border-collapse: separate;
-      border-spacing: 0 12px;
-    }
-
-    /* Table Head */
-    .orders-table thead tr {
-      text-align: left;
-      color: var(--text-muted);
-      font-weight: 600;
-      font-size: 1rem;
-    }
-
-    .orders-table thead th {
-      padding: 0.75rem 1rem;
-    }
-
-    /* Table Body Rows */
-    .orders-table tbody tr {
-      background: var(--card-bg);
-      box-shadow: 0 4px 10px var(--shadow);
-      border-radius: var(--border-radius);
-      cursor: pointer;
-      transition: background-color 0.2s ease;
-    }
-
-    .orders-table tbody tr:hover,
-    .orders-table tbody tr:focus-visible {
-      background-color: #e3f2fd;
-      outline: none;
-    }
-
-    .orders-table tbody td {
-      padding: 1rem;
-      font-size: 1rem;
-      vertical-align: middle;
-      max-width: 1px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    /* Set specific width for columns */
-    .orders-table tbody td:nth-child(1) {
-      width: 12%;
-      font-weight: 600;
-      color: var(--primary-dark);
-    }
-
-    .orders-table tbody td:nth-child(2) {
-      width: 25%;
-    }
-
-    .orders-table tbody td:nth-child(3) {
-      width: 35%;
-      white-space: normal; /* Allow wrapping for address */
-      max-width: none;
-      word-break: break-word;
-    }
-
-    .orders-table tbody td:nth-child(4) {
-      width: 15%;
-    }
-
-    .orders-table tbody td:nth-child(5) {
-      width: 13%;
-      text-align: center;
-    }
-
-    /* Status badges */
-    .status {
-      font-weight: 700;
-      padding: 0.3rem 0.9rem;
+    .order-status {
+      padding: 0.25rem 0.75rem;
       border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.85rem;
       color: white;
-      display: inline-block;
-      font-size: 0.9rem;
-      user-select: none;
-      min-width: 85px;
-      text-align: center;
     }
 
-    .status.pending {
-      background-color: var(--warning);
-      color: #5d4037;
+    .status-pending {
+      background-color: #ff9800;
     }
 
-    .status.preparing {
+    .status-inprogress {
+      background-color: #2196f3;
+    }
+
+    .status-completed {
+      background-color: #4caf50;
+    }
+
+    .order-details {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.3;
+      margin-bottom: 0.5rem;
+    }
+
+    .btn-update-status {
       background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-size: 0.95rem;
     }
 
-    .status.delivering {
+    .btn-update-status:hover {
       background-color: var(--primary-dark);
     }
 
-    .status.delivered {
-      background-color: var(--success);
+    /* Floating Action Buttons Container */
+    .fab-container {
+      position: fixed;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255 255 255 / 0.95);
+      padding: 8px 18px;
+      border-radius: 40px;
+      box-shadow: 0 8px 20px var(--shadow);
+      display: flex;
+      gap: 16px;
+      z-index: 1000;
+      max-width: 600px;
+      width: 100%;
+      justify-content: center;
     }
 
-    .status.cancelled {
-      background-color: var(--danger);
-    }
-
-    /* Action Button */
-    .btn-update {
+    .fab-btn {
       background-color: var(--primary);
-      color: #fff;
       border: none;
-      border-radius: 8px;
-      padding: 0.5rem 1rem;
-      font-size: 0.9rem;
+      color: white;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      font-size: 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
-      transition: background-color 0.2s ease;
-      user-select: none;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s ease;
     }
 
-    .btn-update:hover,
-    .btn-update:focus-visible {
+    .fab-btn:hover,
+    .fab-btn:focus-visible {
       background-color: var(--primary-dark);
       outline: none;
     }
 
     /* Responsive */
-    @media (max-width: 620px) {
-      main {
-        padding: 0 0.8rem;
+    @media (max-width: 400px) {
+      .fab-container {
+        gap: 12px;
+        padding: 6px 12px;
       }
-
-      .card .number {
-        font-size: 1.6rem;
-      }
-
-      .card .label {
-        font-size: 0.9rem;
-      }
-
-      /* Table adjustments for small screen */
-      .orders-table thead {
-        display: none; /* hide headers */
-      }
-
-      .orders-table tbody tr {
-        display: block;
-        margin-bottom: 1rem;
-        box-shadow: 0 4px 10px var(--shadow);
-        border-radius: var(--border-radius);
-        padding: 1rem;
-      }
-
-      .orders-table tbody td {
-        display: flex;
-        padding: 0.4rem 0.6rem;
-        font-size: 0.95rem;
-        white-space: normal;
-        max-width: 100%;
-        overflow: visible;
-        text-overflow: clip;
-        align-items: center;
-      }
-
-      .orders-table tbody td::before {
-        content: attr(data-label);
-        flex: 0 0 110px;
-        font-weight: 700;
-        color: var(--text-muted);
-        padding-right: 0.5rem;
-      }
-
-      .orders-table tbody td:nth-child(5) {
-        justify-content: flex-start;
-        padding-top: 0.8rem;
-      }
-
-      .btn-update {
-        padding: 0.4rem 0.9rem;
-        font-size: 0.85rem;
+      .fab-btn {
+        width: 42px;
+        height: 42px;
+        font-size: 1.2rem;
       }
     }
   </style>
 </head>
 
 <body>
-  <header>แดชบอร์ดไรเดอร์ - Win Delivery</header>
-  <main>
-    <!-- Summary Cards -->
-    <section class="summary-cards" aria-label="ข้อมูลสรุปออเดอร์และรายได้">
-      <article class="card" tabindex="0" role="region" aria-labelledby="pendingOrdersLabel">
-        <div class="icon" aria-hidden="true"><i class="fas fa-box"></i></div>
-        <div id="pendingOrdersNumber" class="number">5</div>
-        <div id="pendingOrdersLabel" class="label">ออเดอร์รอจัดส่ง</div>
-      </article>
-      <article class="card" tabindex="0" role="region" aria-labelledby="deliveredOrdersLabel">
-        <div class="icon" aria-hidden="true"><i class="fas fa-check-circle"></i></div>
-        <div id="deliveredOrdersNumber" class="number">12</div>
-        <div id="deliveredOrdersLabel" class="label">ส่งแล้ววันนี้</div>
-      </article>
-      <article class="card" tabindex="0" role="region" aria-labelledby="inProgressOrdersLabel">
-        <div class="icon" aria-hidden="true"><i class="fas fa-truck-loading"></i></div>
-        <div id="inProgressOrdersNumber" class="number">3</div>
-        <div id="inProgressOrdersLabel" class="label">กำลังจัดส่ง</div>
-      </article>
-      <article class="card" tabindex="0" role="region" aria-labelledby="incomeTodayLabel">
-        <div class="icon" aria-hidden="true"><i class="fas fa-coins"></i></div>
-        <div id="incomeTodayNumber" class="number">฿1,850</div>
-        <div id="incomeTodayLabel" class="label">รายได้วันนี้</div>
-      </article>
-    </section>
+  <header>
+    <div class="logo">Win Delivery - Rider</div>
+    <div class="profile" aria-label="โปรไฟล์ผู้ขับ">
+      <img src="https://via.placeholder.com/80x80?text=R" alt="รูปไรเดอร์" />
+      <div>
+        <div style="font-weight:600;">สมชาย ขับดี</div>
+        <div style="font-size:0.85rem; color: var(--text-muted);">ไรเดอร์ประจำ</div>
+      </div>
+    </div>
+  </header>
 
-    <!-- Orders Table -->
-    <section aria-label="รายการออเดอร์สำหรับไรเดอร์">
-      <table class="orders-table" role="table" aria-describedby="ordersDesc">
-        <thead>
-          <tr>
-            <th scope="col">รหัส</th>
-            <th scope="col">ร้านค้า</th>
-            <th scope="col">ที่อยู่จัดส่ง</th>
-            <th scope="col">สถานะ</th>
-            <th scope="col">จัดการ</th>
-          </tr>
-        </thead>
-        <tbody id="ordersBody">
-          <tr tabindex="0">
-            <td data-label="รหัส">OD1234</td>
-            <td data-label="ร้านค้า">ร้านส้มตำปูปลาร้า</td>
-            <td data-label="ที่อยู่จัดส่ง">ถนนสุขสวัสดิ์ 76 แขวงบางปะกอก เขตราษฎร์บูรณะ กรุงเทพมหานคร 10140</td>
-            <td data-label="สถานะ"><span class="status pending" aria-label="สถานะ รอรับอาหาร">รอรับอาหาร</span></td>
-            <td data-label="จัดการ"><button class="btn-update" aria-label="อัพเดตสถานะ ออเดอร์ OD1234">อัพเดต</button></td>
-          </tr>
-          <tr tabindex="0">
-            <td data-label="รหัส">OD1235</td>
-            <td data-label="ร้านค้า">ร้านไก่ทอดหาดใหญ่</td>
-            <td data-label="ที่อยู่จัดส่ง">ซอยสุขุมวิท 42</td>
-            <td data-label="สถานะ"><span class="status delivering" aria-label="สถานะ กำลังส่ง">กำลังส่ง</span></td>
-            <td data-label="จัดการ"><button class="btn-update" aria-label="อัพเดตสถานะ ออเดอร์ OD1235">อัพเดต</button></td>
-          </tr>
-          <tr tabindex="0">
-            <td data-label="รหัส">OD1236</td>
-            <td data-label="ร้านค้า">ร้านบะหมี่หมูแดง</td>
-            <td data-label="ที่อยู่จัดส่ง">ซอยลาดพร้าว 101</td>
-            <td data-label="สถานะ"><span class="status delivered" aria-label="สถานะ ส่งสำเร็จ">ส่งสำเร็จ</span></td>
-            <td data-label="จัดการ"><button class="btn-update" aria-label="อัพเดตสถานะ ออเดอร์ OD1236">อัพเดต</button></td>
-          </tr>
-        </tbody>
-      </table>
+  <main aria-live="polite" aria-atomic="true" aria-relevant="additions">
+    <section aria-label="รายการออเดอร์ที่รับผิดชอบ">
+      <h2 style="margin-bottom: 1rem; font-weight: 700; color: var(--primary); font-size: 1.3rem;">
+        ออเดอร์ของคุณ
+      </h2>
+
+      <!-- ตัวอย่างการ์ดออเดอร์ 1 -->
+      <article class="order-card" tabindex="0" aria-describedby="order1-desc">
+        <div class="order-header">
+          <span class="order-id">Order #00123</span>
+          <span class="order-status status-pending">รอรับออเดอร์</span>
+        </div>
+        <div id="order1-desc" class="order-details">
+          ร้าน: ร้านส้มตำปูปลาร้า<br />
+          สถานที่ส่ง: ซอยสุขุมวิท 71<br />
+          เวลาออเดอร์: 12:30 น.
+        </div>
+        <button
+          class="btn-update-status"
+          onclick="updateStatus(this, 'inprogress')"
+          aria-label="เปลี่ยนสถานะออเดอร์ 00123 เป็น กำลังส่ง"
+        >
+          รับออเดอร์แล้ว
+        </button>
+      </article>
+
+      <!-- ตัวอย่างการ์ดออเดอร์ 2 -->
+      <article class="order-card" tabindex="0" aria-describedby="order2-desc">
+        <div class="order-header">
+          <span class="order-id">Order #00122</span>
+          <span class="order-status status-inprogress">กำลังส่ง</span>
+        </div>
+        <div id="order2-desc" class="order-details">
+          ร้าน: ร้านไก่ทอดหาดใหญ่<br />
+          สถานที่ส่ง: ถนนพระราม 4<br />
+          เวลาออเดอร์: 11:45 น.
+        </div>
+        <button
+          class="btn-update-status"
+          onclick="updateStatus(this, 'completed')"
+          aria-label="เปลี่ยนสถานะออเดอร์ 00122 เป็น ส่งสำเร็จ"
+        >
+          ส่งออเดอร์แล้ว
+        </button>
+      </article>
     </section>
   </main>
+
+  <!-- Floating Action Buttons -->
+  <nav class="fab-container" aria-label="เมนูลัดไรเดอร์">
+    <button class="fab-btn" aria-label="หน้าหลัก" title="หน้าหลัก" onclick="goHome()">
+      <i class="fas fa-home"></i>
+    </button>
+    <button class="fab-btn" aria-label="รีเฟรชข้อมูล" title="รีเฟรชข้อมูล" onclick="refreshOrders()">
+      <i class="fas fa-sync-alt"></i>
+    </button>
+    <button class="fab-btn" aria-label="แจ้งเตือน" title="แจ้งเตือน" onclick="openNotifications()">
+      <i class="fas fa-bell"></i>
+    </button>
+    <button class="fab-btn" aria-label="แผนที่" title="แผนที่" onclick="openMap()">
+      <i class="fas fa-map-marker-alt"></i>
+    </button>
+    <button class="fab-btn" aria-label="อัพเดตสถานะเร็ว" title="อัพเดตสถานะ" onclick="quickStatusUpdate()">
+      <i class="fas fa-check-circle"></i>
+    </button>
+  </nav>
+
+  <script>
+    // ฟังก์ชันอัพเดตสถานะออเดอร์
+    function updateStatus(button, newStatus) {
+      const orderCard = button.closest('.order-card');
+      const statusLabel = orderCard.querySelector('.order-status');
+
+      // อัพเดตข้อความสถานะและคลาสสี
+      statusLabel.textContent =
+        newStatus === 'pending'
+          ? 'รอรับออเดอร์'
+          : newStatus === 'inprogress'
+          ? 'กำลังส่ง'
+          : 'ส่งสำเร็จ';
+
+      statusLabel.className = 'order-status ' + (newStatus === 'pending'
+        ? 'status-pending'
+        : newStatus === 'inprogress'
+        ? 'status-inprogress'
+        : 'status-completed');
+
+      // เปลี่ยนปุ่มข้อความและสถานะ
+      if (newStatus === 'inprogress') {
+        button.textContent = 'ส่งออเดอร์แล้ว';
+        button.setAttribute('aria-label', 'เปลี่ยนสถานะเป็น ส่งสำเร็จ');
+        button.setAttribute('onclick', "updateStatus(this, 'completed')");
+      } else if (newStatus === 'completed') {
+        button.disabled = true;
+        button.textContent = 'ส่งเรียบร้อยแล้ว';
+        button.style.backgroundColor = '#4caf50';
+        button.style.cursor = 'default';
+      }
+    }
+
+    // ฟังก์ชันเมนูลอย
+    function goHome() {
+      alert('กลับไปหน้าหลัก');
+      // window.location.href = 'rider-dashboard.html'; // หรือ URL หน้าแรกจริง ๆ
+    }
+
+    function refreshOrders() {
+      alert('รีเฟรชข้อมูลออเดอร์ใหม่');
+      // โหลดข้อมูลออเดอร์จาก API หรือ database
+    }
+
+    function openNotifications() {
+      alert('เปิดแจ้งเตือน');
+      // เปิดหน้าจอแจ้งเตือน หรือแสดงข้อความ
+    }
+
+    function openMap() {
+      alert('เปิดแผนที่นำทาง');
+      // เปิดแผนที่ เช่น Google Maps พร้อมพิกัดออเดอร์
+    }
+
+    function quickStatusUpdate() {
+      alert('เปิดฟังก์ชันอัพเดตสถานะรวดเร็ว');
+      // แสดงเมนูเลือกสถานะออเดอร์อย่างรวดเร็ว
+    }
+  </script>
 </body>
 
 </html>
