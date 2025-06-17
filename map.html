@@ -5,10 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>แผนที่ - Rider Map | Win Delivery</title>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     :root {
       --primary: #1877f2;
@@ -33,6 +30,7 @@
       color: var(--text);
       display: flex;
       flex-direction: column;
+      overflow: hidden;
     }
 
     header {
@@ -44,6 +42,7 @@
       text-align: center;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
       position: relative;
+      flex-shrink: 0;
     }
 
     .back-button {
@@ -60,8 +59,19 @@
 
     #map {
       flex-grow: 1;
-      height: 100%;
       width: 100%;
+      height: 100%;
+      min-height: 300px;
+    }
+
+    #locationError {
+      padding: 0.5rem 1rem;
+      text-align: center;
+      color: var(--accent);
+      font-weight: 600;
+      background: #ffe6e6;
+      display: none;
+      flex-shrink: 0;
     }
 
     footer {
@@ -69,8 +79,9 @@
       justify-content: space-around;
       background: #fff;
       border-top: 1px solid #ddd;
-      padding: 0.5rem 0;
-      box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
+      padding: 0.4rem 0;
+      box-shadow: 0 -2px 5px rgb(0 0 0 / 0.1);
+      flex-shrink: 0;
     }
 
     footer a {
@@ -81,16 +92,15 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      transition: color 0.3s;
-      width: 20%;
+      width: 56px;
+      user-select: none;
     }
 
-    footer a i {
-      background-color: #f2f2f2;
-      border-radius: 50%;
-      padding: 0.5rem;
-      font-size: 1.2rem;
-      margin-bottom: 0.25rem;
+    footer a img.icon {
+      width: 28px;
+      height: 28px;
+      margin-bottom: 3px;
+      object-fit: contain;
     }
 
     footer a.active,
@@ -98,35 +108,14 @@
       color: var(--primary);
       font-weight: 600;
     }
-
-    /* ข้อความแจ้งเมื่อหา GPS ไม่ได้ */
-    #locationError {
-      padding: 1rem;
-      text-align: center;
-      color: var(--accent);
-      font-weight: 600;
-      background: #ffe6e6;
-      display: none;
-    }
   </style>
-
-  <!-- ใช้ Font Awesome สำหรับไอคอน -->
-  <script
-    src="https://kit.fontawesome.com/a076d05399.js"
-    crossorigin="anonymous"
-    defer
-  ></script>
-
-  <!-- Google Maps API -->
-  <script
-    async
-    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"
-  ></script>
 </head>
 
 <body>
   <header>
-    <button class="back-button" onclick="goBack()" aria-label="กลับ"><i class="fas fa-arrow-left"></i></button>
+    <button class="back-button" onclick="goBack()" aria-label="กลับ">
+      &#8592;
+    </button>
     แผนที่จัดส่ง
   </header>
 
@@ -135,27 +124,31 @@
 
   <footer>
     <a href="index.html" aria-label="หน้าหลัก">
-      <i class="fas fa-home"></i>
-      <span>หน้าหลัก</span>
+      <img class="icon" src="https://cdn-icons-png.flaticon.com/512/1946/1946433.png" alt="หน้าหลัก" />
+      หน้าหลัก
     </a>
     <a href="rider-dashboard.html" aria-label="แดชบอร์ดไรเดอร์">
-      <i class="fas fa-tachometer-alt"></i>
-      <span>แดชบอร์ด</span>
+      <img class="icon" src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png" alt="แดชบอร์ด" />
+      แดชบอร์ด
     </a>
     <a href="update.html" aria-label="อัปเดตสถานะ">
-      <i class="fas fa-edit"></i>
-      <span>อัปเดต</span>
+      <img class="icon" src="https://cdn-icons-png.flaticon.com/512/992/992700.png" alt="อัปเดต" />
+      อัปเดต
     </a>
     <a href="chat.html" aria-label="แชต">
-      <i class="fas fa-comment-dots"></i>
-      <span>แชต</span>
+      <img class="icon" src="https://cdn-icons-png.flaticon.com/512/2462/2462719.png" alt="แชต" />
+      แชต
     </a>
     <a href="map.html" class="active" aria-current="page" aria-label="แผนที่">
-      <i class="fas fa-map-marker-alt"></i>
-      <span>แผนที่</span>
+      <img class="icon" src="https://cdn-icons-png.flaticon.com/512/252/252025.png" alt="แผนที่" />
+      แผนที่
     </a>
   </footer>
 
+  <script
+    async
+    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"
+  ></script>
   <script>
     function goBack() {
       window.history.back();
@@ -164,27 +157,24 @@
     let map, riderMarker, customerMarker, routePath;
 
     function initMap() {
-      // สร้างแผนที่ที่ศูนย์กลางไว้ก่อน (กรุงเทพ)
       const defaultPosition = { lat: 13.7563, lng: 100.5018 };
 
       map = new google.maps.Map(document.getElementById("map"), {
         center: defaultPosition,
         zoom: 12,
+        gestureHandling: "greedy",
       });
 
-      // ไอคอน Rider
       const riderIcon = {
         url: "https://cdn-icons-png.flaticon.com/512/1946/1946429.png",
         scaledSize: new google.maps.Size(40, 40),
       };
 
-      // ไอคอน บ้านลูกค้า
       const customerIcon = {
         url: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
         scaledSize: new google.maps.Size(40, 40),
       };
 
-      // Marker ลูกค้า ตำแหน่งตัวอย่าง
       const customerPosition = { lat: 13.7463, lng: 100.5318 };
       customerMarker = new google.maps.Marker({
         position: customerPosition,
@@ -193,7 +183,6 @@
         icon: customerIcon,
       });
 
-      // ขอสิทธิ์ดึงตำแหน่ง GPS ของไรเดอร์
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
@@ -202,7 +191,6 @@
               lng: position.coords.longitude,
             };
 
-            // วาง marker ไรเดอร์ตำแหน่งจริง
             if (!riderMarker) {
               riderMarker = new google.maps.Marker({
                 position: riderPos,
@@ -214,9 +202,8 @@
               riderMarker.setPosition(riderPos);
             }
 
-            // วาดเส้นทางจากไรเดอร์ไปยังลูกค้า
             if (routePath) {
-              routePath.setMap(null); // เคลียร์เส้นเดิมก่อน
+              routePath.setMap(null);
             }
 
             routePath = new google.maps.Polyline({
@@ -228,29 +215,24 @@
             });
             routePath.setMap(map);
 
-            // ซูมและจัดตำแหน่งกลางเพื่อให้เห็นทั้ง 2 จุด
             const bounds = new google.maps.LatLngBounds();
             bounds.extend(riderPos);
             bounds.extend(customerPosition);
             map.fitBounds(bounds);
 
-            // ซ่อนข้อความ error
             document.getElementById("locationError").style.display = "none";
           },
           (error) => {
-            // กรณีไม่อนุญาตหรือเกิดข้อผิดพลาด
             const errorDiv = document.getElementById("locationError");
             errorDiv.textContent =
               "ไม่สามารถระบุตำแหน่งปัจจุบันของคุณได้ กรุณาเปิด GPS และอนุญาตเบราว์เซอร์";
             errorDiv.style.display = "block";
 
-            // แสดงตำแหน่ง default และ customer
             map.setCenter(defaultPosition);
             map.setZoom(12);
           }
         );
       } else {
-        // เบราว์เซอร์ไม่รองรับ GPS
         const errorDiv = document.getElementById("locationError");
         errorDiv.textContent = "เบราว์เซอร์ของคุณไม่รองรับการระบุตำแหน่ง";
         errorDiv.style.display = "block";
