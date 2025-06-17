@@ -7,193 +7,135 @@
   <title>Win Delivery</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --primary: #1877f2; /* สีฟ้าหลัก */
-      --primary-light: #d6e4ff; /* สีฟ้าอ่อนสำหรับแบ็คกราวด์ */
-      --background: #f9fbff; /* พื้นหลังขาวอมฟ้า */
+      --primary: #1877f2;
+      --background: #f0f2f5;
       --card: #fff;
       --text: #050505;
-      --text-muted: #65676b;
+      --muted: #65676b;
       --accent: #ff3b30;
-      --shadow-light: rgba(24, 119, 242, 0.2);
-      --shadow-hover: rgba(24, 119, 242, 0.4);
-      --border-radius: 16px;
-      --transition: 0.3s ease;
     }
 
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: "Prompt", sans-serif;
+      font-family: 'Prompt', sans-serif;
     }
 
     body {
       background: var(--background);
       color: var(--text);
       line-height: 1.6;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
     }
 
-    /* Header */
     header {
       background-color: var(--primary);
       color: #fff;
-      padding: 1rem 1.5rem;
+      padding: 1rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      box-shadow: 0 4px 10px var(--shadow-light);
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
     }
 
     .logo {
-      font-size: 2rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      user-select: none;
-    }
-    /* เพิ่มไอคอนโลโก้รูปกล่องเดลิเวอรี่ */
-    .logo::before {
-      content: "📦";
-      font-size: 2.2rem;
-      transform: translateY(2px);
+      font-size: 1.8rem;
+      font-weight: 600;
     }
 
     .user-profile {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.5rem;
     }
 
     .user-profile img {
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
-      border: 2px solid #fff;
-      object-fit: cover;
-      transition: transform var(--transition);
-      cursor: pointer;
-    }
-
-    .user-profile img:hover {
-      transform: scale(1.1);
     }
 
     .cart {
       position: relative;
       cursor: pointer;
-      color: #fff;
-      font-size: 1.6rem;
-      transition: transform var(--transition);
     }
 
-    .cart:hover {
-      transform: scale(1.1);
+    .cart i {
+      font-size: 1.4rem;
     }
 
     .cart-count {
       position: absolute;
-      top: -8px;
-      right: -10px;
+      top: -6px;
+      right: -8px;
       background: var(--accent);
       color: #fff;
       border-radius: 50%;
-      padding: 3px 7px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      box-shadow: 0 0 5px var(--accent);
+      padding: 2px 6px;
+      font-size: 0.7rem;
     }
 
-    /* Main content */
+    /* แบนเนอร์โปรโมชัน */
+    .promo-banner {
+      max-width: 600px;
+      margin: 1rem auto;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .promo-banner img {
+      width: 100%;
+      display: block;
+    }
+
+    .promo-banner:hover {
+      transform: scale(1.05);
+    }
+
     main {
       max-width: 600px;
-      margin: 2rem auto 6rem;
+      margin: 1.5rem auto 5rem;
       padding: 0 1rem;
-      flex-grow: 1;
     }
 
     .feed-post {
       background: var(--card);
-      border-radius: var(--border-radius);
-      box-shadow: 0 4px 12px var(--shadow-light);
-      padding: 1rem 1rem 1.25rem;
-      margin-bottom: 1.8rem;
-      transition: box-shadow var(--transition), transform var(--transition);
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      transition: transform 0.2s ease;
     }
 
     .feed-post:hover {
-      box-shadow: 0 8px 25px var(--shadow-hover);
-      transform: translateY(-6px);
+      transform: translateY(-4px);
     }
 
     .feed-post img {
       width: 100%;
-      border-radius: 12px;
+      border-radius: 0.75rem;
       object-fit: cover;
-      aspect-ratio: 16 / 9;
-      transition: transform var(--transition);
-    }
-
-    .feed-post:hover img {
-      transform: scale(1.05);
     }
 
     .feed-title {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--primary);
-      user-select: none;
+      font-size: 1.3rem;
+      margin-top: 0.75rem;
+      font-weight: 600;
     }
 
     .feed-description {
-      color: var(--text-muted);
-      font-size: 1rem;
-      line-height: 1.4;
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-top: 0.25rem;
     }
 
-    /* ปุ่มสั่งอาหาร */
-    .btn-order {
-      align-self: flex-start;
-      background-color: var(--primary);
-      color: #fff;
-      padding: 0.5rem 1.25rem;
-      border: none;
-      border-radius: 30px;
-      font-weight: 600;
-      font-size: 1rem;
-      cursor: pointer;
-      box-shadow: 0 4px 10px var(--shadow-light);
-      transition: background-color var(--transition), box-shadow var(--transition),
-        transform var(--transition);
-      user-select: none;
-      margin-top: auto;
-    }
-
-    .btn-order:hover {
-      background-color: #135fcc;
-      box-shadow: 0 6px 15px var(--shadow-hover);
-      transform: translateY(-3px);
-    }
-
-    /* Footer */
     footer {
       position: fixed;
       bottom: 0;
@@ -203,243 +145,182 @@
       display: flex;
       justify-content: space-around;
       padding: 0.75rem 0;
-      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.08);
-      z-index: 100;
+      box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
+      z-index: 10;
     }
 
     footer a {
       text-decoration: none;
-      color: var(--text-muted);
-      font-size: 0.8rem;
+      color: var(--muted);
+      font-size: 0.75rem;
       text-align: center;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.3rem;
-      transition: color var(--transition), transform var(--transition);
-      user-select: none;
+      transition: color 0.3s;
     }
 
     footer a i {
-      background-color: var(--primary-light);
-      color: var(--primary);
+      background-color: #f2f2f2;
       border-radius: 50%;
       padding: 0.6rem;
-      font-size: 1.3rem;
-      transition: background-color var(--transition);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 38px;
-      height: 38px;
-      box-shadow: 0 3px 6px var(--shadow-light);
-    }
-
-    footer a:hover {
-      color: var(--primary);
-      transform: translateY(-3px);
-    }
-
-    footer a:hover i {
-      background-color: var(--primary);
-      color: #fff;
-      box-shadow: 0 5px 15px var(--shadow-hover);
+      font-size: 1.2rem;
+      margin-bottom: 0.25rem;
     }
 
     footer a.active {
       color: var(--primary);
-      font-weight: 700;
+      font-weight: 600;
     }
 
-    footer a.active i {
+    /* ปุ่มแชตลอย */
+    .chat-toggle-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
       background-color: var(--primary);
-      color: #fff;
-      box-shadow: 0 5px 15px var(--shadow-hover);
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    /* Chat Popup */
+    /* หน้าต่างแชต */
     .chat-popup {
       display: none;
       position: fixed;
       bottom: 80px;
       right: 20px;
       background: #fff;
-      border-radius: var(--border-radius);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       width: 320px;
-      max-height: 420px;
+      max-height: 400px;
       overflow: hidden;
-      z-index: 150;
-      display: flex;
+      z-index: 25;
       flex-direction: column;
     }
 
     .chat-popup header {
       background-color: var(--primary);
       color: #fff;
-      padding: 0.75rem 1rem;
-      font-weight: 700;
-      font-size: 1.15rem;
-      user-select: none;
+      padding: 0.5rem 1rem;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .chat-popup .messages {
-      padding: 0.75rem 1rem;
-      flex-grow: 1;
+      padding: 0.5rem 1rem;
+      height: 300px;
       overflow-y: auto;
-      font-size: 0.9rem;
-      color: var(--text);
-      background-color: var(--primary-light);
-      border-bottom: 1px solid #ccc;
-      line-height: 1.4;
+      flex-grow: 1;
     }
 
     .chat-popup .input-area {
       display: flex;
-      border-top: 1px solid #ddd;
-      background: #fff;
+      border-top: 1px solid #ccc;
+      padding: 0.5rem 1rem;
     }
 
     .chat-popup input {
       flex: 1;
       border: none;
-      padding: 0.7rem 1rem;
+      padding: 0.5rem;
       font-size: 1rem;
-      outline: none;
-      user-select: text;
-    }
-
-    .chat-popup input::placeholder {
-      color: var(--text-muted);
     }
 
     .chat-popup button {
       border: none;
       background: var(--primary);
       color: #fff;
-      padding: 0 1.3rem;
-      font-weight: 700;
+      padding: 0 1rem;
       cursor: pointer;
-      transition: background-color var(--transition);
-      user-select: none;
-    }
-
-    .chat-popup button:hover {
-      background-color: #135fcc;
-    }
-
-    /* Responsive */
-    @media (max-width: 640px) {
-      main {
-        margin: 1rem 1rem 6rem;
-      }
-
-      .feed-post {
-        padding: 1rem;
-      }
-
-      header {
-        padding: 1rem;
-      }
     }
   </style>
-  <script
-    src="https://kit.fontawesome.com/a076d05399.js"
-    crossorigin="anonymous"
-  ></script>
-  <script>
-    function toggleChat() {
-      const popup = document.getElementById("chatPopup");
-      if (popup.style.display === "flex") {
-        popup.style.display = "none";
-      } else {
-        popup.style.display = "flex";
-      }
-    }
-  </script>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
   <header>
     <div class="logo">Win Delivery</div>
     <div class="user-profile">
-      <img
-        src="https://via.placeholder.com/44"
-        alt="User"
-        title="โปรไฟล์ผู้ใช้"
-      />
+      <img src="https://via.placeholder.com/40" alt="User" />
     </div>
-    <div class="cart" onclick="alert('ไปยังหน้าตะกร้าสินค้า');" title="ตะกร้าสินค้า">
+    <div class="cart">
       <i class="fas fa-shopping-cart"></i>
       <span class="cart-count">2</span>
     </div>
   </header>
 
-  <main>
-    <div class="feed-post" onclick="alert('สั่งเมนู ร้านส้มตำปูปลาร้า');">
-      <img
-        src="https://via.placeholder.com/600x338?text=ส้มตำปูปลาร้า"
-        alt="ส้มตำปูปลาร้า"
-        loading="lazy"
-      />
-      <div class="feed-title">ร้านส้มตำปูปลาร้า</div>
-      <div class="feed-description">
-        วันนี้มีเมนูใหม่ ส้มตำผลไม้รวม แซ่บนัวสุดๆ
-      </div>
-      <button class="btn-order">สั่งเลย</button>
-    </div>
+  <!-- แบนเนอร์โปรโมชัน -->
+  <div class="promo-banner" onclick="alert('ไปที่หน้าโปรโมชั่น!');" role="button" tabindex="0" aria-label="โปรโมชั่น">
+    <img src="https://via.placeholder.com/600x150?text=โปรโมชันเด็ดวันนี้" alt="โปรโมชั่นเด็ดวันนี้" />
+  </div>
 
-    <div class="feed-post" onclick="alert('สั่งเมนู ไก่ทอดหาดใหญ่');">
-      <img
-        src="https://via.placeholder.com/600x338?text=ไก่ทอด+ข้าวเหนียว"
-        alt="ไก่ทอดหาดใหญ่"
-        loading="lazy"
-      />
+  <main>
+    <div class="feed-post">
+      <img src="https://via.placeholder.com/500x300?text=โพสต์อาหารจากร้านค้า" alt="อาหาร" />
+      <div class="feed-title">ร้านส้มตำปูปลาร้า</div>
+      <div class="feed-description">วันนี้มีเมนูใหม่ ส้มตำผลไม้รวม แซ่บนัวสุดๆ</div>
+    </div>
+    <div class="feed-post">
+      <img src="https://via.placeholder.com/500x300?text=ไก่ทอด+ข้าวเหนียว" alt="ข้าวเหนียวไก่ทอด" />
       <div class="feed-title">ร้านไก่ทอดหาดใหญ่</div>
-      <div class="feed-description">
-        โปรโมชั่นวันนี้! ซื้อครบ 100 บาท รับฟรีน้ำสมุนไพร
-      </div>
-      <button class="btn-order">สั่งเลย</button>
+      <div class="feed-description">โปรโมชั่นวันนี้! ซื้อครบ 100 บาท รับฟรีน้ำสมุนไพร</div>
     </div>
   </main>
 
-  <button
-    onclick="toggleChat()"
-    style="position: fixed; bottom: 140px; right: 20px; background: var(--primary); border: none; border-radius: 50%; width: 56px; height: 56px; color: #fff; font-size: 1.8rem; box-shadow: 0 6px 15px var(--shadow-hover); cursor: pointer; user-select: none;"
-    title="แชทกับร้านค้า"
-    aria-label="เปิดแชท"
-  >
-    <i class="fas fa-comments"></i>
-  </button>
-
-  <div id="chatPopup" class="chat-popup" role="dialog" aria-modal="true" aria-labelledby="chatHeader" tabindex="-1">
-    <header id="chatHeader">แชตร้านค้า</header>
+  <!-- หน้าต่างแชต -->
+  <div id="chatPopup" class="chat-popup" role="dialog" aria-modal="true" aria-labelledby="chatTitle">
+    <header>
+      <span id="chatTitle">แชตร้านค้า</span>
+      <button id="closeChat" aria-label="ปิดแชต" style="background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer;">&times;</button>
+    </header>
     <div class="messages">
       <p>👩‍🍳 สวัสดีค่ะ สอบถามเมนูได้นะคะ</p>
     </div>
     <div class="input-area">
-      <input type="text" placeholder="พิมพ์ข้อความ..." aria-label="ข้อความแชท" />
+      <input type="text" placeholder="พิมพ์ข้อความ..." aria-label="พิมพ์ข้อความแชต" />
       <button>ส่ง</button>
     </div>
   </div>
 
+  <!-- ปุ่มเปิดแชตลอย -->
+  <button id="openChat" aria-label="เปิดแชต" class="chat-toggle-btn">
+    <i class="fas fa-comment-dots"></i>
+  </button>
+
   <footer>
-    <a href="index.html" class="active" aria-current="page">
-      <i class="fas fa-home"></i><span>หน้าหลัก</span>
-    </a>
-    <a href="shop.html">
-      <i class="fas fa-store"></i><span>ร้านค้า</span>
-    </a>
-    <a href="coupons.html">
-      <i class="fas fa-ticket-alt"></i><span>คูปอง</span>
-    </a>
-    <a href="notifications.html">
-      <i class="fas fa-bell"></i><span>แจ้งเตือน</span>
-    </a>
-    <a href="accounts.html">
-      <i class="fas fa-user-circle"></i><span>บัญชี</span>
-    </a>
+    <a href="index.html"><i class="fas fa-home"></i><span>หน้าหลัก</span></a>
+    <a href="shop.html"><i class="fas fa-store"></i><span>ร้านค้า</span></a>
+    <a href="coupons.html"><i class="fas fa-ticket-alt"></i><span>คูปอง</span></a>
+    <a href="notifications.html"><i class="fas fa-bell"></i><span>แจ้งเตือน</span></a>
+    <a href="accounts.html"><i class="fas fa-user-circle"></i><span>บัญชี</span></a>
   </footer>
+
+  <script>
+    // เปิดแชต
+    document.getElementById('openChat').addEventListener('click', () => {
+      document.getElementById('chatPopup').style.display = 'flex';
+      document.getElementById('openChat').style.display = 'none';
+    });
+
+    // ปิดแชต
+    document.getElementById('closeChat').addEventListener('click', () => {
+      document.getElementById('chatPopup').style.display = 'none';
+      document.getElementById('openChat').style.display = 'flex';
+    });
+  </script>
 </body>
 
 </html>
