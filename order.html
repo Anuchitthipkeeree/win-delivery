@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>คำสั่งซื้อ | Win Delivery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-papmMgVzHzCQms2kI5LnXacXoG8XJRu/3vJgm0NEAErD4UuAcbYHZcSbQ1JQjIXm7R3+rUeMSq8K7X+82ZTog==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    :root {
+      --primary: #1877f2;
+      --background: #f0f2f5;
+      --card: #fff;
+      --text: #050505;
+      --muted: #65676b;
+      --accent: #ff3b30;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Prompt', sans-serif;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+      padding-bottom: 80px;
+    }
+
+    header {
+      background-color: var(--primary);
+      color: #fff;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .user-profile img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    main {
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: var(--card);
+      border-radius: 1rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .order-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .order-item:last-child {
+      border-bottom: none;
+    }
+
+    .item-info {
+      flex: 1;
+    }
+
+    .item-name {
+      font-weight: 600;
+    }
+
+    .item-price {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .total {
+      text-align: right;
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin-top: 1rem;
+    }
+
+    .confirm-button {
+      width: 100%;
+      margin-top: 2rem;
+      padding: 0.75rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .confirm-button:hover {
+      background: #145dc2;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="logo">คำสั่งซื้อ</div>
+    <div class="user-profile">
+      <img src="https://via.placeholder.com/40" alt="User" />
+    </div>
+  </header>
+
+  <main>
+    <h2>รายการที่คุณเลือก</h2>
+
+    <div class="order-item">
+      <div class="item-info">
+        <div class="item-name">ส้มตำไทย</div>
+        <div class="item-price">฿40 x 2</div>
+      </div>
+      <div>฿80</div>
+    </div>
+
+    <div class="order-item">
+      <div class="item-info">
+        <div class="item-name">ข้าวเหนียว</div>
+        <div class="item-price">฿10 x 3</div>
+      </div>
+      <div>฿30</div>
+    </div>
+
+    <div class="order-item">
+      <div class="item-info">
+        <div class="item-name">น้ำเก๊กฮวย</div>
+        <div class="item-price">฿15 x 1</div>
+      </div>
+      <div>฿15</div>
+    </div>
+
+    <div class="total">รวมทั้งหมด: ฿125</div>
+
+    <button class="confirm-button">ยืนยันคำสั่งซื้อ</button>
+  </main>
+  <nav class="bottom-nav">
+    <a href="index.html"><i class="fas fa-home"></i>หน้าหลัก</a>
+    <a href="order.html"><i class="fas fa-shopping-bag"></i>คำสั่งซื้อ</a>
+    <a href="#"><i class="fas fa-bell"></i>แจ้งเตือน</a>
+    <a href="#"><i class="fas fa-user"></i>โปรไฟล์</a>
+  </nav>
+</body>
+
+</html>
