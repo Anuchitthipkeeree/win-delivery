@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-papmMgVzHzCQms2kI5LnXacXoG8XJRu/3vJgm0NEAErD4UuAcbYHZcSbQ1JQjIXm7R3+rUeMSq8K7X+82ZTog==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
     :root {
       --primary: #1877f2;
@@ -29,6 +30,7 @@
       background: var(--background);
       color: var(--text);
       line-height: 1.6;
+      padding-bottom: 80px;
     }
 
     header {
@@ -60,7 +62,15 @@
     }
 
     .cart {
-      position: relative;
+      position: fixed;
+      bottom: 70px;
+      right: 20px;
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      padding: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      z-index: 100;
       cursor: pointer;
     }
 
@@ -70,8 +80,8 @@
 
     .cart-count {
       position: absolute;
-      top: -6px;
-      right: -8px;
+      top: 2px;
+      right: 2px;
       background: var(--accent);
       color: #fff;
       border-radius: 50%;
@@ -79,7 +89,28 @@
       font-size: 0.7rem;
     }
 
-    /* แบนเนอร์โปรโมชัน */
+    .search-box {
+      max-width: 600px;
+      margin: 1rem auto;
+      padding: 0 1rem;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 0.6rem 1rem;
+      border-radius: 2rem;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    .delivery-address {
+      max-width: 600px;
+      margin: 0 auto 1rem;
+      padding: 0 1rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
     .promo-banner {
       max-width: 600px;
       margin: 1rem auto;
@@ -97,6 +128,37 @@
 
     .promo-banner:hover {
       transform: scale(1.05);
+    }
+
+    .category-icons {
+      max-width: 600px;
+      margin: 1rem auto;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      padding: 0 1rem;
+      gap: 1rem;
+    }
+
+    .category-icons .category {
+      background: var(--card);
+      padding: 0.75rem;
+      border-radius: 1rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      text-align: center;
+      flex: 1 0 21%;
+      max-width: 22%;
+    }
+
+    .category i {
+      font-size: 1.5rem;
+      color: var(--primary);
+    }
+
+    .category span {
+      display: block;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
     }
 
     main {
@@ -136,118 +198,32 @@
       margin-top: 0.25rem;
     }
 
-    footer {
+    .bottom-nav {
       position: fixed;
       bottom: 0;
+      left: 0;
       width: 100%;
-      background: #fff;
-      border-top: 1px solid #ddd;
+      background: white;
       display: flex;
       justify-content: space-around;
-      padding: 0.75rem 0;
-      box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
-      z-index: 10;
+      padding: 0.5rem 0;
+      box-shadow: 0 -1px 6px rgba(0, 0, 0, 0.1);
+      z-index: 99;
     }
 
-    footer a {
-      text-decoration: none;
+    .bottom-nav a {
+      text-align: center;
       color: var(--muted);
       font-size: 0.75rem;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      transition: color 0.3s;
+      text-decoration: none;
     }
 
-    footer a i {
-      background-color: #f2f2f2;
-      border-radius: 50%;
-      padding: 0.6rem;
+    .bottom-nav a i {
+      display: block;
       font-size: 1.2rem;
-      margin-bottom: 0.25rem;
-    }
-
-    footer a.active {
-      color: var(--primary);
-      font-weight: 600;
-    }
-
-    /* ปุ่มแชตลอย */
-    .chat-toggle-btn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: var(--primary);
-      border: none;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      color: white;
-      font-size: 1.5rem;
-      cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      z-index: 30;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* หน้าต่างแชต */
-    .chat-popup {
-      display: none;
-      position: fixed;
-      bottom: 80px;
-      right: 20px;
-      background: #fff;
-      border-radius: 0.75rem;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      width: 320px;
-      max-height: 400px;
-      overflow: hidden;
-      z-index: 25;
-      flex-direction: column;
-    }
-
-    .chat-popup header {
-      background-color: var(--primary);
-      color: #fff;
-      padding: 0.5rem 1rem;
-      font-weight: bold;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .chat-popup .messages {
-      padding: 0.5rem 1rem;
-      height: 300px;
-      overflow-y: auto;
-      flex-grow: 1;
-    }
-
-    .chat-popup .input-area {
-      display: flex;
-      border-top: 1px solid #ccc;
-      padding: 0.5rem 1rem;
-    }
-
-    .chat-popup input {
-      flex: 1;
-      border: none;
-      padding: 0.5rem;
-      font-size: 1rem;
-    }
-
-    .chat-popup button {
-      border: none;
-      background: var(--primary);
-      color: #fff;
-      padding: 0 1rem;
-      cursor: pointer;
+      margin-bottom: 0.2rem;
     }
   </style>
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -256,15 +232,29 @@
     <div class="user-profile">
       <img src="https://via.placeholder.com/40" alt="User" />
     </div>
-    <div class="cart">
-      <i class="fas fa-shopping-cart"></i>
-      <span class="cart-count">2</span>
-    </div>
   </header>
 
-  <!-- แบนเนอร์โปรโมชัน -->
-  <div class="promo-banner" onclick="alert('ไปที่หน้าโปรโมชั่น!');" role="button" tabindex="0" aria-label="โปรโมชั่น">
+  <div class="search-box">
+    <input type="text" placeholder="ค้นหาร้านค้า หรือเมนู..." />
+  </div>
+
+  <div class="delivery-address">
+    ที่อยู่จัดส่ง: 123/45 ถนนสายสุข เมืองสุขใจ
+  </div>
+
+  <div class="promo-banner" onclick="alert('ไปที่หน้าโปรโมชั่น!');">
     <img src="https://via.placeholder.com/600x150?text=โปรโมชันเด็ดวันนี้" alt="โปรโมชั่นเด็ดวันนี้" />
+  </div>
+
+  <div class="category-icons">
+    <div class="category"><i class="fas fa-utensils"></i><span>อาหาร</span></div>
+    <div class="category"><i class="fas fa-coffee"></i><span>เครื่องดื่ม</span></div>
+    <div class="category"><i class="fas fa-ice-cream"></i><span>ของหวาน</span></div>
+    <div class="category"><i class="fas fa-store"></i><span>ของชำ</span></div>
+    <div class="category"><i class="fas fa-bread-slice"></i><span>เบเกอรี่</span></div>
+    <div class="category"><i class="fas fa-leaf"></i><span>สุขภาพ</span></div>
+    <div class="category"><i class="fas fa-drumstick-bite"></i><span>ปิ้งย่าง</span></div>
+    <div class="category"><i class="fas fa-pizza-slice"></i><span>จานด่วน</span></div>
   </div>
 
   <main>
@@ -280,48 +270,18 @@
     </div>
   </main>
 
-  <!-- หน้าต่างแชต -->
-  <div id="chatPopup" class="chat-popup" role="dialog" aria-modal="true" aria-labelledby="chatTitle">
-    <header>
-      <span id="chatTitle">แชตร้านค้า</span>
-      <button id="closeChat" aria-label="ปิดแชต" style="background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer;">&times;</button>
-    </header>
-    <div class="messages">
-      <p>👩‍🍳 สวัสดีค่ะ สอบถามเมนูได้นะคะ</p>
-    </div>
-    <div class="input-area">
-      <input type="text" placeholder="พิมพ์ข้อความ..." aria-label="พิมพ์ข้อความแชต" />
-      <button>ส่ง</button>
-    </div>
+  <div class="cart">
+    <i class="fas fa-shopping-cart"></i>
+    <span class="cart-count">2</span>
   </div>
 
-  <!-- ปุ่มเปิดแชตลอย -->
-  <button id="openChat" aria-label="เปิดแชต" class="chat-toggle-btn">
-    <i class="fas fa-comment-dots"></i>
-  </button>
-
-  <footer>
-  <a href="index.html"><i class="fas fa-home"></i><span>หน้าหลัก</span></a>
-  <a href="shop.html"><i class="fas fa-store"></i><span>ร้านค้า</span></a>
-  <a href="rider-follow.html"><i class="fas fa-motorcycle"></i><span>ติดตามไรเดอร์</span></a>
-  <a href="notifications.html"><i class="fas fa-bell"></i><span>แจ้งเตือน</span></a>
-  <a href="accounts.html"><i class="fas fa-user-circle"></i><span>บัญชี</span></a>
-</footer>
-
-
-  <script>
-    // เปิดแชต
-    document.getElementById('openChat').addEventListener('click', () => {
-      document.getElementById('chatPopup').style.display = 'flex';
-      document.getElementById('openChat').style.display = 'none';
-    });
-
-    // ปิดแชต
-    document.getElementById('closeChat').addEventListener('click', () => {
-      document.getElementById('chatPopup').style.display = 'none';
-      document.getElementById('openChat').style.display = 'flex';
-    });
-  </script>
+  <nav class="bottom-nav">
+    <a href="#"><i class="fas fa-home"></i>หน้าหลัก</a>
+    <a href="#"><i class="fas fa-search"></i>ค้นหา</a>
+    <a href="#"><i class="fas fa-shopping-bag"></i>คำสั่งซื้อ</a>
+    <a href="#"><i class="fas fa-bell"></i>แจ้งเตือน</a>
+    <a href="#"><i class="fas fa-user"></i>โปรไฟล์</a>
+  </nav>
 </body>
 
 </html>
