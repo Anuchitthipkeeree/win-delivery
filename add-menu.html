@@ -5,17 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>เพิ่มเมนูใหม่ | Win Delivery</title>
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    body {
+    :root {
+      --primary: #1877f2;
+      --accent: #ff3b30;
+      --background: #f7f9fc;
+      --card: #fff;
+      --text: #222;
+      --muted: #888;
+    }
+
+    * {
+      box-sizing: border-box;
       font-family: 'Prompt', sans-serif;
-      background: #f4f4f4;
+    }
+
+    body {
+      background: var(--background);
       margin: 0;
       padding: 0;
+      color: var(--text);
     }
 
     header {
-      background: #1877f2;
+      background: var(--primary);
       color: white;
       padding: 1rem;
       text-align: center;
@@ -24,13 +37,16 @@
     }
 
     .container {
+      max-width: 600px;
+      margin: auto;
       padding: 1rem;
-      max-width: 500px;
-      margin: 0 auto;
-      background: white;
-      margin-top: 1rem;
+    }
+
+    form {
+      background: var(--card);
+      padding: 1.5rem;
       border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     }
 
     label {
@@ -39,28 +55,58 @@
       font-weight: 600;
     }
 
-    input, textarea {
+    input[type="text"],
+    input[type="number"],
+    select,
+    textarea {
       width: 100%;
-      padding: 0.7rem;
-      margin-bottom: 1rem;
-      border-radius: 8px;
+      padding: 0.6rem;
       border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 1rem;
       font-size: 1rem;
+    }
+
+    input[type="file"] {
+      margin-bottom: 1rem;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
     }
 
     .btn {
-      background: #1877f2;
-      color: white;
-      border: none;
       padding: 0.6rem 1.2rem;
+      border: none;
       border-radius: 8px;
       font-size: 1rem;
       cursor: pointer;
-      margin-right: 0.5rem;
     }
 
-    .btn.cancel {
-      background: gray;
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: #ccc;
+      color: #222;
+    }
+
+    img#preview {
+      max-width: 100%;
+      margin-top: 1rem;
+      display: none;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    @media screen and (max-width: 500px) {
+      .buttons {
+        flex-direction: column;
+        gap: 10px;
+      }
     }
   </style>
 </head>
@@ -71,31 +117,54 @@
   <div class="container">
     <form onsubmit="handleSubmit(event)">
       <label for="name">ชื่อเมนู</label>
-      <input type="text" id="name" required />
+      <input type="text" id="name" name="name" placeholder="เช่น ส้มตำไทย" required>
 
       <label for="price">ราคา (บาท)</label>
-      <input type="number" id="price" required />
+      <input type="number" id="price" name="price" placeholder="เช่น 30" required>
 
-      <label for="desc">รายละเอียด</label>
-      <textarea id="desc" rows="4"></textarea>
+      <label for="category">หมวดหมู่</label>
+      <select id="category" name="category" required>
+        <option value="">-- เลือกหมวดหมู่ --</option>
+        <option value="อาหาร">อาหาร</option>
+        <option value="เครื่องดื่ม">เครื่องดื่ม</option>
+        <option value="ของหวาน">ของหวาน</option>
+        <option value="อื่นๆ">อื่นๆ</option>
+      </select>
 
-      <button type="submit" class="btn">บันทึก</button>
-      <a href="shop-dashboard.html" class="btn cancel">ย้อนกลับ</a>
+      <label for="image">รูปภาพเมนู</label>
+      <input type="file" id="image" name="image" accept="image/*" onchange="previewImage(event)" required>
+      <img id="preview" alt="รูปตัวอย่าง" />
+
+      <label for="description">รายละเอียดเมนู</label>
+      <textarea id="description" name="description" rows="3" placeholder="รายละเอียดเพิ่มเติม (ถ้ามี)"></textarea>
+
+      <div class="buttons">
+        <button type="button" class="btn btn-secondary" onclick="goBack()">ย้อนกลับ</button>
+        <button type="submit" class="btn btn-primary">บันทึกเมนู</button>
+      </div>
     </form>
   </div>
 
   <script>
+    function previewImage(event) {
+      const reader = new FileReader();
+      reader.onload = function () {
+        const preview = document.getElementById('preview');
+        preview.src = reader.result;
+        preview.style.display = 'block';
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+
     function handleSubmit(e) {
       e.preventDefault();
-      const name = document.getElementById('name').value;
-      const price = document.getElementById('price').value;
-      const desc = document.getElementById('desc').value;
+      alert("✅ เพิ่มเมนูสำเร็จ!");
+      window.location.href = "shop-dashboard.html"; // กลับหน้า dashboard
+    }
 
-      alert(`✅ เมนูใหม่:\nชื่อ: ${name}\nราคา: ${price} บาท\nรายละเอียด: ${desc}`);
-      
-      // ในอนาคต: ส่งข้อมูลไปยัง Google Sheets / Firebase ก็ทำได้ตรงนี้
+    function goBack() {
+      window.location.href = "shop-dashboard.html";
     }
   </script>
-
 </body>
 </html>
