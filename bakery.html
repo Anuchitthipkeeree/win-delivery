@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>หมวดเบเกอรี่ - Win Delivery</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Prompt', sans-serif;
+      background: #fef9f4;
+      margin: 0;
+      padding-bottom: 80px;
+    }
+
+    header {
+      background-color: #e29578;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 600;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    main {
+      max-width: 600px;
+      margin: 1rem auto;
+      padding: 0 1rem;
+    }
+
+    .bakery-item {
+      background: #fff;
+      border-radius: 1rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .bakery-item img {
+      width: 100%;
+      border-radius: 0.75rem;
+    }
+
+    .bakery-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-top: 0.75rem;
+    }
+
+    .bakery-desc {
+      color: #444;
+      font-size: 0.95rem;
+      margin-top: 0.3rem;
+    }
+
+    .order-btn {
+      margin-top: 0.8rem;
+      display: inline-block;
+      background: #e29578;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: white;
+      display: flex;
+      justify-content: space-around;
+      padding: 0.5rem 0;
+      box-shadow: 0 -1px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .bottom-nav a {
+      text-align: center;
+      color: #666;
+      font-size: 0.75rem;
+      text-decoration: none;
+    }
+
+    .bottom-nav a i {
+      display: block;
+      font-size: 1.2rem;
+      margin-bottom: 0.2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>หมวดเบเกอรี่</header>
+
+  <main>
+    <div class="bakery-item">
+      <img src="https://via.placeholder.com/500x300?text=เค้กส้ม" alt="เค้กส้ม" />
+      <div class="bakery-title">เค้กส้ม - ร้านเบเกอรี่หวานเย็น</div>
+      <div class="bakery-desc">เค้กนุ่มฟู รสส้มแท้ หวานอมเปรี้ยว</div>
+      <a href="#" class="order-btn">สั่งเลย</a>
+    </div>
+
+    <div class="bakery-item">
+      <img src="https://via.placeholder.com/500x300?text=ครัวซองต์" alt="ครัวซองต์" />
+      <div class="bakery-title">ครัวซองต์เนยสด - ร้านบ้านขนมปัง</div>
+      <div class="bakery-desc">อบใหม่ทุกเช้า กรอบนอกนุ่มใน</div>
+      <a href="#" class="order-btn">สั่งเลย</a>
+    </div>
+
+    <div class="bakery-item">
+      <img src="https://via.placeholder.com/500x300?text=ขนมปัง" alt="ขนมปังไส้เผือก" />
+      <div class="bakery-title">ขนมปังไส้เผือก - ร้านขนมเจ๊แดง</div>
+      <div class="bakery-desc">ไส้เผือกเน้น ๆ หอม หวานละมุน</div>
+      <a href="#" class="order-btn">สั่งเลย</a>
+    </div>
+  </main>
+
+  <nav class="bottom-nav">
+    <a href="index.html"><i class="fas fa-home"></i>หน้าหลัก</a>
+    <a href="order.html"><i class="fas fa-shopping-bag"></i>คำสั่งซื้อ</a>
+    <a href="notifications.html"><i class="fas fa-bell"></i>แจ้งเตือน</a>
+    <a href="profile.html"><i class="fas fa-user"></i>โปรไฟล์</a>
+  </nav>
+
+</body>
+</html>

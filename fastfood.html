@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>หมวดจานด่วน - Win Delivery</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Prompt', sans-serif;
+      background: #fdfaf6;
+      margin: 0;
+      padding-bottom: 80px;
+    }
+
+    header {
+      background-color: #f4a261;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 600;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    main {
+      max-width: 600px;
+      margin: 1rem auto;
+      padding: 0 1rem;
+    }
+
+    .fastfood-item {
+      background: #fff;
+      border-radius: 1rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .fastfood-item img {
+      width: 100%;
+      border-radius: 0.75rem;
+    }
+
+    .fastfood-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-top: 0.75rem;
+    }
+
+    .fastfood-desc {
+      color: #444;
+      font-size: 0.95rem;
+      margin-top: 0.3rem;
+    }
+
+    .order-btn {
+      margin-top: 0.8rem;
+      display: inline-block;
+      background: #f4a261;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: white;
+      display: flex;
+      justify-content: space-around;
+      padding: 0.5rem 0;
+      box-shadow: 0 -1px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .bottom-nav a {
+      text-align: center;
+      color: #666;
+      font-size: 0.75rem;
+      text-decoration: none;
+    }
+
+    .bottom-nav a i {
+      display: block;
+      font-size: 1.2rem;
+      margin-bottom: 0.2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>หมวดจานด่วน</header>
+
+  <main>
+    <div class="fastfood-item">
+      <img src="https://via.placeholder.com/500x300?text=ข้าวกะเพรา" alt="ข้าวกะเพรา" />
+      <div class="fastfood-title">ข้าวกะเพราไก่ไข่ดาว - ร้านลุงแดง</div>
+      <div class="fastfood-desc">เผ็ดจัดจ้าน หอมใบกะเพรา พร้อมไข่ดาวกรอบ</div>
+      <a href="#" class="order-btn">สั่งเลย</a>
+    </div>
+
+    <div class="fastfood-item">
+      <img src="https://via.placeholder.com/500x300?text=ข้าวไข่เจียว" alt="ข้าวไข่เจียว" />
+      <div class="fastfood-title">ข้าวไข่เจียวหมูสับ - ร้านเจ๊นุช</div>
+      <div class="fastfood-desc">ไข่เจียวฟูๆ กรอบนอกนุ่มใน เสิร์ฟพร้อมซอส</div>
+      <a href="#" class="order-btn">สั่งเลย</a>
+    </div>
+
+    <div class="fastfood-item">
+      <img src="https://via.placeholder.com/500x300?text=ข้าวผัด" alt="ข้าวผัด" />
+      <div class="fastfood-title">ข้าวผัดหมู - ร้านคุณแม่</div>
+      <div class="fastfood-desc">ข้าวผัดร่วนหอมกระทะ เครื่องแน่น</div>
+      <a href="#" class="order-btn">สั่งเลย</a>
+    </div>
+  </main>
+
+  <nav class="bottom-nav">
+    <a href="index.html"><i class="fas fa-home"></i>หน้าหลัก</a>
+    <a href="order.html"><i class="fas fa-shopping-bag"></i>คำสั่งซื้อ</a>
+    <a href="notifications.html"><i class="fas fa-bell"></i>แจ้งเตือน</a>
+    <a href="profile.html"><i class="fas fa-user"></i>โปรไฟล์</a>
+  </nav>
+
+</body>
+</html>
