@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="th">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -156,15 +155,12 @@
     const imagePreview = document.getElementById("imagePreview");
     const successMessage = document.getElementById("successMessage");
 
-    let imageBase64 = "";
-
     imageInput.addEventListener("change", function () {
       const file = this.files[0];
       if (file) {
         const reader = new FileReader();
         reader.onload = function (e) {
           imagePreview.src = e.target.result;
-          imageBase64 = e.target.result; // เก็บ base64
           imagePreview.style.display = "block";
         };
         reader.readAsDataURL(file);
@@ -181,32 +177,34 @@
         priceError.style.display = "none";
       }
 
-      const menuData = {
-        name: document.getElementById("name").value,
-        price: document.getElementById("price").value,
-        category: document.getElementById("category").value,
-        postText: document.getElementById("postText").value,
-        image: imageBase64,
-        timestamp: new Date().toISOString()
-      };
+      const name = document.getElementById("name").value;
+      const price = document.getElementById("price").value;
+      const category = document.getElementById("category").value;
+      const postText = document.getElementById("postText").value;
+      const timestamp = new Date().toISOString();
+      const imageFile = imageInput.files[0];
 
-      // ส่งข้อมูลไป Google Apps Script Web App
-      fetch("https://script.google.com/macros/s/AKfycbyb02JGT4eG9Hm77RFmF8u0g8M5ZodM_XmIwEy9a7TPKgFcLuEkIRV1XigkfpDUsapn/exec", {
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("price", price);
+      formData.append("category", category);
+      formData.append("postText", postText);
+      formData.append("timestamp", timestamp);
+      formData.append("image", imageFile); // ภาพเป็นไฟล์จริง
+
+      fetch("https://hook.eu2.make.com/uaaih93in133bz72e1r4j9xvq7sh1122", {
         method: "POST",
-        mode: "no-cors",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(menuData)
-      });
-
-      // แสดงข้อความสำเร็จ
-      successMessage.style.display = "block";
-      form.reset();
-      imagePreview.style.display = "none";
-      imageBase64 = "";
+        body: formData
+      })
+        .then(() => {
+          successMessage.style.display = "block";
+          form.reset();
+          imagePreview.style.display = "none";
+        })
+        .catch(() => {
+          alert("เกิดข้อผิดพลาดในการส่งข้อมูลไปยัง Make");
+        });
     });
   </script>
 </body>
-
 </html>
