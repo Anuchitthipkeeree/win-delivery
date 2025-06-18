@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>เพิ่มเมนูใหม่ | Win Delivery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Prompt', sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: #1877f2;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .container {
+      padding: 1rem;
+      max-width: 500px;
+      margin: 0 auto;
+      background: white;
+      margin-top: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 0.7rem;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    .btn {
+      background: #1877f2;
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-right: 0.5rem;
+    }
+
+    .btn.cancel {
+      background: gray;
+    }
+  </style>
+</head>
+<body>
+
+  <header>เพิ่มเมนูใหม่</header>
+
+  <div class="container">
+    <form onsubmit="handleSubmit(event)">
+      <label for="name">ชื่อเมนู</label>
+      <input type="text" id="name" required />
+
+      <label for="price">ราคา (บาท)</label>
+      <input type="number" id="price" required />
+
+      <label for="desc">รายละเอียด</label>
+      <textarea id="desc" rows="4"></textarea>
+
+      <button type="submit" class="btn">บันทึก</button>
+      <a href="shop-dashboard.html" class="btn cancel">ย้อนกลับ</a>
+    </form>
+  </div>
+
+  <script>
+    function handleSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const price = document.getElementById('price').value;
+      const desc = document.getElementById('desc').value;
+
+      alert(`✅ เมนูใหม่:\nชื่อ: ${name}\nราคา: ${price} บาท\nรายละเอียด: ${desc}`);
+      
+      // ในอนาคต: ส่งข้อมูลไปยัง Google Sheets / Firebase ก็ทำได้ตรงนี้
+    }
+  </script>
+
+</body>
+</html>
