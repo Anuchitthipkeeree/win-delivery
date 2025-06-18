@@ -8,7 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-papmMgVzHzCQms2kI5LnXacXoG8XJRu/3vJgm0NEAErD4UuAcbYHZcSbQ1JQjIXm7R3+rUeMSq8K7X+82ZTog==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-papmMgVzHzCQms2kI5LnXacXoG8XJRu/3vJgm0NEAErD4UuAcbYHZcSbQ1JQjIXm7R3+rUeMSq8K7X+82ZTog=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
     :root {
       --primary: #1877f2;
@@ -130,35 +132,58 @@
       transform: scale(1.05);
     }
 
+    /* ปรับปรุงปุ่มหมวดหมู่ใหม่ */
     .category-icons {
       max-width: 600px;
       margin: 1rem auto;
       display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
       flex-wrap: wrap;
       padding: 0 1rem;
       gap: 1rem;
     }
 
     .category-icons .category {
-      background: var(--card);
-      padding: 0.75rem;
-      border-radius: 1rem;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      background: linear-gradient(135deg, #4c8bf5, #1a5ddb);
+      padding: 1rem 0;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(28, 63, 124, 0.4);
       text-align: center;
       flex: 1 0 21%;
       max-width: 22%;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .category i {
-      font-size: 1.5rem;
-      color: var(--primary);
+    .category-icons .category a {
+      color: #fff;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      font-size: 1rem;
     }
 
-    .category span {
-      display: block;
-      margin-top: 0.5rem;
-      font-size: 0.9rem;
+    .category-icons .category i {
+      font-size: 2rem;
+      color: #fff;
+      transition: color 0.3s ease;
+    }
+
+    .category-icons .category:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 15px rgba(28, 63, 124, 0.7);
+    }
+
+    .category-icons .category:hover i {
+      color: #ffdd57;
+    }
+
+    .category-icons .category span {
+      font-size: 1.1rem;
+      color: #fff;
     }
 
     main {
@@ -279,48 +304,47 @@
   </div>
 
   <div class="category-icons">
-  <div class="category">
-    <a href="food.html">
-      <i class="fas fa-utensils"></i><span>อาหาร</span>
-    </a>
+    <div class="category">
+      <a href="food.html">
+        <i class="fas fa-utensils"></i><span>อาหาร</span>
+      </a>
+    </div>
+    <div class="category">
+      <a href="drink.html">
+        <i class="fas fa-coffee"></i><span>เครื่องดื่ม</span>
+      </a>
+    </div>
+    <div class="category">
+      <a href="dessert.html">
+        <i class="fas fa-ice-cream"></i><span>ของหวาน</span>
+      </a>
+    </div>
+    <div class="category">
+      <a href="grocery.html">
+        <i class="fas fa-store"></i><span>ของชำ</span>
+      </a>
+    </div>
+    <div class="category">
+      <a href="bakery.html">
+        <i class="fas fa-bread-slice"></i><span>เบเกอรี่</span>
+      </a>
+    </div>
+    <div class="category">
+      <a href="healthy.html">
+        <i class="fas fa-leaf"></i><span>สุขภาพ</span>
+      </a>
+    </div>
+    <div class="category">
+      <a href="bbq.html">
+        <i class="fas fa-drumstick-bite"></i><span>ปิ้งย่าง</span>
+      </a>
+    </div>
+    <div class="category">
+      <a href="fastfood.html">
+        <i class="fas fa-pizza-slice"></i><span>จานด่วน</span>
+      </a>
+    </div>
   </div>
-  <div class="category">
-    <a href="drink.html">
-      <i class="fas fa-coffee"></i><span>เครื่องดื่ม</span>
-    </a>
-  </div>
-  <div class="category">
-    <a href="dessert.html">
-      <i class="fas fa-ice-cream"></i><span>ของหวาน</span>
-    </a>
-  </div>
-  <div class="category">
-    <a href="grocery.html">
-      <i class="fas fa-store"></i><span>ของชำ</span>
-    </a>
-  </div>
-  <div class="category">
-    <a href="bakery.html">
-      <i class="fas fa-bread-slice"></i><span>เบเกอรี่</span>
-    </a>
-  </div>
-  <div class="category">
-    <a href="healthy.html">
-      <i class="fas fa-leaf"></i><span>สุขภาพ</span>
-    </a>
-  </div>
-  <div class="category">
-    <a href="bbq.html">
-      <i class="fas fa-drumstick-bite"></i><span>ปิ้งย่าง</span>
-    </a>
-  </div>
-  <div class="category">
-    <a href="fastfood.html">
-      <i class="fas fa-pizza-slice"></i><span>จานด่วน</span>
-    </a>
-  </div>
-</div>
-
 
   <main>
     <div class="feed-post">
