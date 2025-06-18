@@ -156,12 +156,15 @@
     const imagePreview = document.getElementById("imagePreview");
     const successMessage = document.getElementById("successMessage");
 
+    let imageBase64 = "";
+
     imageInput.addEventListener("change", function () {
       const file = this.files[0];
       if (file) {
         const reader = new FileReader();
         reader.onload = function (e) {
           imagePreview.src = e.target.result;
+          imageBase64 = e.target.result; // เก็บ base64
           imagePreview.style.display = "block";
         };
         reader.readAsDataURL(file);
@@ -170,6 +173,7 @@
 
     form.addEventListener("submit", function (e) {
       e.preventDefault();
+
       if (parseFloat(priceInput.value) <= 0) {
         priceError.style.display = "block";
         return;
@@ -177,21 +181,30 @@
         priceError.style.display = "none";
       }
 
-      const postText = document.getElementById("postText").value;
-      const menuName = document.getElementById("name").value;
-      const category = document.getElementById("category").value;
+      const menuData = {
+        name: document.getElementById("name").value,
+        price: document.getElementById("price").value,
+        category: document.getElementById("category").value,
+        postText: document.getElementById("postText").value,
+        image: imageBase64,
+        timestamp: new Date().toISOString()
+      };
 
-      // จำลองการบันทึก
-      console.log("ชื่อเมนู:", menuName);
-      console.log("หมวดหมู่:", category);
-      console.log("โพสต์:", postText);
+      // ส่งข้อมูลไป Google Apps Script Web App
+      fetch("https://script.google.com/macros/s/AKfycbyb02JGT4eG9Hm77RFmF8u0g8M5ZodM_XmIwEy9a7TPKgFcLuEkIRV1XigkfpDUsapn/exec", {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(menuData)
+      });
 
       // แสดงข้อความสำเร็จ
-      setTimeout(() => {
-        successMessage.style.display = "block";
-        form.reset();
-        imagePreview.style.display = "none";
-      }, 500);
+      successMessage.style.display = "block";
+      form.reset();
+      imagePreview.style.display = "none";
+      imageBase64 = "";
     });
   </script>
 </body>
