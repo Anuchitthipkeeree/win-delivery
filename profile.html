@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>โปรไฟล์ | Win Delivery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-papmMgVzHzCQms2kI5LnXacXoG8XJRu/3vJgm0NEAErD4UuAcbYHZcSbQ1JQjIXm7R3+rUeMSq8K7X+82ZTog==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    :root {
+      --primary: #1877f2;
+      --background: #f0f2f5;
+      --card: #fff;
+      --text: #050505;
+      --muted: #65676b;
+      --accent: #ff3b30;
+      --border-radius: 1rem;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Prompt', sans-serif;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+      padding-bottom: 80px;
+    }
+
+    header {
+      background-color: var(--primary);
+      color: #fff;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+
+    main {
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      background: var(--card);
+      padding: 1rem;
+      border-radius: var(--border-radius);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    .profile-header img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--primary);
+    }
+
+    .profile-info {
+      flex: 1;
+    }
+
+    .profile-info h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .profile-info p {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .coupon-section {
+      background: var(--card);
+      padding: 1rem;
+      border-radius: var(--border-radius);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      margin-bottom: 1.5rem;
+    }
+
+    .coupon-section h3 {
+      margin-bottom: 1rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .coupon-count {
+      font-weight: 600;
+      color: var(--accent);
+      background: #ffe6e6;
+      padding: 0.1rem 0.5rem;
+      border-radius: 12px;
+      margin-left: 0.3rem;
+      font-size: 0.9rem;
+    }
+
+    .coupon-list {
+      list-style: none;
+    }
+
+    .coupon-list li {
+      padding: 0.7rem 1rem;
+      border: 1px solid #ddd;
+      border-radius: 0.8rem;
+      margin-bottom: 0.7rem;
+      font-size: 0.95rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f9fafb;
+      box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .coupon-name {
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .coupon-expiry {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: white;
+      display: flex;
+      justify-content: space-around;
+      padding: 0.5rem 0;
+      box-shadow: 0 -1px 6px rgba(0, 0, 0, 0.1);
+      z-index: 99;
+    }
+
+    .bottom-nav a {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.75rem;
+      text-decoration: none;
+      flex-grow: 1;
+      padding: 0.3rem 0;
+      transition: color 0.3s;
+    }
+
+    .bottom-nav a i {
+      display: block;
+      font-size: 1.3rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .bottom-nav a.active {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .bottom-nav a:hover:not(.active) {
+      color: var(--primary);
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="logo">โปรไฟล์ของฉัน</div>
+  </header>
+
+  <main>
+    <section class="profile-header">
+      <img src="https://via.placeholder.com/80" alt="User Profile Picture" />
+      <div class="profile-info">
+        <h2>นายอนุชิต ทิพย์กีรี</h2>
+        <p>อีเมล: anuchit@example.com</p>
+        <p>เบอร์โทร: 081-234-5678</p>
+      </div>
+    </section>
+
+    <section class="coupon-section">
+      <h3>คูปองของคุณ
+        <span class="coupon-count">3 ใบ</span>
+      </h3>
+      <ul class="coupon-list">
+        <li>
+          <span class="coupon-name">คูปองลด 10%</span>
+          <span class="coupon-expiry">หมดอายุ 30 มิ.ย. 2025</span>
+        </li>
+        <li>
+          <span class="coupon-name">คูปองส่งฟรี</span>
+          <span class="coupon-expiry">หมดอายุ 15 ก.ค. 2025</span>
+        </li>
+        <li>
+          <span class="coupon-name">คูปองลด 50 บาท</span>
+          <span class="coupon-expiry">หมดอายุ 31 ธ.ค. 2025</span>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <a href="index.html">
+      <i class="fas fa-home"></i>
+      หน้าหลัก
+    </a>
+    <a href="order.html">
+      <i class="fas fa-shopping-bag"></i>
+      คำสั่งซื้อ
+    </a>
+    <a href="notify.html">
+      <i class="fas fa-bell"></i>
+      แจ้งเตือน
+    </a>
+    <a href="profile.html" class="active">
+      <i class="fas fa-user"></i>
+      โปรไฟล์
+    </a>
+  </nav>
+</body>
+
+</html>
