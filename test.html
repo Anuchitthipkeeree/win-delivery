@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <title>เพิ่มเมนูอาหารพร้อมภาพ</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    label { display: block; margin-top: 10px; }
+    input, select, textarea { width: 300px; padding: 5px; }
+    button { margin-top: 15px; padding: 10px 20px; font-size: 16px; }
+  </style>
+</head>
+<body>
+  <h2>เพิ่มเมนูอาหารพร้อมภาพ</h2>
+  <form id="menuForm">
+    <label>ชื่อเมนู:
+      <input type="text" id="name" required />
+    </label>
+
+    <label>ราคา:
+      <input type="number" id="price" required min="0" />
+    </label>
+
+    <label>หมวดหมู่:
+      <select id="category" required>
+        <option value="">-- เลือกหมวดหมู่ --</option>
+        <option value="อาหาร">อาหาร</option>
+        <option value="เครื่องดื่ม">เครื่องดื่ม</option>
+        <option value="ของหวาน">ของหวาน</option>
+      </select>
+    </label>
+
+    <label>ข้อความโพสต์:
+      <textarea id="postText" rows="3"></textarea>
+    </label>
+
+    <label>เลือกรูปภาพ:
+      <input type="file" id="imageFile" accept="image/*" required />
+    </label>
+
+    <button type="submit">ส่งข้อมูล</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('menuForm');
+    const imageFileInput = document.getElementById('imageFile');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      if (!imageFileInput.files[0]) {
+        alert('กรุณาเลือกรูปภาพก่อนส่งข้อมูล');
+        return;
+      }
+
+      const name = document.getElementById('name').value.trim();
+      const price = document.getElementById('price').value.trim();
+      const category = document.getElementById('category').value;
+      const postText = document.getElementById('postText').value.trim();
+
+      const file = imageFileInput.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+        const base64Image = e.target.result;
+
+        const dataToSend = {
+          name,
+          price,
+          category,
+          postText,
+          image: base64Image
+        };
+
+        // URL Google Apps Script Web App ที่คุณให้มา
+        const url = 'https://script.google.com/macros/s/AKfycbyb02JGT4eG9Hm77RFmF8u0g8M5ZodM_XmIwEy9a7TPKgFcLuEkIRV1XigkfpDUsapn/exec';
+
+        fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(dataToSend)
+        })
+        .then(response => response.json())
+        .then(result => {
+          if (result.status === 'success') {
+            alert('บันทึกข้อมูลเรียบร้อย!\nลิงก์รูปภาพ: ' + result.imageUrl);
+            form.reset();
+          } else {
+            alert('เกิดข้อผิดพลาด: ' + result.message);
+          }
+        })
+        .catch(error => {
+          alert('ไม่สามารถส่งข้อมูลได้: ' + error.message);
+        });
+      };
+
+      reader.readAsDataURL(file);
+    });
+  </script>
+</body>
+</html>
