@@ -5,35 +5,79 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>แดชบอร์ดไรเดอร์ | Win Delivery</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap" rel="stylesheet" />
   <style>
+    :root {
+      --green: #2ecc71;
+      --green-dark: #27ae60;
+      --gray-light: #f8f8f8;
+      --shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
     body {
       font-family: 'Prompt', sans-serif;
       margin: 0;
-      padding-bottom: 60px; /* เผื่อพื้นที่ให้แถบล่าง */
-      background: #f4f4f4;
+      padding-bottom: 70px;
+      background: var(--gray-light);
+      color: #333;
     }
+
     .section {
-      padding: 16px;
       background: white;
-      margin-bottom: 12px;
+      margin: 16px;
+      padding: 16px;
+      border-radius: 16px;
+      box-shadow: var(--shadow);
     }
-    .toggle-online {
-      background: #28a745;
+
+    .online-btn {
+      display: inline-block;
+      width: 100%;
+      padding: 12px;
+      background: var(--green);
       color: white;
-      padding: 10px 16px;
+      font-weight: bold;
+      font-size: 16px;
+      border: none;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .online-btn.offline {
+      background: #e74c3c;
+    }
+
+    .order-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      padding: 12px;
+      margin-top: 12px;
+    }
+
+    .order-card p {
+      margin: 4px 0;
+    }
+
+    .order-card button {
+      margin-top: 8px;
+      padding: 8px 12px;
+      background: var(--green-dark);
+      color: white;
       border: none;
       border-radius: 8px;
-      font-weight: bold;
       cursor: pointer;
-      width: 100%;
+      font-weight: bold;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
     }
-    .order-card {
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 12px;
-      margin: 8px 0;
-      background: #fff;
+
+    h3 {
+      margin-top: 0;
+      color: var(--green-dark);
     }
+
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -41,33 +85,45 @@
       right: 0;
       background: white;
       border-top: 1px solid #ddd;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
       display: flex;
       justify-content: space-around;
       padding: 8px 0;
-      font-size: 12px;
+      z-index: 999;
     }
+
     .bottom-nav a {
       text-align: center;
-      color: #555;
+      color: #666;
+      font-size: 12px;
       text-decoration: none;
+      transition: color 0.2s;
     }
+
     .bottom-nav i {
       font-size: 18px;
+      margin-bottom: 2px;
     }
-    .active {
-      color: #007bff;
+
+    .bottom-nav a.active {
+      color: var(--green-dark);
+    }
+
+    .badge {
+      font-weight: bold;
+      color: var(--green-dark);
     }
   </style>
 </head>
 <body>
 
-  <!-- ส่วนบน: สถานะและรายได้ -->
+  <!-- สถานะไรเดอร์ -->
   <div class="section">
-    <button id="onlineBtn" class="toggle-online">✅ พร้อมรับงาน</button>
-    <p style="margin-top: 12px;"><strong>รายได้วันนี้:</strong> <span id="todayEarnings">฿0</span></p>
+    <button id="onlineBtn" class="online-btn">✅ พร้อมรับงาน</button>
+    <p style="margin-top: 12px;"><strong>รายได้วันนี้:</strong> <span id="todayEarnings" class="badge">฿0</span></p>
   </div>
 
-  <!-- งานใหม่ที่รับได้ -->
+  <!-- งานใหม่ -->
   <div class="section">
     <h3>📦 งานใหม่ที่รับได้</h3>
     <div class="order-card">
@@ -90,18 +146,18 @@
     <div class="order-card">
       <p><strong>ร้าน:</strong> ก๋วยเตี๋ยว 5 ดาว</p>
       <p><strong>ลูกค้า:</strong> คุณสมชาย (บ้านสวน)</p>
-      <p><strong>สถานะ:</strong> กำลังจัดส่ง</p>
+      <p><strong>สถานะ:</strong> <span class="badge">กำลังจัดส่ง</span></p>
       <button onclick="goToDetails('order003')">ดูรายละเอียด</button>
     </div>
   </div>
 
-  <!-- ข่าว / ประกาศ -->
+  <!-- ข่าวสาร -->
   <div class="section">
-    <h3>📢 ข่าวสารระบบ</h3>
-    <p>💰 รับโบนัส 100 บาท เมื่อส่งครบ 5 งานภายในวันนี้!</p>
+    <h3>📢 ข่าวสาร</h3>
+    <p>🎁 โบนัสพิเศษ! ส่งครบ 5 งานวันนี้ รับเพิ่ม 100 บาททันที</p>
   </div>
 
-  <!-- เมนูด้านล่าง -->
+  <!-- เมนูล่าง -->
   <nav class="bottom-nav">
     <a href="rider-dashboard.html" class="active">
       <i class="fa-solid fa-motorcycle"></i><br>งานของฉัน
@@ -122,20 +178,26 @@
     let isOnline = true;
     document.getElementById("onlineBtn").addEventListener("click", () => {
       isOnline = !isOnline;
-      document.getElementById("onlineBtn").textContent = isOnline ? "✅ พร้อมรับงาน" : "⛔️ ปิดรับงาน";
-      document.getElementById("onlineBtn").style.background = isOnline ? "#28a745" : "#dc3545";
+      const btn = document.getElementById("onlineBtn");
+      if (isOnline) {
+        btn.textContent = "✅ พร้อมรับงาน";
+        btn.classList.remove("offline");
+      } else {
+        btn.textContent = "⛔ ปิดรับงาน";
+        btn.classList.add("offline");
+      }
     });
 
     function acceptOrder(orderId) {
       alert("คุณรับงาน: " + orderId + " แล้ว");
-      // ในระบบจริง จะส่งข้อมูลไปยังเซิร์ฟเวอร์
+      // ในระบบจริง: ส่งข้อมูลไปยัง server
     }
 
     function goToDetails(orderId) {
       window.location.href = "order-details.html?order=" + orderId;
     }
 
-    // ตัวอย่างรายได้ (สามารถดึงจาก API ได้)
+    // จำลองรายได้
     document.getElementById("todayEarnings").textContent = "฿120";
   </script>
 
