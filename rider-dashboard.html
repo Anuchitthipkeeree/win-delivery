@@ -2,10 +2,16 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>แดชบอร์ดไรเดอร์ | Win Delivery</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap" rel="stylesheet" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
   <style>
     :root {
       --green: #2ecc71;
@@ -22,6 +28,66 @@
       color: #333;
     }
 
+    /* Header */
+    header {
+      background: var(--green);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      font-weight: bold;
+      font-size: 18px;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    header .title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Notification bell container */
+    .notif-container {
+      position: relative;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .notif-container .badge {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: red;
+      color: white;
+      font-size: 10px;
+      font-weight: bold;
+      padding: 2px 6px;
+      border-radius: 50%;
+      display: none;
+      min-width: 18px;
+      text-align: center;
+      line-height: 14px;
+    }
+
+    /* Rider nearby popup */
+    #riderNearby {
+      position: fixed;
+      top: 70px;
+      right: 16px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      padding: 12px 16px;
+      font-size: 14px;
+      color: #333;
+      z-index: 1100;
+      max-width: 220px;
+      cursor: default;
+    }
+
+    /* Main sections */
     .section {
       background: white;
       margin: 16px;
@@ -30,54 +96,76 @@
       box-shadow: var(--shadow);
     }
 
+    /* ปุ่มพร้อมรับงาน */
     .online-btn {
       display: inline-block;
       width: 100%;
-      padding: 12px;
+      padding: 14px;
       background: var(--green);
       color: white;
-      font-weight: bold;
+      font-weight: 700;
       font-size: 16px;
       border: none;
       border-radius: 12px;
       box-shadow: var(--shadow);
       cursor: pointer;
-      transition: 0.3s;
+      transition: background-color 0.3s;
+      text-align: center;
     }
 
     .online-btn.offline {
       background: #e74c3c;
     }
 
+    /* การ์ดงาน */
     .order-card {
       background: #fff;
       border-radius: 12px;
       box-shadow: var(--shadow);
-      padding: 12px;
+      padding: 14px;
       margin-top: 12px;
+      transition: box-shadow 0.3s;
+    }
+    .order-card:hover {
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     }
 
     .order-card p {
-      margin: 4px 0;
+      margin: 5px 0;
+      font-size: 15px;
     }
 
     .order-card button {
-      margin-top: 8px;
-      padding: 8px 12px;
+      margin-top: 10px;
+      padding: 10px 16px;
       background: var(--green-dark);
       color: white;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
-      font-weight: bold;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+      font-weight: 700;
+      font-size: 14px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+      transition: background-color 0.3s;
+      width: 100%;
+    }
+    .order-card button:hover {
+      background: #219150;
     }
 
     h3 {
       margin-top: 0;
       color: var(--green-dark);
+      font-weight: 700;
     }
 
+    /* Badge */
+    .badge {
+      font-weight: 700;
+      color: var(--green-dark);
+    }
+
+    /* เมนูล่าง */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -85,10 +173,10 @@
       right: 0;
       background: white;
       border-top: 1px solid #ddd;
-      box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.12);
       display: flex;
       justify-content: space-around;
-      padding: 8px 0;
+      padding: 10px 0 14px 0;
       z-index: 999;
     }
 
@@ -97,34 +185,70 @@
       color: #666;
       font-size: 12px;
       text-decoration: none;
-      transition: color 0.2s;
+      transition: color 0.3s;
+      flex-grow: 1;
     }
 
     .bottom-nav i {
-      font-size: 18px;
-      margin-bottom: 2px;
+      font-size: 20px;
+      margin-bottom: 4px;
+      display: block;
     }
 
     .bottom-nav a.active {
       color: var(--green-dark);
+      font-weight: 700;
     }
 
-    .badge {
-      font-weight: bold;
-      color: var(--green-dark);
+    /* Responsive */
+    @media (min-width: 600px) {
+      .section {
+        margin: 20px auto;
+        max-width: 480px;
+      }
+      .bottom-nav {
+        max-width: 480px;
+        margin: 0 auto;
+        border-radius: 16px 16px 0 0;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Header -->
+  <header>
+    <div class="title">
+      <i class="fa-solid fa-bolt fa-lg"></i>
+      Win Delivery – Rider
+    </div>
+    <div
+      class="notif-container"
+      onclick="showNotifications()"
+      aria-label="แจ้งเตือนงานใหม่"
+      role="button"
+      tabindex="0"
+      onkeypress="if(event.key==='Enter'){showNotifications();}"
+    >
+      <i class="fa-solid fa-bell fa-lg" style="color: white;"></i>
+      <span id="notifBadge" class="badge">0</span>
+    </div>
+  </header>
+
+  <!-- Rider Nearby popup -->
+  <div id="riderNearby" title="จำนวนไรเดอร์ที่ออนไลน์ในรัศมี 3 กิโลเมตร">
+    ไรเดอร์ออนไลน์ในรัศมี 3 กม.: <strong id="riderCount">0</strong> คน
+  </div>
 
   <!-- สถานะไรเดอร์ -->
   <div class="section">
     <button id="onlineBtn" class="online-btn">✅ พร้อมรับงาน</button>
-    <p style="margin-top: 12px;"><strong>รายได้วันนี้:</strong> <span id="todayEarnings" class="badge">฿0</span></p>
+    <p style="margin-top: 12px;">
+      <strong>รายได้วันนี้:</strong> <span id="todayEarnings" class="badge">฿0</span>
+    </p>
   </div>
 
   <!-- งานใหม่ -->
-  <div class="section">
+  <div class="section" id="newOrdersSection">
     <h3>📦 งานใหม่ที่รับได้</h3>
     <div class="order-card">
       <p><strong>ร้าน:</strong> ส้มตำแม่ศรี</p>
@@ -159,47 +283,78 @@
 
   <!-- เมนูล่าง -->
   <nav class="bottom-nav">
-    <a href="rider-dashboard.html" class="active">
-      <i class="fa-solid fa-motorcycle"></i><br>งานของฉัน
+    <a href="rider-dashboard.html" class="active" aria-current="page" aria-label="งานของฉัน">
+      <i class="fa-solid fa-motorcycle"></i>
+      งานของฉัน
     </a>
-    <a href="rider-history.html">
-      <i class="fa-solid fa-clock-rotate-left"></i><br>ประวัติ
+    <a href="rider-history.html" aria-label="ประวัติ">
+      <i class="fa-solid fa-clock-rotate-left"></i>
+      ประวัติ
     </a>
-    <a href="rider-profile.html">
-      <i class="fa-solid fa-user"></i><br>บัญชี
+    <a href="rider-profile.html" aria-label="บัญชี">
+      <i class="fa-solid fa-user"></i>
+      บัญชี
     </a>
-    <a href="support.html">
-      <i class="fa-solid fa-circle-question"></i><br>ช่วยเหลือ
+    <a href="support.html" aria-label="ช่วยเหลือ">
+      <i class="fa-solid fa-circle-question"></i>
+      ช่วยเหลือ
     </a>
   </nav>
 
-  <!-- JavaScript -->
   <script>
     let isOnline = true;
-    document.getElementById("onlineBtn").addEventListener("click", () => {
+    const onlineBtn = document.getElementById("onlineBtn");
+    const notifBadge = document.getElementById("notifBadge");
+    const riderCountElem = document.getElementById("riderCount");
+
+    onlineBtn.addEventListener("click", () => {
       isOnline = !isOnline;
-      const btn = document.getElementById("onlineBtn");
       if (isOnline) {
-        btn.textContent = "✅ พร้อมรับงาน";
-        btn.classList.remove("offline");
+        onlineBtn.textContent = "✅ พร้อมรับงาน";
+        onlineBtn.classList.remove("offline");
       } else {
-        btn.textContent = "⛔ ปิดรับงาน";
-        btn.classList.add("offline");
+        onlineBtn.textContent = "⛔ ปิดรับงาน";
+        onlineBtn.classList.add("offline");
       }
     });
 
     function acceptOrder(orderId) {
       alert("คุณรับงาน: " + orderId + " แล้ว");
-      // ในระบบจริง: ส่งข้อมูลไปยัง server
+      // TODO: ส่งข้อมูลไป server
+      updateNotificationCount(currentNotificationCount - 1);
     }
 
     function goToDetails(orderId) {
       window.location.href = "order-details.html?order=" + orderId;
     }
 
-    // จำลองรายได้
-    document.getElementById("todayEarnings").textContent = "฿120";
-  </script>
+    function showNotifications() {
+      alert("มีงานใหม่เข้าระบบ กรุณาตรวจสอบในส่วนงานใหม่ที่รับได้");
+    }
 
+    // จำนวนแจ้งเตือนงานใหม่ (สมมติ)
+    let currentNotificationCount = 2;
+    function updateNotificationCount(count) {
+      currentNotificationCount = count;
+      if (count > 0) {
+        notifBadge.textContent = count;
+        notifBadge.style.display = "inline-block";
+      } else {
+        notifBadge.style.display = "none";
+      }
+    }
+    updateNotificationCount(currentNotificationCount);
+
+    // รายได้วันนี้ (สมมติ)
+    document.getElementById("todayEarnings").textContent = "฿120";
+
+    // จำนวนไรเดอร์ออนไลน์ในรัศมี 3 กม. (สมมติ)
+    function updateRiderCount(count) {
+      riderCountElem.textContent = count;
+    }
+    updateRiderCount(3);
+
+    // ถ้าจะทำระบบอัปเดตจริง ให้เชื่อม API หรือ websocket มาดึงข้อมูลนี้อัตโนมัติ
+  </script>
 </body>
 </html>
