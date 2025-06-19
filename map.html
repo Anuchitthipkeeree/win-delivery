@@ -28,23 +28,7 @@
     }
     #map {
       width: 100%;
-      height: calc(100% - 250px);
-    }
-    .controls {
-      display: flex;
-      justify-content: space-around;
-      padding: 10px;
-      background: white;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    .controls button {
-      padding: 8px 12px;
-      font-weight: 600;
-      border: none;
-      background: #27ae60;
-      color: white;
-      border-radius: 8px;
-      cursor: pointer;
+      height: calc(100% - 210px);
     }
     .status-summary {
       background: #ecf0f1;
@@ -53,21 +37,6 @@
       font-size: 14px;
       display: flex;
       justify-content: space-between;
-    }
-    .job-list {
-      background: white;
-      padding: 10px 16px;
-      max-height: 120px;
-      overflow-y: auto;
-      box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
-    }
-    .job-item {
-      padding: 8px 0;
-      border-bottom: 1px solid #eee;
-      font-size: 14px;
-    }
-    .job-item:last-child {
-      border-bottom: none;
     }
     .float-btn {
       position: fixed;
@@ -136,7 +105,6 @@
       line-height: 14px;
     }
   </style>
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
 </head>
 <body>
   <header>
@@ -155,29 +123,27 @@
     <div>🛵 ไรเดอร์ออนไลน์: <strong>5</strong> คน</div>
   </div>
 
-  <div id="map"></div>
+  <iframe
+    id="map"
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3954.751730759911!2d98.9303419!3d10.2087631!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3056137c3c4809ef%3A0xc1d532a928277560!2z4LmA4LiC4Liy4LiX4Liw4Lil4Li44LiE4Liy4Lij4LmM4LmB4LiE4Lij4LmM!5e0!3m2!1sth!2sth!4v1718783629474!5m2!1sth!2sth"
+    width="100%"
+    height="100%"
+    style="border:0;"
+    allowfullscreen=""
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade">
+  </iframe>
 
-  <div class="controls">
-    <button onclick="toggleLayer('jobs')">งานใหม่</button>
-    <button onclick="toggleLayer('shops')">ร้านค้า</button>
-    <button onclick="toggleLayer('riders')">ไรเดอร์</button>
-  </div>
-
-  <div class="job-list" id="jobList">
-    <div class="job-item">📦 ร้านข้าวมันไก่ - 2.3 กม. - ค่าจ้าง ฿35</div>
-    <div class="job-item">🍜 ก๋วยเตี๋ยว 5 ดาว - 1.1 กม. - ค่าจ้าง ฿40</div>
-  </div>
-
-  <button class="float-btn" onclick="centerMap()">
+  <button class="float-btn" onclick="alert('กำลังระบุตำแหน่งของคุณ')">
     <i class="fa-solid fa-location-crosshairs"></i>
   </button>
 
   <nav class="bottom-nav">
-    <a href="rider-dashboard.html">
+    <a href="#">
       <i class="fa-solid fa-briefcase"></i>
       My Jobs
     </a>
-    <a href="map.html" class="active">
+    <a href="#" class="active">
       <i class="fa-solid fa-map"></i>
       Map
     </a>
@@ -195,47 +161,5 @@
     </a>
   </nav>
 
-  <audio id="alertSound" src="https://www.soundjay.com/buttons/sounds/beep-07.mp3" preload="auto"></audio>
-
-  <script>
-    function toggleLayer(type) {
-      alert('Toggle layer: ' + type);
-    }
-
-    function centerMap() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(position => {
-          const pos = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          };
-          map.setCenter(pos);
-        });
-      }
-    }
-
-    function playAlertSound() {
-      const sound = document.getElementById('alertSound');
-      sound.play();
-    }
-    setTimeout(playAlertSound, 3000);
-
-    let map;
-    function initMap() {
-      const carCareLocation = { lat: 13.823385, lng: 100.561654 }; // เขาทะลุคาร์แคร์
-      map = new google.maps.Map(document.getElementById("map"), {
-        center: carCareLocation,
-        zoom: 15
-      });
-
-      new google.maps.Marker({
-        position: carCareLocation,
-        map,
-        title: "เขาทะลุคาร์แคร์"
-      });
-    }
-
-    window.onload = initMap;
-  </script>
 </body>
 </html>
