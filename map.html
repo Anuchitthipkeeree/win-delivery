@@ -28,7 +28,7 @@
     }
     #map {
       width: 100%;
-      height: calc(100% - 210px);
+      height: calc(100% - 250px);
     }
     .controls {
       display: flex;
@@ -45,6 +45,14 @@
       color: white;
       border-radius: 8px;
       cursor: pointer;
+    }
+    .status-summary {
+      background: #ecf0f1;
+      color: #2c3e50;
+      padding: 10px 16px;
+      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
     }
     .job-list {
       background: white;
@@ -128,6 +136,7 @@
       line-height: 14px;
     }
   </style>
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
 </head>
 <body>
   <header>
@@ -140,6 +149,11 @@
       <span class="badge">2</span>
     </div>
   </header>
+
+  <div class="status-summary">
+    <div>🛒 ร้านค้าออนไลน์: <strong>8</strong> ร้าน</div>
+    <div>🛵 ไรเดอร์ออนไลน์: <strong>5</strong> คน</div>
+  </div>
 
   <div id="map"></div>
 
@@ -159,11 +173,11 @@
   </button>
 
   <nav class="bottom-nav">
-    <a href="#">
+    <a href="rider-dashboard.html">
       <i class="fa-solid fa-briefcase"></i>
       My Jobs
     </a>
-    <a href="#" class="active">
+    <a href="map.html" class="active">
       <i class="fa-solid fa-map"></i>
       Map
     </a>
@@ -187,18 +201,41 @@
     function toggleLayer(type) {
       alert('Toggle layer: ' + type);
     }
+
     function centerMap() {
-      alert('หาตำแหน่งของคุณ');
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+          const pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          map.setCenter(pos);
+        });
+      }
     }
 
-    // ตัวอย่างเสียงแจ้งเตือนเมื่อมีงานใหม่
     function playAlertSound() {
       const sound = document.getElementById('alertSound');
       sound.play();
     }
+    setTimeout(playAlertSound, 3000);
 
-    // จำลองการมีงานใหม่เข้า
-    setTimeout(playAlertSound, 3000); // ลองหลังโหลด 3 วินาที
+    let map;
+    function initMap() {
+      const carCareLocation = { lat: 13.823385, lng: 100.561654 }; // เขาทะลุคาร์แคร์
+      map = new google.maps.Map(document.getElementById("map"), {
+        center: carCareLocation,
+        zoom: 15
+      });
+
+      new google.maps.Marker({
+        position: carCareLocation,
+        map,
+        title: "เขาทะลุคาร์แคร์"
+      });
+    }
+
+    window.onload = initMap;
   </script>
 </body>
 </html>
