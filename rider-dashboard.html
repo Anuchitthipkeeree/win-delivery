@@ -49,6 +49,20 @@
       gap: 8px;
     }
 
+    /* Earnings bar under header */
+    #earningsBar {
+      background: var(--green-dark);
+      color: white;
+      font-weight: 700;
+      font-size: 16px;
+      padding: 8px 16px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 56px; /* ต่ำกว่า header */
+      z-index: 999;
+    }
+
     /* Notification bell container */
     .notif-container {
       position: relative;
@@ -74,7 +88,7 @@
     /* Rider nearby popup */
     #riderNearby {
       position: fixed;
-      top: 70px;
+      top: 106px; /* 56px header + 40px earnings bar + 10px margin */
       right: 16px;
       background: white;
       border-radius: 12px;
@@ -234,6 +248,11 @@
     </div>
   </header>
 
+  <!-- Earnings bar under header -->
+  <div id="earningsBar" title="รายได้วันนี้">
+    💰 รายได้วันนี้: <span id="stickyEarnings">฿0</span>
+  </div>
+
   <!-- Rider Nearby popup -->
   <div id="riderNearby" title="จำนวนไรเดอร์ที่ออนไลน์ในรัศมี 3 กิโลเมตร">
     ไรเดอร์ออนไลน์ในรัศมี 3 กม.: <strong id="riderCount">0</strong> คน
@@ -242,9 +261,6 @@
   <!-- สถานะไรเดอร์ -->
   <div class="section">
     <button id="onlineBtn" class="online-btn">✅ พร้อมรับงาน</button>
-    <p style="margin-top: 12px;">
-      <strong>รายได้วันนี้:</strong> <span id="todayEarnings" class="badge">฿0</span>
-    </p>
   </div>
 
   <!-- งานใหม่ -->
@@ -306,6 +322,7 @@
     const onlineBtn = document.getElementById("onlineBtn");
     const notifBadge = document.getElementById("notifBadge");
     const riderCountElem = document.getElementById("riderCount");
+    const stickyEarnings = document.getElementById("stickyEarnings");
 
     onlineBtn.addEventListener("click", () => {
       isOnline = !isOnline;
@@ -322,6 +339,7 @@
       alert("คุณรับงาน: " + orderId + " แล้ว");
       // TODO: ส่งข้อมูลไป server
       updateNotificationCount(currentNotificationCount - 1);
+      updateEarnings(currentEarnings + 40); // สมมติเพิ่มเงินหลังรับงาน
     }
 
     function goToDetails(orderId) {
@@ -346,7 +364,12 @@
     updateNotificationCount(currentNotificationCount);
 
     // รายได้วันนี้ (สมมติ)
-    document.getElementById("todayEarnings").textContent = "฿120";
+    let currentEarnings = 120;
+    function updateEarnings(amount) {
+      currentEarnings = amount;
+      stickyEarnings.textContent = `฿${amount}`;
+    }
+    updateEarnings(currentEarnings);
 
     // จำนวนไรเดอร์ออนไลน์ในรัศมี 3 กม. (สมมติ)
     function updateRiderCount(count) {
