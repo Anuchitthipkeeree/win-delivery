@@ -212,20 +212,24 @@
             if (data.success) {
               const imageUrl = data.data.url;
 
-              const formData = new FormData();
-              formData.append("name", name);
-              formData.append("price", price);
-              formData.append("category", category);
-              formData.append("postText", postText);
-              formData.append("timestamp", timestamp);
-              formData.append("imageUrl", imageUrl);
+              const payload = {
+                name,
+                price,
+                category,
+                postText,
+                timestamp,
+                image: imageUrl
+              };
 
               const googleScriptURL =
-                "https://script.google.com/macros/s/AKfycbza85WENyoKWYHiUQbK1MEdQ7tePCgyP-1UfpNxfQKire2-btOpExt3_0DGPAUPjnOu/exec";
+                "https://script.google.com/macros/s/AKfycbzsbOKPEg9MZ2v8ZpCKF40-XJcrEyCiowLbBsTisv8pPxlEDEXcw5V6klqVunq2q0k0/exec";
 
               return fetch(googleScriptURL, {
                 method: "POST",
-                body: formData,
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload),
               });
             } else {
               throw new Error("อัปโหลดภาพไม่สำเร็จ");
