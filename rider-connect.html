@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rider Connect | Win Delivery</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+  />
+  <style>
+    body,
+    html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Prompt', sans-serif;
+      background: #f6f9f5;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: #27ae60;
+      color: white;
+      font-weight: 600;
+      font-size: 18px;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      position: relative;
+      z-index: 10;
+    }
+
+    .notif-container {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .notif-container .badge {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: red;
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 50%;
+      min-width: 18px;
+      text-align: center;
+      line-height: 14px;
+      user-select: none;
+    }
+
+    #chat-container {
+      flex-grow: 1;
+      padding: 12px 16px 80px 16px;
+      overflow-y: auto;
+      background: white;
+      box-shadow: inset 0 0 8px #d3e6d6;
+      border-radius: 8px 8px 0 0;
+    }
+
+    .message {
+      margin-bottom: 12px;
+      display: flex;
+      align-items: flex-start;
+      max-width: 85%;
+    }
+    .message.winbot {
+      justify-content: flex-start;
+      color: #2e7d32;
+      font-style: italic;
+    }
+    .message.user {
+      justify-content: flex-start;
+    }
+
+    .avatar {
+      flex-shrink: 0;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #ccc;
+      color: white;
+      font-weight: 700;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+      user-select: none;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.12);
+    }
+
+    .avatar.winbot {
+      background: #27ae60;
+      font-style: normal;
+    }
+
+    .msg-content {
+      background: #e4f0dc;
+      padding: 8px 12px;
+      border-radius: 12px;
+      position: relative;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      word-wrap: break-word;
+      white-space: pre-wrap;
+      font-size: 14px;
+      line-height: 1.4;
+      color: #2e7d32;
+      max-width: 100%;
+    }
+
+    .msg-content.user {
+      background: #d9edf7;
+      color: #31708f;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    }
+
+    .msg-header {
+      font-weight: 600;
+      font-size: 13px;
+      margin-bottom: 2px;
+      color: #333;
+    }
+    .msg-rank {
+      font-weight: 500;
+      font-size: 12px;
+      color: #4a7c32;
+      margin-left: 6px;
+    }
+    .msg-hours {
+      font-weight: 400;
+      font-size: 11px;
+      color: #6b8e23;
+      margin-left: 6px;
+    }
+    .msg-time {
+      font-size: 10px;
+      color: #999;
+      margin-left: auto;
+      align-self: center;
+      user-select: none;
+    }
+
+    #input-area {
+      position: fixed;
+      bottom: 60px;
+      left: 0;
+      right: 0;
+      background: white;
+      padding: 10px 16px;
+      box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
+      display: flex;
+      gap: 10px;
+      z-index: 20;
+    }
+
+    #input-area input[type='text'] {
+      flex-grow: 1;
+      border-radius: 20px;
+      border: 1.5px solid #27ae60;
+      padding: 8px 16px;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+    #input-area input[type='text']:focus {
+      border-color: #1e8449;
+    }
+
+    #input-area button {
+      background: #27ae60;
+      border: none;
+      color: white;
+      font-weight: 700;
+      padding: 10px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 15px;
+      box-shadow: 0 3px 8px rgba(39, 174, 96, 0.5);
+      transition: background-color 0.2s ease;
+    }
+    #input-area button:disabled {
+      background: #a1d99a;
+      cursor: default;
+      box-shadow: none;
+    }
+    #input-area button:hover:not(:disabled) {
+      background: #1e8449;
+    }
+
+    /* Pop-up รางวัล */
+    #reward-popup {
+      position: fixed;
+      bottom: 130px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #27ae60;
+      color: white;
+      padding: 14px 24px;
+      border-radius: 30px;
+      box-shadow: 0 3px 15px rgba(39, 174, 96, 0.7);
+      font-weight: 600;
+      font-size: 14px;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      z-index: 50;
+      user-select: none;
+    }
+
+    #reward-popup i {
+      font-size: 20px;
+    }
+
+    /* เมนูด้านล่าง */
+    nav.bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      border-top: 1px solid #ddd;
+      box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0 14px 0;
+      z-index: 30;
+    }
+    nav.bottom-nav a {
+      flex-grow: 1;
+      color: #666;
+      font-size: 11px;
+      text-decoration: none;
+      text-align: center;
+      user-select: none;
+      transition: color 0.25s ease;
+    }
+    nav.bottom-nav a.active {
+      color: #27ae60;
+      font-weight: 700;
+      font-size: 12px;
+    }
+    nav.bottom-nav i {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 3px;
+      user-select: none;
+    }
+
+    /* Scrollbar for chat */
+    #chat-container::-webkit-scrollbar {
+      width: 6px;
+    }
+    #chat-container::-webkit-scrollbar-thumb {
+      background: #27ae60cc;
+      border-radius: 4px;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      #input-area button {
+        padding: 10px 14px;
+        font-size: 14px;
+      }
+      .msg-header {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div><i class="fa-solid fa-bolt"></i> Win Delivery – Rider Connect</div>
+    <div
+      class="notif-container"
+      title="การแจ้งเตือน"
+      onclick="alert('มีการแจ้งเตือนใหม่!')"
+    >
+      <i class="fa-solid fa-bell"></i>
+      <span class="badge" id="notif-count">3</span>
+    </div>
+  </header>
+
+  <main id="chat-container" aria-live="polite" aria-label="ห้องสนทนาไรเดอร์"></main>
+
+  <div id="reward-popup" role="alert" aria-live="assertive">
+    <i class="fa-solid fa-gift"></i> <span id="reward-text"></span>
+  </div>
+
+  <form id="input-area" onsubmit="return sendMessage();">
+    <input
+      type="text"
+      id="message-input"
+      placeholder="พิมพ์ข้อความที่นี่..."
+      autocomplete="off"
+      aria-label="ข้อความแชท"
+    />
+    <button type="submit" id="send-btn" disabled>ส่ง</button>
+  </form>
+
+  <nav class="bottom-nav" role="navigation" aria-label="เมนูหลัก">
+    <a href="#" aria-current="false" title="งานของฉัน">
+      <i class="fa-solid fa-briefcase"></i>My Jobs
+    </a>
+    <a href="#" class="active" aria-current="page" title="แผนที่">
+      <i class="fa-solid fa-map"></i>Map
+    </a>
+    <a href="#" aria-current="false" title="รายได้">
+      <i class="fa-solid fa-wallet"></i>Earnings
+    </a>
+    <a href="#" aria-current="false" title="โปรไฟล์">
+      <i class="fa-solid fa-user"></i>Profile
+    </a>
+    <a href="#" aria-current="false" title="Rider Connect">
+      <i class="fa-solid fa-comments"></i>Rider Connect
+    </a>
+  </nav>
+
+  <script>
+    // ข้อมูลไรเดอร์จำลอง (ชื่อ, rank, ชั่วโมงสะสม)
+    const riderName = prompt('กรุณาใส่ชื่อของคุณ:', 'Somchai') || 'Somchai';
+    const ranks = [
+      { name: 'Newbie Rider', minHours: 0, icon: '🟢' },
+      { name: 'Pro Rider', minHours: 100, icon: '💼' },
+      { name: 'Trusted Rider', minHours: 300, icon: '🌟' },
+      { name: 'Elite Rider', minHours: 500, icon: '🏆' },
+      { name: 'Win Champion', minHours: 1000, icon: '👑' },
+    ];
+    // สมมุติชั่วโมงสะสม
+    let riderHours = Math.floor(Math.random() * 1100);
+    let riderRank = ranks[0];
+    for (let i = ranks.length - 1; i >= 0; i--) {
+      if (riderHours >= ranks[i].minHours) {
+        riderRank = ranks[i];
+        break;
+      }
+    }
+
+    // แชทเก็บใน localStorage
+    const CHAT_STORAGE_KEY = 'win_delivery_rider_connect_chat';
+    let chatMessages = JSON.parse(localStorage.getItem(CHAT_STORAGE_KEY)) || [];
+
+    const chatContainer = document.getElementById('chat-container');
+    const messageInput = document.getElementById('message-input');
+    const sendBtn = document.getElementById('send-btn');
+    const rewardPopup = document.getElementById('reward-popup');
+    const rewardText = document.getElementById('reward-text');
+
+    function formatTime(date) {
+      return date.toLocaleTimeString('th-TH', {
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+    }
+
+    // สร้าง message element
+    function createMessageElement(msg) {
+      const el = document.createElement('div');
+      el.classList.add('message');
+      if (msg.sender === 'WinBot') el.classList.add('winbot');
+      else el.classList.add('user');
+
+      const avatar = document.createElement('div');
+      avatar.classList.add('avatar');
+      if (msg.sender === 'WinBot') avatar.classList.add('winbot');
+      // กำหนดตัวอักษรย่อจากชื่อ
+      avatar.textContent = msg.sender === 'WinBot' ? '🤖' : msg.sender.charAt(0).toUpperCase();
+
+      const content = document.createElement('div');
+      content.classList.add('msg-content');
+      if (msg.sender !== 'WinBot') content.classList.add('user');
+
+      // header: ชื่อ + rank + ชั่วโมง + เวลา
+      const header = document.createElement('div');
+      header.classList.add('msg-header');
+
+      if (msg.sender === 'WinBot') {
+        header.textContent = 'WinBot';
+      } else {
+        const nameSpan = document.createElement('span');
+        nameSpan.textContent = msg.sender;
+
+        const rankSpan = document.createElement('span');
+        rankSpan.classList.add('msg-rank');
+        rankSpan.textContent = `${riderRank.icon} ${riderRank.name}`;
+
+        const hoursSpan = document.createElement('span');
+        hoursSpan.classList.add('msg-hours');
+        hoursSpan.textContent = `${riderHours} ชั่วโมง`;
+
+        header.appendChild(nameSpan);
+        header.appendChild(rankSpan);
+        header.appendChild(hoursSpan);
+      }
+
+      const timeSpan = document.createElement('span');
+      timeSpan.classList.add('msg-time');
+      timeSpan.textContent = formatTime(new Date(msg.time));
+      header.appendChild(timeSpan);
+
+      const text = document.createElement('div');
+      text.textContent = msg.text;
+
+      content.appendChild(header);
+      content.appendChild(text);
+
+      el.appendChild(avatar);
+      el.appendChild(content);
+
+      return el;
+    }
+
+    // โหลดข้อความเก่า
+    function loadMessages() {
+      chatContainer.innerHTML = '';
+      chatMessages.forEach((msg) => {
+        const el = createMessageElement(msg);
+        chatContainer.appendChild(el);
+      });
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    loadMessages();
+
+    // อัพเดตปุ่มส่ง
+    messageInput.addEventListener('input', () => {
+      sendBtn.disabled = messageInput.value.trim() === '';
+    });
+
+    // ส่งข้อความ
+    function sendMessage() {
+      const text = messageInput.value.trim();
+      if (!text) return false;
+
+      const newMsg = {
+        sender: riderName,
+        text,
+        time: new Date().toISOString(),
+      };
+      chatMessages.push(newMsg);
+      localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(chatMessages));
+      const el = createMessageElement(newMsg);
+      chatContainer.appendChild(el);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+
+      messageInput.value = '';
+      sendBtn.disabled = true;
+
+      // ให้ WinBot ตอบกลับเล็กน้อย (จำลอง)
+      setTimeout(() => {
+        winBotReply(text);
+      }, 1500);
+
+      return false;
+    }
+
+    // WinBot ข้อความตอบกลับจำลอง + กำลังใจ
+    function winBotReply(userText) {
+      const encouragements = [
+        'สู้ๆ นะครับ ไรเดอร์ Win Delivery! 💪',
+        'ยอดเยี่ยม! รับงานเพิ่มอีกสักหน่อยนะครับ 🚀',
+        'อย่าลืมพักดื่มน้ำบ้างนะครับ เพื่อความปลอดภัย 💧',
+        'ทำได้ดีมากครับ อีกนิดเดียวก็ถึงเป้าหมายแล้ว!',
+        'คุณคือดาวรุ่งแห่ง Win Delivery ⭐️',
+      ];
+
+      // กระตุ้นถ้าใช้คำว่า "เหนื่อย" หรือ "ล้า"
+      if (/เหนื่อย|ล้า|พัก/i.test(userText)) {
+        encouragements.push(
+          'พักก่อนก็ดีครับ แต่เดี๋ยวก็ต้องลุยต่อ! คุณทำได้แน่นอน 🚴‍♂️'
+        );
+      }
+
+      const randIndex = Math.floor(Math.random() * encouragements.length);
+      const reply = encouragements[randIndex];
+
+      const botMsg = {
+        sender: 'WinBot',
+        text: reply,
+        time: new Date().toISOString(),
+      };
+      chatMessages.push(botMsg);
+      localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(chatMessages));
+      const el = createMessageElement(botMsg);
+      chatContainer.appendChild(el);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    // ฟังก์ชันแสดง popup รางวัล
+    function showRewardPopup(text) {
+      rewardText.textContent = text;
+      rewardPopup.style.display = 'flex';
+      setTimeout(() => {
+        rewardPopup.style.display = 'none';
+      }, 4000);
+    }
+
+    // ตัวอย่างเรียก popup รางวัล (สมมติว่าได้รับรางวัล)
+    setTimeout(() => {
+      showRewardPopup('🎁 คุณได้รับคูปองเวลาดี 1 วัน!');
+    }, 4000);
+
+    setTimeout(() => {
+      showRewardPopup('🏆 ยินดีด้วย! คุณเลื่อนขั้นเป็น Pro Rider แล้ว!');
+    }, 12000);
+  </script>
+</body>
+</html>
