@@ -137,12 +137,7 @@
       </select>
 
       <label for="postText">📝 ข้อความโพสต์</label>
-      <textarea
-        id="postText"
-        name="postText"
-        rows="3"
-        placeholder="ใส่ข้อความโปรโมต เช่น เมนูใหม่ โปรโมชั่นพิเศษ ฯลฯ"
-      ></textarea>
+      <textarea id="postText" name="postText" rows="3" placeholder="ใส่ข้อความโปรโมต เช่น เมนูใหม่ โปรโมชั่นพิเศษ ฯลฯ"></textarea>
 
       <div class="btn-group">
         <button type="button" class="btn btn-secondary" onclick="window.location.href='shop-dashboard.html'">ยกเลิก</button>
@@ -199,7 +194,6 @@
 
       const reader = new FileReader();
       reader.onloadend = function () {
-        // ดึงข้อมูลภาพเป็น Base64 ตัดส่วน prefix data:image/...
         const base64Image = reader.result.split(",")[1];
 
         const imgbbAPI = "https://api.imgbb.com/1/upload";
@@ -218,16 +212,14 @@
             if (data.success) {
               const imageUrl = data.data.url;
 
-              // เตรียมข้อมูลส่งไป Google Apps Script Web App
               const formData = new FormData();
               formData.append("name", name);
               formData.append("price", price);
               formData.append("category", category);
               formData.append("postText", postText);
               formData.append("timestamp", timestamp);
-              formData.append("imageUrl", imageUrl); // ส่ง URL ของภาพ
+              formData.append("imageUrl", imageUrl);
 
-              // เปลี่ยนเป็น URL Google Apps Script Web App ของคุณ
               const googleScriptURL =
                 "https://script.google.com/macros/s/AKfycbxiX-hqkkhPKkuqaAlfKf7KuAeSnJMdiY3bOLcMEwkhy-UDHEoSJlzZiqWOOvcTlaY/exec";
 
@@ -236,7 +228,7 @@
                 body: formData,
               });
             } else {
-              throw new Error("ไม่สามารถอัปโหลดภาพไปยัง Imgbb ได้");
+              throw new Error("อัปโหลดภาพไม่สำเร็จ");
             }
           })
           .then((response) => response.json())
@@ -246,7 +238,7 @@
               form.reset();
               imagePreview.style.display = "none";
             } else {
-              alert("เกิดข้อผิดพลาดในการบันทึกข้อมูล: " + result.message);
+              alert("เกิดข้อผิดพลาดในการบันทึก: " + result.message);
             }
           })
           .catch((err) => {
