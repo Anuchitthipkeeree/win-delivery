@@ -23,12 +23,11 @@
     body {
       font-family: 'Prompt', sans-serif;
       margin: 0;
-      padding-bottom: 70px;
+      padding-bottom: 80px;
       background: var(--gray-light);
       color: #333;
     }
 
-    /* Header */
     header {
       background: var(--green);
       color: white;
@@ -49,7 +48,6 @@
       gap: 8px;
     }
 
-    /* Earnings bar under header */
     #earningsBar {
       background: var(--green-dark);
       color: white;
@@ -59,15 +57,13 @@
       text-align: center;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
       position: sticky;
-      top: 56px; /* ต่ำกว่า header */
+      top: 56px;
       z-index: 999;
     }
 
-    /* Notification bell container */
     .notif-container {
       position: relative;
       cursor: pointer;
-      flex-shrink: 0;
     }
     .notif-container .badge {
       position: absolute;
@@ -85,10 +81,9 @@
       line-height: 14px;
     }
 
-    /* Rider nearby popup */
     #riderNearby {
       position: fixed;
-      top: 106px; /* 56px header + 40px earnings bar + 10px margin */
+      top: 106px;
       right: 16px;
       background: white;
       border-radius: 12px;
@@ -98,10 +93,8 @@
       color: #333;
       z-index: 1100;
       max-width: 220px;
-      cursor: default;
     }
 
-    /* Main sections */
     .section {
       background: white;
       margin: 16px;
@@ -110,7 +103,6 @@
       box-shadow: var(--shadow);
     }
 
-    /* ปุ่มพร้อมรับงาน */
     .online-btn {
       display: inline-block;
       width: 100%;
@@ -131,19 +123,13 @@
       background: #e74c3c;
     }
 
-    /* การ์ดงาน */
     .order-card {
       background: #fff;
       border-radius: 12px;
       box-shadow: var(--shadow);
       padding: 14px;
       margin-top: 12px;
-      transition: box-shadow 0.3s;
     }
-    .order-card:hover {
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    }
-
     .order-card p {
       margin: 5px 0;
       font-size: 15px;
@@ -159,27 +145,9 @@
       cursor: pointer;
       font-weight: 700;
       font-size: 14px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-      transition: background-color 0.3s;
       width: 100%;
     }
-    .order-card button:hover {
-      background: #219150;
-    }
 
-    h3 {
-      margin-top: 0;
-      color: var(--green-dark);
-      font-weight: 700;
-    }
-
-    /* Badge */
-    .badge {
-      font-weight: 700;
-      color: var(--green-dark);
-    }
-
-    /* เมนูล่าง */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -199,185 +167,84 @@
       color: #666;
       font-size: 12px;
       text-decoration: none;
-      transition: color 0.3s;
       flex-grow: 1;
     }
-
     .bottom-nav i {
       font-size: 20px;
       margin-bottom: 4px;
       display: block;
     }
-
     .bottom-nav a.active {
       color: var(--green-dark);
       font-weight: 700;
     }
-
-    /* Responsive */
-    @media (min-width: 600px) {
-      .section {
-        margin: 20px auto;
-        max-width: 480px;
-      }
-      .bottom-nav {
-        max-width: 480px;
-        margin: 0 auto;
-        border-radius: 16px 16px 0 0;
-      }
-    }
   </style>
 </head>
 <body>
-  <!-- Header -->
   <header>
     <div class="title">
       <i class="fa-solid fa-bolt fa-lg"></i>
       Win Delivery – Rider
     </div>
-    <div
-      class="notif-container"
-      onclick="showNotifications()"
-      aria-label="แจ้งเตือนงานใหม่"
-      role="button"
-      tabindex="0"
-      onkeypress="if(event.key==='Enter'){showNotifications();}"
-    >
+    <div class="notif-container" onclick="showNotifications()">
       <i class="fa-solid fa-bell fa-lg" style="color: white;"></i>
-      <span id="notifBadge" class="badge">0</span>
+      <span id="notifBadge" class="badge">2</span>
     </div>
   </header>
 
-  <!-- Earnings bar under header -->
-  <div id="earningsBar" title="รายได้วันนี้">
-    💰 รายได้วันนี้: <span id="stickyEarnings">฿0</span>
-  </div>
+  <div id="earningsBar">💰 รายได้วันนี้: <span id="stickyEarnings">฿120</span></div>
+  <div id="riderNearby">ไรเดอร์ออนไลน์ในรัศมี 3 กม.: <strong id="riderCount">3</strong> คน</div>
 
-  <!-- Rider Nearby popup -->
-  <div id="riderNearby" title="จำนวนไรเดอร์ที่ออนไลน์ในรัศมี 3 กิโลเมตร">
-    ไรเดอร์ออนไลน์ในรัศมี 3 กม.: <strong id="riderCount">0</strong> คน
-  </div>
-
-  <!-- สถานะไรเดอร์ -->
   <div class="section">
     <button id="onlineBtn" class="online-btn">✅ พร้อมรับงาน</button>
   </div>
 
-  <!-- งานใหม่ -->
-  <div class="section" id="newOrdersSection">
+  <div class="section">
     <h3>📦 งานใหม่ที่รับได้</h3>
     <div class="order-card">
       <p><strong>ร้าน:</strong> ส้มตำแม่ศรี</p>
       <p><strong>ระยะทาง:</strong> 2.1 กม.</p>
       <p><strong>ค่าจ้าง:</strong> 40 บาท</p>
-      <button onclick="acceptOrder('order001')">รับงานนี้</button>
-    </div>
-    <div class="order-card">
-      <p><strong>ร้าน:</strong> ไก่ทอดวิเศษ</p>
-      <p><strong>ระยะทาง:</strong> 1.4 กม.</p>
-      <p><strong>ค่าจ้าง:</strong> 35 บาท</p>
-      <button onclick="acceptOrder('order002')">รับงานนี้</button>
+      <button>รับงานนี้</button>
     </div>
   </div>
 
-  <!-- งานที่กำลังทำ -->
   <div class="section">
     <h3>🚚 งานที่กำลังจัดส่ง</h3>
     <div class="order-card">
       <p><strong>ร้าน:</strong> ก๋วยเตี๋ยว 5 ดาว</p>
-      <p><strong>ลูกค้า:</strong> คุณสมชาย (บ้านสวน)</p>
-      <p><strong>สถานะ:</strong> <span class="badge">กำลังจัดส่ง</span></p>
-      <button onclick="goToDetails('order003')">ดูรายละเอียด</button>
+      <p><strong>ลูกค้า:</strong> คุณสมชาย</p>
+      <p><strong>สถานะ:</strong> กำลังจัดส่ง</p>
+      <button>ดูรายละเอียด</button>
     </div>
   </div>
 
-  <!-- ข่าวสาร -->
   <div class="section">
     <h3>📢 ข่าวสาร</h3>
-    <p>🎁 โบนัสพิเศษ! ส่งครบ 5 งานวันนี้ รับเพิ่ม 100 บาททันที</p>
+    <p>🎁 โบนัสพิเศษ! ส่งครบ 5 งานวันนี้ รับเพิ่ม 100 บาท</p>
   </div>
 
-  <!-- เมนูล่าง -->
   <nav class="bottom-nav">
-    <a href="rider-dashboard.html" class="active" aria-current="page" aria-label="งานของฉัน">
-      <i class="fa-solid fa-motorcycle"></i>
-      งานของฉัน
+    <a href="#" class="active">
+      <i class="fa-solid fa-briefcase"></i>
+      My Jobs
     </a>
-    <a href="rider-history.html" aria-label="ประวัติ">
-      <i class="fa-solid fa-clock-rotate-left"></i>
-      ประวัติ
+    <a href="#">
+      <i class="fa-solid fa-map"></i>
+      Map
     </a>
-    <a href="rider-profile.html" aria-label="บัญชี">
+    <a href="#">
+      <i class="fa-solid fa-wallet"></i>
+      Earnings
+    </a>
+    <a href="#">
       <i class="fa-solid fa-user"></i>
-      บัญชี
+      Profile
     </a>
-    <a href="support.html" aria-label="ช่วยเหลือ">
+    <a href="#">
       <i class="fa-solid fa-circle-question"></i>
-      ช่วยเหลือ
+      Help
     </a>
   </nav>
-
-  <script>
-    let isOnline = true;
-    const onlineBtn = document.getElementById("onlineBtn");
-    const notifBadge = document.getElementById("notifBadge");
-    const riderCountElem = document.getElementById("riderCount");
-    const stickyEarnings = document.getElementById("stickyEarnings");
-
-    onlineBtn.addEventListener("click", () => {
-      isOnline = !isOnline;
-      if (isOnline) {
-        onlineBtn.textContent = "✅ พร้อมรับงาน";
-        onlineBtn.classList.remove("offline");
-      } else {
-        onlineBtn.textContent = "⛔ ปิดรับงาน";
-        onlineBtn.classList.add("offline");
-      }
-    });
-
-    function acceptOrder(orderId) {
-      alert("คุณรับงาน: " + orderId + " แล้ว");
-      // TODO: ส่งข้อมูลไป server
-      updateNotificationCount(currentNotificationCount - 1);
-      updateEarnings(currentEarnings + 40); // สมมติเพิ่มเงินหลังรับงาน
-    }
-
-    function goToDetails(orderId) {
-      window.location.href = "order-details.html?order=" + orderId;
-    }
-
-    function showNotifications() {
-      alert("มีงานใหม่เข้าระบบ กรุณาตรวจสอบในส่วนงานใหม่ที่รับได้");
-    }
-
-    // จำนวนแจ้งเตือนงานใหม่ (สมมติ)
-    let currentNotificationCount = 2;
-    function updateNotificationCount(count) {
-      currentNotificationCount = count;
-      if (count > 0) {
-        notifBadge.textContent = count;
-        notifBadge.style.display = "inline-block";
-      } else {
-        notifBadge.style.display = "none";
-      }
-    }
-    updateNotificationCount(currentNotificationCount);
-
-    // รายได้วันนี้ (สมมติ)
-    let currentEarnings = 120;
-    function updateEarnings(amount) {
-      currentEarnings = amount;
-      stickyEarnings.textContent = `฿${amount}`;
-    }
-    updateEarnings(currentEarnings);
-
-    // จำนวนไรเดอร์ออนไลน์ในรัศมี 3 กม. (สมมติ)
-    function updateRiderCount(count) {
-      riderCountElem.textContent = count;
-    }
-    updateRiderCount(3);
-
-    // ถ้าจะทำระบบอัปเดตจริง ให้เชื่อม API หรือ websocket มาดึงข้อมูลนี้อัตโนมัติ
-  </script>
 </body>
 </html>
