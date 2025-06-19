@@ -5,10 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>เพิ่มเมนูใหม่</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
+    body { font-family: sans-serif; margin: 20px; background: #f9f9f9; }
+    h1 { color: #333; }
     label { display: block; margin-top: 10px; }
-    input[type="text"], input[type="number"] { width: 300px; padding: 8px; font-size: 16px; }
-    button { margin-top: 20px; padding: 10px 20px; font-size: 16px; }
+    input[type="text"], input[type="number"] {
+      width: 300px; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px;
+    }
+    button {
+      margin-top: 20px; padding: 10px 20px;
+      font-size: 16px; background-color: #007bff; color: white; border: none; border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover { background-color: #0056b3; }
     #message { margin-top: 15px; font-weight: bold; }
   </style>
 </head>
@@ -28,7 +36,6 @@
 
   <script>
     const scriptURL = 'https://script.google.com/macros/s/AKfycbzDcEXbuifrid9Dmn2A1MD7zOQAmeCRMA2Uqlb-X4kw1QnfTsR5kdCX68zS355Oal5X/exec';
-
     const form = document.getElementById('menuForm');
     const messageDiv = document.getElementById('message');
 
@@ -46,24 +53,24 @@
 
       fetch(scriptURL, {
         method: 'POST',
-        body: JSON.stringify({ menuName, price }),
         headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ menuName, price })
       })
-        .then(response => response.json())
-        .then(data => {
-          if (data.result === 'success') {
-            messageDiv.textContent = 'บันทึกข้อมูลสำเร็จ!';
-            messageDiv.style.color = 'green';
-            form.reset();
-          } else {
-            messageDiv.textContent = 'เกิดข้อผิดพลาด: ' + (data.message || 'ไม่ทราบสาเหตุ');
-            messageDiv.style.color = 'red';
-          }
-        })
-        .catch(error => {
-          messageDiv.textContent = 'เกิดข้อผิดพลาด: ' + error.message;
+      .then(response => response.json())
+      .then(data => {
+        if (data.result === 'success') {
+          messageDiv.textContent = 'บันทึกข้อมูลสำเร็จ!';
+          messageDiv.style.color = 'green';
+          form.reset();
+        } else {
+          messageDiv.textContent = 'เกิดข้อผิดพลาด: ' + (data.message || 'ไม่ทราบสาเหตุ');
           messageDiv.style.color = 'red';
-        });
+        }
+      })
+      .catch(error => {
+        messageDiv.textContent = 'เกิดข้อผิดพลาด: ' + error.message;
+        messageDiv.style.color = 'red';
+      });
     });
   </script>
 </body>
