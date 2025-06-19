@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ฟีดร้านค้า | Win Delivery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Prompt', sans-serif;
+      background-color: #f8f9fa;
+      padding-top: 60px;
+      padding-bottom: 80px;
+    }
+    header.header-bar {
+      background-color: #fd7e14;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.3rem;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
+    .post-card {
+      margin-bottom: 1rem;
+    }
+    .post-image {
+      max-height: 180px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+    .post-time {
+      font-size: 0.8rem;
+      color: gray;
+    }
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #fff;
+      border-top: 1px solid #ddd;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0.5rem 0;
+      z-index: 999;
+      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    }
+    footer a {
+      text-decoration: none;
+      color: #666;
+      font-size: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      transition: color 0.3s ease;
+    }
+    footer a.active,
+    footer a:hover {
+      color: #fd7e14;
+    }
+    footer i {
+      font-size: 1.3rem;
+      margin-bottom: 2px;
+    }
+  </style>
+</head>
+<body>
+  <header class="header-bar">
+    ฟีดโพสต์ร้าน
+  </header>
+
+  <div class="container py-4">
+    <div class="post-card card">
+      <div class="card-body">
+        <h5>🍛 เมนูใหม่! ข้าวหมูกรอบพิเศษ</h5>
+        <p class="post-time">โพสต์เมื่อ 18 มิ.ย. 2025 | 10:15</p>
+        <img src="https://source.unsplash.com/food1" class="img-fluid post-image mb-2" alt="เมนูใหม่">
+        <p>กรอบนอกนุ่มใน เสิร์ฟพร้อมน้ำจิ้มสูตรลับเฉพาะของร้าน!</p>
+      </div>
+    </div>
+
+    <div class="post-card card">
+      <div class="card-body">
+        <h5>🎉 โปรโมชั่น 1 แถม 1 เฉพาะวันนี้!</h5>
+        <p class="post-time">โพสต์เมื่อ 17 มิ.ย. 2025 | 12:00</p>
+        <p>เฉพาะเมนูเครื่องดื่มเย็น รีบสั่งก่อนหมดเวลา!</p>
+      </div>
+    </div>
+
+    <div class="post-card card">
+      <div class="card-body">
+        <h5>🕘 แจ้งเวลาเปิด-ปิดใหม่</h5>
+        <p class="post-time">โพสต์เมื่อ 15 มิ.ย. 2025 | 18:20</p>
+        <p>ร้านเปิด 09:00 - 20:00 ทุกวันไม่มีวันหยุดครับ</p>
+      </div>
+    </div>
+
+    <div class="post-card card">
+      <div class="card-body">
+        <h5>💬 ขอขอบคุณลูกค้าทุกท่าน</h5>
+        <p class="post-time">โพสต์เมื่อ 14 มิ.ย. 2025 | 14:00</p>
+        <p>ทางร้านรู้สึกยินดีที่ได้บริการลูกค้าทุกคน ❤️</p>
+      </div>
+    </div>
+
+    <div class="post-card card">
+      <div class="card-body">
+        <h5>🍰 วางขายแล้ว! เค้กมะพร้าวอ่อนโฮมเมด</h5>
+        <p class="post-time">โพสต์เมื่อ 13 มิ.ย. 2025 | 09:40</p>
+        <img src="https://source.unsplash.com/food2" class="img-fluid post-image mb-2" alt="เค้ก">
+        <p>เบา หอม นุ่ม ใช้มะพร้าวอ่อนสดใหม่จากสวน</p>
+      </div>
+    </div>
+
+    <div class="post-card card">
+      <div class="card-body">
+        <h5>🚧 ปิดปรับปรุงระบบชั่วคราว</h5>
+        <p class="post-time">โพสต์เมื่อ 11 มิ.ย. 2025 | 23:59</p>
+        <p>ร้านจะงดรับออเดอร์ช่วง 00:00 - 03:00 คืนนี้</p>
+      </div>
+    </div>
+
+    <div class="post-card card">
+      <div class="card-body">
+        <h5>📷 เบื้องหลังการทำครัวของเรา</h5>
+        <p class="post-time">โพสต์เมื่อ 10 มิ.ย. 2025 | 08:15</p>
+        <img src="https://source.unsplash.com/food3" class="img-fluid post-image mb-2" alt="ครัว">
+        <p>สะอาด ปลอดภัย ใส่ใจทุกขั้นตอน</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <a href="shop-dashboard.html">
+      <i class="fas fa-store"></i>
+      <span>ร้านฉัน</span>
+    </a>
+    <a href="orders.html">
+      <i class="fas fa-clipboard-list"></i>
+      <span>ออเดอร์</span>
+    </a>
+    <a href="products.html">
+      <i class="fas fa-utensils"></i>
+      <span>เมนู</span>
+    </a>
+    <a href="settings.html">
+      <i class="fas fa-cog"></i>
+      <span>ตั้งค่า</span>
+    </a>
+    <a href="shop-feed.html" class="active">
+      <i class="fas fa-bullhorn"></i>
+      <span>ฟีด</span>
+    </a>
+  </footer>
+</body>
+</html>
