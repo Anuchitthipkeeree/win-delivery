@@ -118,6 +118,69 @@
       font-weight: 600;
     }
 
+    .status {
+      font-weight: bold;
+      padding: 0.3rem 0.6rem;
+      border-radius: 5px;
+      font-size: 0.85rem;
+      display: inline-block;
+    }
+
+    .status.pending {
+      background-color: var(--warning);
+      color: #000;
+    }
+
+    .status.preparing {
+      background-color: var(--info);
+      color: #fff;
+    }
+
+    .status.delivered {
+      background-color: var(--success);
+      color: #fff;
+    }
+
+    .status.cancelled {
+      background-color: var(--danger);
+      color: #fff;
+    }
+
+    .btn {
+      background-color: var(--primary);
+      color: white;
+      padding: 0.4rem 0.8rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    .btn:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    .floating-btn {
+      position: fixed;
+      bottom: 85px;
+      right: 20px;
+      background-color: var(--primary);
+      color: white;
+      padding: 0.7rem 1.2rem;
+      border-radius: 999px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      font-weight: 600;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .floating-btn:hover {
+      background-color: #e96b05;
+    }
+
     footer {
       position: fixed;
       bottom: 0;
@@ -185,8 +248,8 @@
         <p>รีวิวทั้งหมด</p>
       </div>
     </div>
-  </div>
-<h3 style="margin-bottom: 0.5rem;">คำสั่งซื้อล่าสุด</h3>
+
+    <h3 style="margin-bottom: 0.5rem;">คำสั่งซื้อล่าสุด</h3>
 
     <section class="filter-section" aria-label="กรองคำสั่งซื้อ">
       <label for="orderStatusFilter">กรองตามสถานะ:</label>
@@ -238,7 +301,7 @@
   <a href="add-menu.html" class="floating-btn" aria-label="เพิ่มเมนูใหม่">
     <i class="fas fa-plus"></i> เพิ่มเมนู
   </a>
-  
+
   <footer>
     <a href="shop-dashboard.html" class="active">
       <i class="fas fa-store"></i>
