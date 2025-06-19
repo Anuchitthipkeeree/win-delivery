@@ -1,372 +1,143 @@
 <!DOCTYPE html>
 <html lang="th">
-
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>แดชบอร์ดไรเดอร์ - Win Delivery</title>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap"
-    rel="stylesheet"
-  />
-  <link
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    rel="stylesheet"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>แดชบอร์ดไรเดอร์ | Win Delivery</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
   <style>
-    :root {
-      --primary: #1877f2;
-      --primary-dark: #145dbf;
-      --background: #f0f2f5;
-      --card: #fff;
-      --text: #050505;
-      --muted: #65676b;
-      --accent: #ff3b30;
-      --success: #28a745;
-      --shadow: rgba(0, 0, 0, 0.1);
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Prompt', sans-serif;
-    }
-
     body {
-      background: var(--background);
-      color: var(--text);
-      min-height: 100vh;
-      padding-bottom: 120px; /* พื้นที่ปุ่มลอย */
-      line-height: 1.5;
+      font-family: 'Prompt', sans-serif;
+      margin: 0;
+      padding-bottom: 60px; /* เผื่อพื้นที่ให้แถบล่าง */
+      background: #f4f4f4;
     }
-
-    header {
-      background-color: var(--primary);
-      color: #fff;
-      padding: 1rem;
-      text-align: center;
-      font-weight: 600;
-      font-size: 1.3rem;
-      box-shadow: 0 2px 5px var(--shadow);
-      position: sticky;
-      top: 0;
-      z-index: 100;
+    .section {
+      padding: 16px;
+      background: white;
+      margin-bottom: 12px;
     }
-
-    main {
-      max-width: 600px;
-      margin: 1rem auto 0 auto;
-      padding: 0 1rem;
-    }
-
-    .status-card {
-      background: var(--card);
-      box-shadow: 0 3px 8px var(--shadow);
-      border-radius: 1rem;
-      padding: 1rem 1.5rem;
-      margin-bottom: 1rem;
-      font-weight: 600;
-      font-size: 1.1rem;
-      color: var(--primary-dark);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .order-list {
-      max-width: 600px;
-      margin: 0 auto 80px auto;
-      padding: 0 1rem;
-    }
-
-    .order-item {
-      background: var(--card);
-      border-radius: 1rem;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-      padding: 1rem;
-      margin-bottom: 1rem;
-      cursor: pointer;
-      transition: box-shadow 0.3s ease;
-    }
-
-    .order-item:hover,
-    .order-item:focus {
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-      outline: none;
-    }
-
-    .order-header {
-      font-weight: 700;
-      font-size: 1.1rem;
-      margin-bottom: 0.25rem;
-      color: var(--primary);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .order-details {
-      font-size: 0.9rem;
-      color: var(--muted);
-      margin-top: 0.5rem;
-    }
-
-    /* ปุ่มลอยด้านล่าง */
-    .fab-container {
-      position: fixed;
-      bottom: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(255 255 255 / 0.98);
-      padding: 10px 16px;
-      border-radius: 40px;
-      box-shadow: 0 8px 20px var(--shadow);
-      display: flex;
-      gap: 20px;
-      z-index: 1000;
-      max-width: 600px;
-      width: 100%;
-      justify-content: center;
-      user-select: none;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .fab-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      font-size: 0.7rem;
-      color: var(--primary-dark);
-      cursor: pointer;
-      width: 44px;
-      user-select: none;
-      flex-shrink: 0;
-    }
-
-    .fab-btn {
-      background-color: var(--primary);
-      border: none;
+    .toggle-online {
+      background: #28a745;
       color: white;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      font-size: 1.2rem;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+    }
+    .order-card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 12px;
+      margin: 8px 0;
+      background: #fff;
+    }
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      border-top: 1px solid #ddd;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 6px;
-      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-      transition: background-color 0.3s ease, box-shadow 0.3s ease;
-      user-select: none;
+      justify-content: space-around;
+      padding: 8px 0;
+      font-size: 12px;
     }
-
-    .fab-item:hover .fab-btn,
-    .fab-item:focus .fab-btn {
-      background-color: var(--primary-dark);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-      outline: none;
+    .bottom-nav a {
+      text-align: center;
+      color: #555;
+      text-decoration: none;
     }
-
-    /* ปุ่มรีเฟรชเด่นตรงกลาง */
-    .fab-item.refresh {
-      width: 68px;
-      font-weight: 700;
-      font-size: 0.75rem;
-      color: var(--success);
-      margin: 0 16px;
+    .bottom-nav i {
+      font-size: 18px;
     }
-
-    .fab-btn.refresh-btn {
-      width: 68px;
-      height: 68px;
-      font-size: 1.7rem;
-      background-color: var(--success);
-      box-shadow: 0 0 15px var(--success);
-      animation: pulse-glow 2.5s infinite;
-    }
-
-    @keyframes pulse-glow {
-      0% {
-        box-shadow: 0 0 8px var(--success);
-      }
-
-      50% {
-        box-shadow: 0 0 18px var(--success);
-      }
-
-      100% {
-        box-shadow: 0 0 8px var(--success);
-      }
-    }
-
-    @media (max-width: 480px) {
-      .fab-container {
-        padding: 8px 8px;
-        gap: 12px;
-      }
-
-      .fab-item {
-        width: 36px;
-        font-size: 0.6rem;
-      }
-
-      .fab-btn {
-        width: 36px;
-        height: 36px;
-        font-size: 1rem;
-        margin-bottom: 4px;
-      }
-
-      .fab-item.refresh {
-        width: 56px;
-        font-size: 0.7rem;
-        margin: 0 12px;
-      }
-
-      .fab-btn.refresh-btn {
-        width: 56px;
-        height: 56px;
-        font-size: 1.5rem;
-      }
+    .active {
+      color: #007bff;
     }
   </style>
 </head>
-
 <body>
-  <header>แดชบอร์ดไรเดอร์</header>
 
-  <main>
-    <section class="status-card" aria-label="สถานะไรเดอร์">
-      สถานะ: <span id="riderStatus">ออนไลน์</span>
-      <button
-        style="
-          margin-left: 12px;
-          background-color: var(--primary);
-          color: white;
-          border: none;
-          padding: 6px 12px;
-          border-radius: 6px;
-          cursor: pointer;
-          font-weight: 600;
-          font-size: 0.9rem;
-          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
-          transition: background-color 0.3s ease;
-        "
-        id="btnUpdateStatus"
-        aria-label="อัปเดตสถานะไรเดอร์"
-      >
-        อัปเดตสถานะ
-      </button>
-    </section>
+  <!-- ส่วนบน: สถานะและรายได้ -->
+  <div class="section">
+    <button id="onlineBtn" class="toggle-online">✅ พร้อมรับงาน</button>
+    <p style="margin-top: 12px;"><strong>รายได้วันนี้:</strong> <span id="todayEarnings">฿0</span></p>
+  </div>
 
-    <section class="order-list" aria-label="รายการออร์เดอร์ที่ได้รับ">
-      <article
-        class="order-item"
-        tabindex="0"
-        aria-label="ออร์เดอร์หมายเลข 12345 สั่งโดยคุณสมชาย"
-      >
-        <div class="order-header">
-          <span>ออร์เดอร์ #12345</span>
-          <span>กำลังรอรับอาหาร</span>
-        </div>
-        <div class="order-details">
-          <p>ลูกค้า: คุณสมชาย</p>
-          <p>ที่อยู่: 123/45 ซ.สุขุมวิท 101</p>
-          <p>โทร: 081-234-5678</p>
-          <p>รายการ: ส้มตำปูปลาร้า, ไก่ทอด</p>
-        </div>
-      </article>
+  <!-- งานใหม่ที่รับได้ -->
+  <div class="section">
+    <h3>📦 งานใหม่ที่รับได้</h3>
+    <div class="order-card">
+      <p><strong>ร้าน:</strong> ส้มตำแม่ศรี</p>
+      <p><strong>ระยะทาง:</strong> 2.1 กม.</p>
+      <p><strong>ค่าจ้าง:</strong> 40 บาท</p>
+      <button onclick="acceptOrder('order001')">รับงานนี้</button>
+    </div>
+    <div class="order-card">
+      <p><strong>ร้าน:</strong> ไก่ทอดวิเศษ</p>
+      <p><strong>ระยะทาง:</strong> 1.4 กม.</p>
+      <p><strong>ค่าจ้าง:</strong> 35 บาท</p>
+      <button onclick="acceptOrder('order002')">รับงานนี้</button>
+    </div>
+  </div>
 
-      <article
-        class="order-item"
-        tabindex="0"
-        aria-label="ออร์เดอร์หมายเลข 12346 สั่งโดยคุณสายฝน"
-      >
-        <div class="order-header">
-          <span>ออร์เดอร์ #12346</span>
-          <span>กำลังจัดส่ง</span>
-        </div>
-        <div class="order-details">
-          <p>ลูกค้า: คุณสายฝน</p>
-          <p>ที่อยู่: 456/78 ถ.ลาดพร้าว</p>
-          <p>โทร: 089-876-5432</p>
-          <p>รายการ: ข้าวมันไก่, น้ำสมุนไพร</p>
-        </div>
-      </article>
-    </section>
-  </main>
+  <!-- งานที่กำลังทำ -->
+  <div class="section">
+    <h3>🚚 งานที่กำลังจัดส่ง</h3>
+    <div class="order-card">
+      <p><strong>ร้าน:</strong> ก๋วยเตี๋ยว 5 ดาว</p>
+      <p><strong>ลูกค้า:</strong> คุณสมชาย (บ้านสวน)</p>
+      <p><strong>สถานะ:</strong> กำลังจัดส่ง</p>
+      <button onclick="goToDetails('order003')">ดูรายละเอียด</button>
+    </div>
+  </div>
 
-  <!-- ปุ่มลอยลิงก์ -->
-<nav class="fab-container">
-  <a href="rider-dashboard.html" class="fab-item" aria-label="หน้าหลัก">
-    <div class="fab-btn"><i class="fas fa-home"></i></div>
-    หน้าหลัก
-  </a>
+  <!-- ข่าว / ประกาศ -->
+  <div class="section">
+    <h3>📢 ข่าวสารระบบ</h3>
+    <p>💰 รับโบนัส 100 บาท เมื่อส่งครบ 5 งานภายในวันนี้!</p>
+  </div>
 
-  <a href="update.html" class="fab-item" aria-label="อัปเดต">
-    <div class="fab-btn"><i class="fas fa-user-check"></i></div>
-    อัปเดต
-  </a>
+  <!-- เมนูด้านล่าง -->
+  <nav class="bottom-nav">
+    <a href="rider-dashboard.html" class="active">
+      <i class="fa-solid fa-motorcycle"></i><br>งานของฉัน
+    </a>
+    <a href="rider-history.html">
+      <i class="fa-solid fa-clock-rotate-left"></i><br>ประวัติ
+    </a>
+    <a href="rider-profile.html">
+      <i class="fa-solid fa-user"></i><br>บัญชี
+    </a>
+    <a href="support.html">
+      <i class="fa-solid fa-circle-question"></i><br>ช่วยเหลือ
+    </a>
+  </nav>
 
-  <a href="map.html" class="fab-item refresh" aria-label="รีเฟรช">
-    <div class="fab-btn refresh-btn"><i class="fas fa-sync-alt"></i></div>
-    รีเฟรช
-  </a>
-
-  <a href="chat.html" class="fab-item" aria-label="แชต">
-    <div class="fab-btn"><i class="fas fa-comment-alt"></i></div>
-    แชต
-  </a>
-
-  <a href="map.html" class="fab-item" aria-label="แผนที่">
-    <div class="fab-btn"><i class="fas fa-map-marker-alt"></i></div>
-    แผนที่
-  </a>
-</nav>
-
-
+  <!-- JavaScript -->
   <script>
-    // ตัวอย่างฟังก์ชันทดสอบ กดปุ่มต่างๆ
-    function goHome() {
-      alert('กลับสู่หน้าหลัก (ทดสอบ)');
-      // TODO: เปลี่ยนหน้าเป็นหน้าหลัก หรือโหลดข้อมูลใหม่
-    }
-
-    function updateStatus() {
-      alert('อัปเดตสถานะไรเดอร์ (ทดสอบ)');
-      // TODO: โค้ดอัปเดตสถานะจริง
-    }
-
-    function refreshOrders() {
-      alert('รีเฟรชรายการออร์เดอร์แล้ว (ทดสอบ)');
-      // TODO: โหลดข้อมูลออร์เดอร์ใหม่จาก API
-    }
-
-    function openChat() {
-      alert('เปิดแชตกับร้านค้า (ทดสอบ)');
-      // TODO: เปิดหน้าต่างแชต
-    }
-
-    function openMap() {
-      alert('เปิดแผนที่การจัดส่ง (ทดสอบ)');
-      // TODO: เปิดแผนที่ที่ตำแหน่งออร์เดอร์ หรือ Google Maps
-    }
-
-    // รองรับกดคีย์ Enter หรือ Space บนปุ่มลอย
-    document.querySelectorAll('.fab-item').forEach((item) => {
-      item.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          item.click();
-        }
-      });
+    let isOnline = true;
+    document.getElementById("onlineBtn").addEventListener("click", () => {
+      isOnline = !isOnline;
+      document.getElementById("onlineBtn").textContent = isOnline ? "✅ พร้อมรับงาน" : "⛔️ ปิดรับงาน";
+      document.getElementById("onlineBtn").style.background = isOnline ? "#28a745" : "#dc3545";
     });
 
-    // ปุ่มอัปเดตสถานะที่บนหน้าจอ
-    document.getElementById('btnUpdateStatus').addEventListener('click', updateStatus);
-  </script>
-</body>
+    function acceptOrder(orderId) {
+      alert("คุณรับงาน: " + orderId + " แล้ว");
+      // ในระบบจริง จะส่งข้อมูลไปยังเซิร์ฟเวอร์
+    }
 
+    function goToDetails(orderId) {
+      window.location.href = "order-details.html?order=" + orderId;
+    }
+
+    // ตัวอย่างรายได้ (สามารถดึงจาก API ได้)
+    document.getElementById("todayEarnings").textContent = "฿120";
+  </script>
+
+</body>
 </html>
