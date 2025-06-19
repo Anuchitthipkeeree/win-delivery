@@ -186,7 +186,59 @@
       </div>
     </div>
   </div>
+<h3 style="margin-bottom: 0.5rem;">คำสั่งซื้อล่าสุด</h3>
 
+    <section class="filter-section" aria-label="กรองคำสั่งซื้อ">
+      <label for="orderStatusFilter">กรองตามสถานะ:</label>
+      <select id="orderStatusFilter" aria-controls="ordersTable">
+        <option value="all" selected>ทั้งหมด</option>
+        <option value="pending">รอชำระ/รอจัดเตรียม</option>
+        <option value="preparing">กำลังจัดเตรียม</option>
+        <option value="delivered">จัดส่งแล้ว</option>
+        <option value="cancelled">ยกเลิก</option>
+      </select>
+    </section>
+
+    <table aria-label="รายการคำสั่งซื้อ" id="ordersTable">
+      <thead>
+        <tr>
+          <th>ออเดอร์</th>
+          <th>ลูกค้า</th>
+          <th>ยอดรวม</th>
+          <th>สถานะ</th>
+          <th>จัดการ</th>
+        </tr>
+      </thead>
+      <tbody id="ordersTbody">
+        <tr>
+          <td>#1023</td>
+          <td>สมชาย</td>
+          <td>฿150</td>
+          <td><span class="status delivered" aria-label="สถานะ: จัดส่งแล้ว">จัดส่งแล้ว</span></td>
+          <td><button class="btn" disabled>เสร็จสิ้น</button></td>
+        </tr>
+        <tr>
+          <td>#1022</td>
+          <td>สุพัตรา</td>
+          <td>฿89</td>
+          <td><span class="status preparing" aria-label="สถานะ: กำลังจัดเตรียม">กำลังจัดเตรียม</span></td>
+          <td><button class="btn" data-orderid="1022" data-status="preparing">ทำเครื่องหมายว่า จัดส่งแล้ว</button></td>
+        </tr>
+        <tr>
+          <td>#1021</td>
+          <td>จารุวรรณ</td>
+          <td>฿120</td>
+          <td><span class="status pending" aria-label="สถานะ: รอชำระ/รอจัดเตรียม">รอจัดเตรียม</span></td>
+          <td><button class="btn" data-orderid="1021" data-status="pending">เริ่มจัดเตรียม</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <a href="add-menu.html" class="floating-btn" aria-label="เพิ่มเมนูใหม่">
+    <i class="fas fa-plus"></i> เพิ่มเมนู
+  </a>
+  
   <footer>
     <a href="shop-dashboard.html" class="active">
       <i class="fas fa-store"></i>
