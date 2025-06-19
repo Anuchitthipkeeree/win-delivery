@@ -18,14 +18,34 @@
     body {
       font-family: 'Prompt', sans-serif;
       background-color: #f8f9fa;
-      padding-bottom: 80px; /* กัน footer บังเนื้อหา */
+      padding-top: 60px; /* เว้นที่ให้ header */
+      padding-bottom: 80px; /* เว้นที่ให้ footer */
     }
+
+    /* แถบด้านบน */
+    header.header-bar {
+      background-color: #007bff;
+      color: white;
+      padding: 1rem;
+      font-weight: 600;
+      font-size: 1.3rem;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
     .tab-content {
       background-color: #fff;
       padding: 1rem;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.05);
     }
+
+    /* Footer */
     footer {
       position: fixed;
       bottom: 0;
@@ -62,9 +82,13 @@
 </head>
 
 <body>
-  <div class="container py-4">
-    <h2 class="mb-4 text-center">รายการออเดอร์ของร้าน</h2>
 
+  <!-- แถบด้านบน -->
+  <header class="header-bar">
+    รายการออเดอร์ของร้าน
+  </header>
+
+  <div class="container py-4">
     <!-- Tabs -->
     <ul class="nav nav-tabs mb-3 justify-content-center" id="orderTabs" role="tablist">
       <li class="nav-item" role="presentation">
