@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>เพิ่มเมนูใหม่ | Win Delivery</title>
-  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
     :root {
       --primary: #1877f2;
@@ -72,6 +72,7 @@
     .image-preview {
       margin-top: 1rem;
       max-height: 200px;
+      display: none;
     }
 
     .btn-group {
@@ -112,15 +113,15 @@
   <div class="container">
     <form id="menuForm">
       <label for="name">🏷️ ชื่อเมนู</label>
-      <input type="text" id="name" name="name" required>
+      <input type="text" id="name" name="name" required />
 
       <label for="price">💵 ราคา (บาท)</label>
-      <input type="number" id="price" name="price" min="1" required>
+      <input type="number" id="price" name="price" min="1" required />
       <small id="priceError" style="color:red; display:none;">กรุณาใส่ราคาที่มากกว่า 0</small>
 
       <label for="image">📸 รูปภาพเมนู</label>
-      <input type="file" id="image" name="image" accept="image/*" required>
-      <img id="imagePreview" class="image-preview" src="#" alt="Preview" style="display: none;" />
+      <input type="file" id="image" name="image" accept="image/*" required />
+      <img id="imagePreview" class="image-preview" alt="Preview" />
 
       <label for="category">📂 หมวดหมู่</label>
       <select id="category" name="category" required>
@@ -136,7 +137,12 @@
       </select>
 
       <label for="postText">📝 ข้อความโพสต์</label>
-      <textarea id="postText" name="postText" rows="3" placeholder="ใส่ข้อความโปรโมต เช่น เมนูใหม่ โปรโมชั่นพิเศษ ฯลฯ"></textarea>
+      <textarea
+        id="postText"
+        name="postText"
+        rows="3"
+        placeholder="ใส่ข้อความโปรโมต เช่น เมนูใหม่ โปรโมชั่นพิเศษ ฯลฯ"
+      ></textarea>
 
       <div class="btn-group">
         <button type="button" class="btn btn-secondary" onclick="window.location.href='shop-dashboard.html'">ยกเลิก</button>
@@ -147,94 +153,109 @@
     </form>
   </div>
 
-  <!-- ... ส่วน <head> คงเดิมตามที่คุณส่งมา ... -->
+  <script>
+    const form = document.getElementById("menuForm");
+    const priceInput = document.getElementById("price");
+    const priceError = document.getElementById("priceError");
+    const imageInput = document.getElementById("image");
+    const imagePreview = document.getElementById("imagePreview");
+    const successMessage = document.getElementById("successMessage");
 
-<script>
-  const form = document.getElementById("menuForm");
-  const priceInput = document.getElementById("price");
-  const priceError = document.getElementById("priceError");
-  const imageInput = document.getElementById("image");
-  const imagePreview = document.getElementById("imagePreview");
-  const successMessage = document.getElementById("successMessage");
+    imageInput.addEventListener("change", function () {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          imagePreview.src = e.target.result;
+          imagePreview.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+      } else {
+        imagePreview.style.display = "none";
+      }
+    });
 
-  imageInput.addEventListener("change", function () {
-    const file = this.files[0];
-    if (file) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      if (parseFloat(priceInput.value) <= 0) {
+        priceError.style.display = "block";
+        return;
+      } else {
+        priceError.style.display = "none";
+      }
+
+      const name = document.getElementById("name").value.trim();
+      const price = document.getElementById("price").value.trim();
+      const category = document.getElementById("category").value;
+      const postText = document.getElementById("postText").value.trim();
+      const timestamp = new Date().toLocaleString("th-TH", { timeZone: "Asia/Bangkok" });
+      const imageFile = imageInput.files[0];
+
+      if (!imageFile) {
+        alert("กรุณาเลือกภาพเมนู");
+        return;
+      }
+
       const reader = new FileReader();
-      reader.onload = function (e) {
-        imagePreview.src = e.target.result;
-        imagePreview.style.display = "block";
+      reader.onloadend = function () {
+        // ดึงข้อมูลภาพเป็น Base64 ตัดส่วน prefix data:image/...
+        const base64Image = reader.result.split(",")[1];
+
+        const imgbbAPI = "https://api.imgbb.com/1/upload";
+        const apiKey = "7422917798edd5e29a5e8847c036185a";
+
+        const imgbbFormData = new FormData();
+        imgbbFormData.append("key", apiKey);
+        imgbbFormData.append("image", base64Image);
+
+        fetch(imgbbAPI, {
+          method: "POST",
+          body: imgbbFormData,
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.success) {
+              const imageUrl = data.data.url;
+
+              // เตรียมข้อมูลส่งไป Google Apps Script Web App
+              const formData = new FormData();
+              formData.append("name", name);
+              formData.append("price", price);
+              formData.append("category", category);
+              formData.append("postText", postText);
+              formData.append("timestamp", timestamp);
+              formData.append("imageUrl", imageUrl); // ส่ง URL ของภาพ
+
+              // เปลี่ยนเป็น URL Google Apps Script Web App ของคุณ
+              const googleScriptURL =
+                "https://script.google.com/macros/s/AKfycbxiX-hqkkhPKkuqaAlfKf7KuAeSnJMdiY3bOLcMEwkhy-UDHEoSJlzZiqWOOvcTlaY/exec";
+
+              return fetch(googleScriptURL, {
+                method: "POST",
+                body: formData,
+              });
+            } else {
+              throw new Error("ไม่สามารถอัปโหลดภาพไปยัง Imgbb ได้");
+            }
+          })
+          .then((response) => response.json())
+          .then((result) => {
+            if (result.status === "success") {
+              successMessage.style.display = "block";
+              form.reset();
+              imagePreview.style.display = "none";
+            } else {
+              alert("เกิดข้อผิดพลาดในการบันทึกข้อมูล: " + result.message);
+            }
+          })
+          .catch((err) => {
+            alert("เกิดข้อผิดพลาด: " + err.message);
+          });
       };
-      reader.readAsDataURL(file);
-    }
-  });
 
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    if (parseFloat(priceInput.value) <= 0) {
-      priceError.style.display = "block";
-      return;
-    } else {
-      priceError.style.display = "none";
-    }
-
-    const name = document.getElementById("name").value;
-    const price = document.getElementById("price").value;
-    const category = document.getElementById("category").value;
-    const postText = document.getElementById("postText").value;
-    const timestamp = new Date().toLocaleString("th-TH", { timeZone: "Asia/Bangkok" });
-    const imageFile = imageInput.files[0];
-
-    const reader = new FileReader();
-    reader.onloadend = function () {
-      const base64Image = reader.result.split(',')[1];
-
-      const imgbbAPI = 'https://api.imgbb.com/1/upload';
-      const apiKey = '7422917798edd5e29a5e8847c036185a';
-
-      const imgbbFormData = new FormData();
-      imgbbFormData.append('key', apiKey);
-      imgbbFormData.append('image', base64Image);
-
-      fetch(imgbbAPI, {
-        method: 'POST',
-        body: imgbbFormData
-      })
-        .then(res => res.json())
-        .then(data => {
-          if (data.success) {
-            const imageUrl = data.data.url;
-
-            const formData = new FormData();
-            formData.append("name", name);
-            formData.append("price", price);
-            formData.append("category", category);
-            formData.append("postText", postText);
-            formData.append("timestamp", timestamp);
-            formData.append("imageUrl", imageUrl); // ✅ ใช้ imageUrl แทน image
-
-            return fetch("https://hook.eu2.make.com/uaaih93in133bz72e1r4j9xvq7sh1122", {
-              method: "POST",
-              body: formData
-            });
-          } else {
-            throw new Error("ไม่สามารถอัปโหลดภาพไปยัง Imgbb ได้");
-          }
-        })
-        .then(() => {
-          successMessage.style.display = "block";
-          form.reset();
-          imagePreview.style.display = "none";
-        })
-        .catch(err => {
-          alert("เกิดข้อผิดพลาด: " + err.message);
-        });
-    };
-
-    reader.readAsDataURL(imageFile);
-  });
-</script>
-
+      reader.readAsDataURL(imageFile);
+    });
+  </script>
 </body>
 </html>
