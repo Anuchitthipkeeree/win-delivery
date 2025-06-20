@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>งานของฉัน | Win Delivery</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Prompt', sans-serif;
+      margin: 0;
+      padding-bottom: 100px;
+      background: #f9f9f9;
+      color: #333;
+    }
+
+    header {
+      background: #2ecc71;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      font-weight: bold;
+      font-size: 18px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .section {
+      margin: 16px;
+      padding: 16px;
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .section h3 {
+      margin-top: 0;
+      color: #27ae60;
+    }
+
+    .order-card {
+      padding: 14px;
+      margin-top: 12px;
+      background: #fefefe;
+      border-radius: 10px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    .order-card p {
+      margin: 6px 0;
+      font-size: 15px;
+    }
+
+    .order-card .status {
+      font-weight: bold;
+      color: #f39c12;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      border-top: 1px solid #ddd;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.12);
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0 14px 0;
+      z-index: 999;
+    }
+
+    .bottom-nav a {
+      text-align: center;
+      color: #666;
+      font-size: 12px;
+      text-decoration: none;
+      flex-grow: 1;
+    }
+
+    .bottom-nav i {
+      font-size: 20px;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .bottom-nav a.active {
+      color: #27ae60;
+      font-weight: 700;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <span><i class="fa-solid fa-briefcase"></i> งานของฉัน</span>
+    <span id="jobCount">📋 ทั้งหมด: 2 งาน</span>
+  </header>
+
+  <div class="section">
+    <h3>🚚 กำลังจัดส่ง</h3>
+    <div class="order-card">
+      <p><strong>ร้าน:</strong> ชานมไข่มุก SweetTime</p>
+      <p><strong>ลูกค้า:</strong> คุณอรทัย</p>
+      <p><strong>สถานะ:</strong> <span class="status">กำลังจัดส่ง</span></p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>✅ ส่งสำเร็จวันนี้</h3>
+    <div class="order-card">
+      <p><strong>ร้าน:</strong> ไก่ทอดจุใจ</p>
+      <p><strong>ลูกค้า:</strong> คุณนิค</p>
+      <p><strong>เวลาส่ง:</strong> 10:42 น.</p>
+      <p><strong>ค่าจ้าง:</strong> 45 บาท</p>
+    </div>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="rider-dashboard.html">
+      <i class="fa-solid fa-briefcase"></i>
+      My Jobs
+    </a>
+    <a href="map.html">
+      <i class="fa-solid fa-map"></i>
+      Map
+    </a>
+    <a href="available-jobs.html" class="job-button-center">
+      <i class="fa-solid fa-motorcycle"></i>
+    </a>
+    <a href="#">
+      <i class="fa-solid fa-user"></i>
+      Profile
+    </a>
+    <a href="rider-connect.html">
+      <i class="fa-solid fa-comments"></i>
+      Rider Connect
+    </a>
+  </nav>
+</body>
+
+</html>
