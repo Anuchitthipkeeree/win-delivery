@@ -92,6 +92,10 @@
       font-weight: bold;
       display: none;
     }
+    #status {
+      margin-top: 1rem;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -131,15 +135,30 @@
       </div>
 
       <div class="success-message" id="successMessage">✅ บันทึกเมนูเรียบร้อยแล้ว!</div>
+      <div id="status"></div>
     </form>
   </div>
 
   <script>
-    const imgbbAPIKey = '1a291d628ca70cfc830c7fbb39b54df5'; // ✅ ใช้ได้แล้ว
-    const googleAppsScriptURL = 'https://script.google.com/macros/s/AKfycbzVrTZi_EoA44XBfMdDmJ5gml3iavOHWtyFN92IIuDKwWrME0-wlVBVk5mhkz98HpGL/exec'; // ❗️เปลี่ยนตรงนี้เป็น URL Web App ของคุณ
+    const imgbbAPIKey = '1a291d628ca70cfc830c7fbb39b54df5';
+    const googleAppsScriptURL = 'https://script.google.com/macros/s/AKfycbzVrTZi_EoA44XBfMdDmJ5gml3iavOHWtyFN92IIuDKwWrME0-wlVBVk5mhkz98HpGL/exec';
 
     const form = document.getElementById('menuForm');
     const statusDiv = document.getElementById('status');
+
+    // แสดงรูปพรีวิว
+    document.getElementById('image').addEventListener('change', function (event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const img = document.getElementById('imagePreview');
+          img.src = e.target.result;
+          img.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      }
+    });
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -170,7 +189,7 @@
               name: formData.get('name'),
               price: formData.get('price'),
               category: formData.get('category'),
-              description: formData.get('description'),
+              description: formData.get('postText'), // 👈 ตรงกับฟอร์ม
               imageUrl: imageUrl,
               timestamp: new Date().toISOString(),
             };
@@ -183,7 +202,9 @@
 
             if (response.ok) {
               statusDiv.textContent = '🎉 บันทึกข้อมูลเมนูสำเร็จ!';
+              document.getElementById('successMessage').style.display = 'block';
               form.reset();
+              document.getElementById('imagePreview').style.display = 'none';
             } else {
               statusDiv.textContent = '❌ บันทึกข้อมูลไม่สำเร็จ';
             }
