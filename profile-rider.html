@@ -39,11 +39,43 @@
       z-index: 1000;
       display: flex;
       align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
       gap: 10px;
     }
 
-    header i {
-      font-size: 24px;
+    .notif-container {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .notif-container .badge {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: red;
+      color: white;
+      font-size: 10px;
+      font-weight: bold;
+      padding: 2px 6px;
+      border-radius: 50%;
+      min-width: 18px;
+      text-align: center;
+      line-height: 14px;
+    }
+
+    #statusBar {
+      background: var(--green-dark);
+      color: white;
+      font-weight: 700;
+      font-size: 16px;
+      padding: 8px 16px;
+      text-align: center;
+      box-shadow: var(--shadow);
     }
 
     .profile {
@@ -161,7 +193,6 @@
       font-size: 20px;
     }
 
-    /* Bottom Nav */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -195,7 +226,6 @@
       font-weight: 700;
     }
 
-    /* ปุ่มสถานะกลาง */
     .job-button-center {
       width: 70px;
       height: 70px;
@@ -214,27 +244,21 @@
       color: white;
       text-decoration: none;
     }
-
-    .status-online {
-      background: var(--green);
-    }
-
-    .status-break {
-      background: var(--yellow);
-      color: #222;
-    }
-
-    .status-offline {
-      background: var(--red);
-    }
   </style>
 </head>
 
 <body>
-
   <header>
-    <i class="fa-solid fa-user"></i> โปรไฟล์ไรเดอร์
+    <div class="header-left">
+      <i class="fa-solid fa-bolt"></i> Win Delivery
+    </div>
+    <div class="notif-container">
+      <i class="fa-solid fa-bell"></i>
+      <span class="badge">2</span>
+    </div>
   </header>
+
+  <div id="statusBar">✅ รับงานอยู่ (สถานะบัญชี: ปกติ)</div>
 
   <section class="profile">
     <div class="profile-header">
@@ -298,12 +322,10 @@
   </nav>
 
   <script>
-    // ตัวอย่างโค้ดเปลี่ยนสีปุ่มสถานะรับงาน (ถ้าจะเชื่อม backend ให้ปรับตรงนี้)
     const jobBtn = document.getElementById('jobButton');
     const statuses = ['status-online', 'status-break', 'status-offline'];
     let currentStatus = 0;
 
-    // ตัวอย่างเปลี่ยนสถานะด้วยคลิกขวา
     jobBtn.addEventListener('contextmenu', (e) => {
       e.preventDefault();
       currentStatus = (currentStatus + 1) % statuses.length;
