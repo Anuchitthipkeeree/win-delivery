@@ -103,8 +103,6 @@
     }
 
     .job-button-center {
-      background: var(--green-dark);
-      color: white;
       width: 70px;
       height: 70px;
       border-radius: 50%;
@@ -119,37 +117,12 @@
       transform: translateX(-50%);
       z-index: 1000;
       cursor: pointer;
-    }
-
-    .popup-status {
-      position: fixed;
-      bottom: 100px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: white;
-      padding: 16px;
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      display: none;
-      text-align: center;
-      z-index: 1200;
-    }
-
-    .popup-status p {
-      margin: 0;
-      font-weight: bold;
-    }
-
-    .status-indicator {
-      display: inline-block;
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      margin-right: 8px;
+      color: white;
+      text-decoration: none;
     }
 
     .status-online { background: var(--green); }
-    .status-break { background: var(--yellow); }
+    .status-break { background: var(--yellow); color: #222; }
     .status-offline { background: var(--red); }
   </style>
 </head>
@@ -179,10 +152,6 @@
     </div>
   </div>
 
-  <div id="popupStatus" class="popup-status">
-    <p><span id="statusColor" class="status-indicator status-online"></span><span id="statusText">รับงานอยู่</span></p>
-  </div>
-
   <nav class="bottom-nav">
     <a href="rider-dashboard.html">
       <i class="fa-solid fa-briefcase"></i>
@@ -192,7 +161,7 @@
       <i class="fa-solid fa-map"></i>
       Map
     </a>
-    <a id="jobButton" class="job-button-center">
+    <a id="jobButton" href="my-job-rider.html" class="job-button-center status-online">
       <i class="fa-solid fa-bolt"></i>
     </a>
     <a href="#">
@@ -206,25 +175,15 @@
   </nav>
 
   <script>
+    // เปลี่ยนสถานะสีปุ่มสายฟ้า (ถ้าจะให้เปลี่ยนแบบอัตโนมัติสามารถปรับตามสถานะที่เชื่อมจากระบบได้)
     const jobBtn = document.getElementById('jobButton');
-    const popup = document.getElementById('popupStatus');
-    const statusText = document.getElementById('statusText');
-    const statusColor = document.getElementById('statusColor');
-
-    const statuses = [
-      { text: 'รับงานอยู่', class: 'status-online' },
-      { text: 'พักชั่วคราว', class: 'status-break' },
-      { text: 'ปิดรับงาน', class: 'status-offline' }
-    ];
-
+    const statuses = ['status-online', 'status-break', 'status-offline'];
     let currentStatus = 0;
 
-    jobBtn.addEventListener('click', () => {
+    jobBtn.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
       currentStatus = (currentStatus + 1) % statuses.length;
-      statusText.textContent = statuses[currentStatus].text;
-      statusColor.className = 'status-indicator ' + statuses[currentStatus].class;
-      popup.style.display = 'block';
-      setTimeout(() => popup.style.display = 'none', 1500);
+      jobBtn.className = 'job-button-center ' + statuses[currentStatus];
     });
   </script>
 </body>
