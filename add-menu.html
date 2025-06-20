@@ -186,12 +186,14 @@
             statusDiv.textContent = '✅ อัปโหลดภาพสำเร็จ กำลังบันทึกข้อมูล...';
 
             const payload = {
+              timestamp: new Date().toISOString(),
               name: formData.get('name'),
               price: formData.get('price'),
+              imageUrl: imageUrl,
               category: formData.get('category'),
               description: formData.get('postText'), // 👈 ตรงกับฟอร์ม
-              imageUrl: imageUrl,
-              timestamp: new Date().toISOString(),
+              
+             
             };
 
             const response = await fetch(googleAppsScriptURL, {
