@@ -192,7 +192,6 @@
               description: formData.get('postText'), // 👈 ตรงกับฟอร์ม
               imageUrl: imageUrl,
               timestamp: new Date().toISOString(),
-            };
 
             const response = await fetch(googleAppsScriptURL, {
               method: 'POST',
