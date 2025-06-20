@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>แดชบอร์ดไรเดอร์ | Win Delivery</title>
+  <title>งานของฉัน | Win Delivery</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap" rel="stylesheet" />
   <style>
@@ -12,119 +13,60 @@
       --yellow: #f1c40f;
       --red: #e74c3c;
       --green-dark: #27ae60;
-      --gray-light: #f8f8f8;
-      --shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
 
     body {
       font-family: 'Prompt', sans-serif;
       margin: 0;
       padding-bottom: 100px;
-      background: var(--gray-light);
+      background: #f9f9f9;
       color: #333;
     }
 
     header {
-      background: var(--green);
+      background: #2ecc71;
       color: white;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 16px;
+      padding: 14px 16px;
       font-weight: bold;
       font-size: 18px;
-      box-shadow: var(--shadow);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
       position: sticky;
       top: 0;
       z-index: 1000;
     }
 
-    header .title {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    #earningsBar {
-      background: var(--green-dark);
-      color: white;
-      font-weight: 700;
-      font-size: 16px;
-      padding: 8px 16px;
-      text-align: center;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-      position: sticky;
-      top: 56px;
-      z-index: 999;
-    }
-
-    .notif-container {
-      position: relative;
-      cursor: pointer;
-    }
-
-    .notif-container .badge {
-      position: absolute;
-      top: -6px;
-      right: -6px;
-      background: red;
-      color: white;
-      font-size: 10px;
-      font-weight: bold;
-      padding: 2px 6px;
-      border-radius: 50%;
-      display: none;
-      min-width: 18px;
-      text-align: center;
-      line-height: 14px;
-    }
-
-    #riderNearby {
-      position: fixed;
-      top: 106px;
-      right: 16px;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-      padding: 12px 16px;
-      font-size: 14px;
-      color: #333;
-      z-index: 1100;
-      max-width: 220px;
-    }
-
     .section {
-      background: white;
       margin: 16px;
       padding: 16px;
-      border-radius: 16px;
-      box-shadow: var(--shadow);
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .section h3 {
+      margin-top: 0;
+      color: #27ae60;
     }
 
     .order-card {
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: var(--shadow);
       padding: 14px;
       margin-top: 12px;
+      background: #fefefe;
+      border-radius: 10px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
     }
 
     .order-card p {
-      margin: 5px 0;
+      margin: 6px 0;
       font-size: 15px;
     }
 
-    .order-card button {
-      margin-top: 10px;
-      padding: 10px 16px;
-      background: var(--green-dark);
-      color: white;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: 700;
-      font-size: 14px;
-      width: 100%;
+    .order-card .status {
+      font-weight: bold;
+      color: #f39c12;
     }
 
     .bottom-nav {
@@ -156,13 +98,31 @@
     }
 
     .bottom-nav a.active {
-      color: var(--green-dark);
+      color: #27ae60;
       font-weight: 700;
+    }
+
+    .job-button-center {
+      background: var(--green-dark);
+      color: white;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 28px;
+      position: absolute;
+      top: -35px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
     }
 
     .status-btn {
       position: fixed;
-      bottom: 80px;
+      bottom: 90px;
       right: 20px;
       border: none;
       border-radius: 30px;
@@ -180,50 +140,36 @@
     .offline { background: var(--red); }
   </style>
 </head>
+
 <body>
   <header>
-    <div class="title">
-      <i class="fa-solid fa-bolt fa-lg"></i>
-      Win Delivery – Rider
-    </div>
-    <div class="notif-container" onclick="showNotifications()">
-      <i class="fa-solid fa-bell fa-lg" style="color: white;"></i>
-      <span id="notifBadge" class="badge">2</span>
-    </div>
+    <span><i class="fa-solid fa-briefcase"></i> งานของฉัน</span>
+    <span id="jobCount">📋 ทั้งหมด: 2 งาน</span>
   </header>
 
-  <div id="earningsBar">💰 รายได้วันนี้: <span id="stickyEarnings">฿120</span></div>
-  <div id="riderNearby">ไรเดอร์ออนไลน์ในรัศมี 3 กม.: <strong id="riderCount">3</strong> คน</div>
-
   <div class="section">
-    <h3>📦 งานใหม่ที่รับได้</h3>
+    <h3>🚚 กำลังจัดส่ง</h3>
     <div class="order-card">
-      <p><strong>ร้าน:</strong> ส้มตำแม่ศรี</p>
-      <p><strong>ระยะทาง:</strong> 2.1 กม.</p>
-      <p><strong>ค่าจ้าง:</strong> 40 บาท</p>
-      <button>รับงานนี้</button>
+      <p><strong>ร้าน:</strong> ชานมไข่มุก SweetTime</p>
+      <p><strong>ลูกค้า:</strong> คุณอรทัย</p>
+      <p><strong>สถานะ:</strong> <span class="status">กำลังจัดส่ง</span></p>
     </div>
   </div>
 
   <div class="section">
-    <h3>🚚 งานที่กำลังจัดส่ง</h3>
+    <h3>✅ ส่งสำเร็จวันนี้</h3>
     <div class="order-card">
-      <p><strong>ร้าน:</strong> ก๋วยเตี๋ยว 5 ดาว</p>
-      <p><strong>ลูกค้า:</strong> คุณสมชาย</p>
-      <p><strong>สถานะ:</strong> กำลังจัดส่ง</p>
-      <button>ดูรายละเอียด</button>
+      <p><strong>ร้าน:</strong> ไก่ทอดจุใจ</p>
+      <p><strong>ลูกค้า:</strong> คุณนิค</p>
+      <p><strong>เวลาส่ง:</strong> 10:42 น.</p>
+      <p><strong>ค่าจ้าง:</strong> 45 บาท</p>
     </div>
-  </div>
-
-  <div class="section">
-    <h3>📢 ข่าวสาร</h3>
-    <p>🎁 โบนัสพิเศษ! ส่งครบ 5 งานวันนี้ รับเพิ่ม 100 บาท</p>
   </div>
 
   <button id="statusButton" class="status-btn online">✅ รับงานอยู่</button>
 
   <nav class="bottom-nav">
-    <a href="rider-dashboard.html" class="active">
+    <a href="rider-dashboard.html">
       <i class="fa-solid fa-briefcase"></i>
       My Jobs
     </a>
@@ -231,16 +177,16 @@
       <i class="fa-solid fa-map"></i>
       Map
     </a>
-    <a href="#">
-      <i class="fa-solid fa-wallet"></i>
-      Earnings
+    <a href="my-job-rider.html" class="job-button-center">
+      <i class="fa-solid fa-motorcycle"></i>
     </a>
     <a href="#">
       <i class="fa-solid fa-user"></i>
       Profile
     </a>
     <a href="rider-connect.html">
-      <i class="fa-solid fa-comments"></i>Rider Connect
+      <i class="fa-solid fa-comments"></i>
+      Rider Connect
     </a>
   </nav>
 
@@ -260,4 +206,5 @@
     });
   </script>
 </body>
+
 </html>
