@@ -78,9 +78,12 @@
       display: none;
     }
     #status {
-      margin-top: 1rem;
+      margin-top: 1.5rem;
       font-weight: bold;
       color: green;
+    }
+    #status.error {
+      color: red;
     }
   </style>
 </head>
@@ -146,9 +149,16 @@
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       statusDiv.textContent = '⏳ กำลังอัปโหลดรูปภาพ...';
+      statusDiv.classList.remove('error');
 
       const formData = new FormData(form);
       const file = formData.get('image');
+
+      if (!file || file.size === 0) {
+        statusDiv.textContent = '❌ กรุณาเลือกรูปภาพ';
+        statusDiv.classList.add('error');
+        return;
+      }
 
       const reader = new FileReader();
       reader.readAsDataURL(file);
@@ -190,12 +200,15 @@
               document.getElementById('imagePreview').style.display = 'none';
             } else {
               statusDiv.textContent = '❌ บันทึกข้อมูลล้มเหลว: ' + result.message;
+              statusDiv.classList.add('error');
             }
           } else {
             statusDiv.textContent = '❌ อัปโหลดภาพไม่สำเร็จ: ' + imgbbData.error.message;
+            statusDiv.classList.add('error');
           }
         } catch (error) {
           statusDiv.textContent = '❌ เกิดข้อผิดพลาด: ' + error.message;
+          statusDiv.classList.add('error');
         }
       };
     });
