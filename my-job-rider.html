@@ -8,6 +8,13 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap" rel="stylesheet" />
   <style>
+    :root {
+      --green: #2ecc71;
+      --yellow: #f1c40f;
+      --red: #e74c3c;
+      --green-dark: #27ae60;
+    }
+
     body {
       font-family: 'Prompt', sans-serif;
       margin: 0;
@@ -94,6 +101,56 @@
       color: #27ae60;
       font-weight: 700;
     }
+
+    .job-button-center {
+      background: var(--green-dark);
+      color: white;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 28px;
+      position: absolute;
+      top: -35px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      cursor: pointer;
+    }
+
+    .popup-status {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      padding: 16px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      display: none;
+      text-align: center;
+      z-index: 1200;
+    }
+
+    .popup-status p {
+      margin: 0;
+      font-weight: bold;
+    }
+
+    .status-indicator {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+
+    .status-online { background: var(--green); }
+    .status-break { background: var(--yellow); }
+    .status-offline { background: var(--red); }
   </style>
 </head>
 
@@ -122,6 +179,10 @@
     </div>
   </div>
 
+  <div id="popupStatus" class="popup-status">
+    <p><span id="statusColor" class="status-indicator status-online"></span><span id="statusText">รับงานอยู่</span></p>
+  </div>
+
   <nav class="bottom-nav">
     <a href="rider-dashboard.html">
       <i class="fa-solid fa-briefcase"></i>
@@ -131,8 +192,8 @@
       <i class="fa-solid fa-map"></i>
       Map
     </a>
-    <a href="my-job-rider.html" class="job-button-center">
-      <i class="fa-solid fa-motorcycle"></i>
+    <a id="jobButton" class="job-button-center">
+      <i class="fa-solid fa-bolt"></i>
     </a>
     <a href="#">
       <i class="fa-solid fa-user"></i>
@@ -143,6 +204,29 @@
       Rider Connect
     </a>
   </nav>
+
+  <script>
+    const jobBtn = document.getElementById('jobButton');
+    const popup = document.getElementById('popupStatus');
+    const statusText = document.getElementById('statusText');
+    const statusColor = document.getElementById('statusColor');
+
+    const statuses = [
+      { text: 'รับงานอยู่', class: 'status-online' },
+      { text: 'พักชั่วคราว', class: 'status-break' },
+      { text: 'ปิดรับงาน', class: 'status-offline' }
+    ];
+
+    let currentStatus = 0;
+
+    jobBtn.addEventListener('click', () => {
+      currentStatus = (currentStatus + 1) % statuses.length;
+      statusText.textContent = statuses[currentStatus].text;
+      statusColor.className = 'status-indicator ' + statuses[currentStatus].class;
+      popup.style.display = 'block';
+      setTimeout(() => popup.style.display = 'none', 1500);
+    });
+  </script>
 </body>
 
 </html>
