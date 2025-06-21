@@ -6,33 +6,58 @@
 </head>
 <body>
   <h2>เพิ่มข้อมูลวันเกิด</h2>
+
+  <!-- ฟอร์มรับข้อมูลจากผู้ใช้ -->
   <form id="birthdayForm">
+    <!-- input รับชื่อ -->
     <input type="text" name="name" placeholder="ชื่อ" required />
+
+    <!-- input รับวันเกิด -->
     <input type="date" name="birthday" required />
+
+    <!-- ปุ่มส่งข้อมูล -->
     <button type="submit">บันทึก</button>
   </form>
 
   <script>
+    // URL ของ Google Apps Script Web App (ใช้สำหรับส่งข้อมูล)
     const scriptURL = "https://script.google.com/macros/s/AKfycbwLDBJ0cpKNQ1Nsas4SAPuGN8COCqqmvjSQk_t11Q6rJt5NgqplfuZn49fL80noWRYD/exec";
 
+    // เลือกฟอร์มด้วย id="birthdayForm" และเพิ่ม event listener เมื่อผู้ใช้ส่งฟอร์ม
     document.getElementById("birthdayForm").addEventListener("submit", function(e) {
-      e.preventDefault();
+      e.preventDefault(); 
+      /*
+        ป้องกันฟอร์มไม่ให้ reload หน้าเว็บ (พฤติกรรมปกติของ form)
+        เราอยากจัดการการส่งเองด้วย JavaScript
+      */
+
+      // สร้างออบเจ็กต์ข้อมูลที่จะส่งไป Google Apps Script
       const formData = {
-        name: this.name.value,
-        birthday: this.birthday.value
+        name: this.name.value,        // ค่าจาก input name="name"
+        birthday: this.birthday.value // ค่าจาก input name="birthday"
       };
 
+      console.log("กำลังส่งข้อมูล:", formData);
+      /*
+        แสดงข้อมูลใน console เพื่อดีบั๊กว่าข้อมูลถูกส่งจริงไหม
+      */
+
+      // ใช้ fetch() ส่งข้อมูลแบบ POST ไปยัง Apps Script
       fetch(scriptURL, {
-        method: "POST",
-        body: JSON.stringify(formData),
-        headers: { "Content-Type": "application/json" }
+        method: "POST",                          // ส่งแบบ POST
+        body: JSON.stringify(formData),          // แปลง object เป็น JSON
+        headers: {
+          "Content-Type": "application/json"     // บอกว่าเราส่งข้อมูลแบบ JSON
+        }
       })
-      .then(res => res.text())
+      .then(res => res.text()) // แปลงผลลัพธ์เป็นข้อความ (เช่น "Success")
       .then(msg => {
-        alert("✅ บันทึกเรียบร้อยแล้ว: " + msg);
-        this.reset();
+        alert("✅ บันทึกเรียบร้อยแล้ว: " + msg); // แสดงผลสำเร็จ
+        this.reset(); // ล้างฟอร์ม
       })
-      .catch(err => alert("❌ เกิดข้อผิดพลาด: " + err));
+      .catch(err => {
+        alert("❌ เกิดข้อผิดพลาด: " + err); // แสดงผลผิดพลาด
+      });
     });
   </script>
 </body>
