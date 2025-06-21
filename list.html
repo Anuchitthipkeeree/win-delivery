@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>รายชื่อวันเกิด</title>
+</head>
+<body>
+  <h2>รายชื่อวันเกิดทั้งหมด</h2>
+  <ul id="birthdayList">กำลังโหลด...</ul>
+
+  <script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbwLDBJ0cpKNQ1Nsas4SAPuGN8COCqqmvjSQk_t11Q6rJt5NgqplfuZn49fL80noWRYD/exec";
+
+    fetch(scriptURL)
+      .then(response => response.json())
+      .then(data => {
+        const list = document.getElementById("birthdayList");
+        list.innerHTML = "";
+        data.forEach(person => {
+          const li = document.createElement("li");
+          li.textContent = `${person.name} - ${person.birthday}`;
+          list.appendChild(li);
+        });
+      })
+      .catch(err => {
+        document.getElementById("birthdayList").textContent = "❌ ไม่สามารถโหลดข้อมูลได้";
+        console.error(err);
+      });
+  </script>
+</body>
+</html>
